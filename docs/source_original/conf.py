@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'gitinspectorgui'
+copyright = 'The gitinspectorgui Team'
+author = 'Bert van Beek'
 
 release = '0.1'
 version = '0.1.0'
