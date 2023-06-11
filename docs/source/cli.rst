@@ -1,16 +1,11 @@
 CLI: Command Line Interface
 ===========================
-
-Mandatory arguments to long options are mandatory for short options too. Boolean
-arguments can only be given to long options.
-
-
 Synopsis
 --------
 
 .. code::
 
-  gitinspectorgui [-h] [-V] [-g | --gui-settings | --no-gui-settings] [-a] [-v]
+  gitinspectorgui [-h] [-V] [-a] [-v]
                   [-F {html,htmlembedded,json,text,xml,excel,csv}]
                   [--scaled-percentages | --no-scaled-percentages] [-f NUMBER]
                   [--merged-repositories | --no-merged-repositories]
@@ -36,10 +31,6 @@ Unique for CLI
 ``--examples``
   Show usage examples.
 
-``-g``, ``--gui-settings``, ``--no-gui-settings``
-  Use the global GUI settings file as starting point for the command line
-  options.
-
 ``-v``, ``--verbose``
   More verbose output for each ``v``, e.g. ``-vv``.
 
@@ -48,7 +39,7 @@ Positional arguments
 --------------------
 
 Positional arguments are either for the GUI (``gui``) or for the CLI
-(``repo``, ``folder``, ``folders``, ``urls`` or ``settings``):
+(``repo``, ``folder``, ``folders``, ``urls``, ``settings``):
 
 ``gui``
   Start the GUI.

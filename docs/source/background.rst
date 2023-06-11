@@ -5,7 +5,7 @@ The gitinspector algorithm is based on the output from ``git log``, see the
 `git-log manual pages <https://www.mankier.com/1/git-log>`_. Some options on how
 ``git log`` analyses the repositories cannot be changed by the user. These are:
 
-Ignore changes in whitespace are ignored ``git log --ignore-all-space``
+Ignore changes in whitespace ``git log --ignore-all-space``
   Ignore whitespace when comparing lines. This ignores differences even if one
   line has whitespace where the other line has none.
 
