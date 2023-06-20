@@ -109,9 +109,16 @@ Output formats excel and csv
   Generate output for the first ``NR_OF_FILES`` files with the highest number of
   insertions for each repository.
 
+``--merged-repositories``
+  Merge commit information from found repositories as if coming from a single
+  repository.
 
 Output formats text ... html
 ----------------------------
+Note that for these output formats, output from multiple repositories is always
+merged. This behavior is equivalent to the ``--merged-repositories`` option for
+the output formats.
+
 ``-m``,  ``--metrics BOOL``
   Include checks for certain metrics during the analysis of commits.
 
