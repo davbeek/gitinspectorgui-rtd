@@ -9,6 +9,8 @@
 project = "Home gitinspectorgui"
 copyright = "2023, Adam Waldenberg and GitinspectorGUI Team"
 author = "GitinspectorGUI Team"
+version = "0.1"
+release = "0.1alpha"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
