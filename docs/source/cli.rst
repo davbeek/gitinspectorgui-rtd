@@ -117,7 +117,7 @@ Output formats text ... html
 ----------------------------
 Note that for these output formats, output from multiple repositories is always
 merged. This behavior is equivalent to the ``--merged-repositories`` option for
-the output formats.
+the output formats excel and csv.
 
 ``-m``,  ``--metrics BOOL``
   Include checks for certain metrics during the analysis of commits.

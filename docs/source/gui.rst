@@ -158,7 +158,7 @@ Output formats text ... html
 ----------------------------
 Note that for these output formats, output from multiple repositories is always
 merged. This behavior is equivalent to the ``--merged-repositories`` option for
-the output formats.
+the output formats excel and csv.
 
 Format
   Selects the formats for which  output is generated: :guilabel:`text`

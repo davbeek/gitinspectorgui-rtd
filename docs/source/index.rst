@@ -1,4 +1,4 @@
-The gitinspectorgui tool
+The GitinspectorGUI tool
 ========================
 
 .. toctree::
@@ -28,27 +28,30 @@ and copyrights of the gitinspector tool apply unchanged.
 
 Aim
 ---
-We hope that GitinspectorGUI will eventually be incorporated in the  `GitHub
+We hope that gitinspectorgui will eventually be incorporated in the  `GitHub
 gitinspector repository <https://github.com/ejwa/gitinspector>`_. Until that
 time, we provide our extension of gitinspector as a separate repository at: *to
 be defined*.
 
 Author
 ------
-Originally written by Adam Waldenberg. Extended and updated functionality mainly
-by Jingjing Wang.
+Originally written by Adam Waldenberg. Extended and updated by the
+GitinspectorGUI team consisting of Jingjing Wang and Bert van Beek. Python
+functionality of gitinspectorgui mainly by Jingjing Wang. Documentation and
+design of gitinspectorgui mainly by Bert van Beek.
 
 Reporting bugs
 --------------
 If you encounter problems, be sure to read the :doc:`FAQ<faq>` first and check
 if your problem is mentioned in either the issue tracker of the original
 `gitinspector repo <https://github.com/ejwa/gitinspector/issues>`_, or at the
-`gitinspectorgui repo <https://gitlab.tue.nl/grading/gitinspector/-/issues>`_
+`gitinspectorgui repo <https://gitlab.tue.nl/grading/gitinspector/-/issues>`_.
 
 
 Copyright
 ---------
-Copyright (C) 2012-2015 Ejwa Software. All rights reserved. License GPLv3+: GNU
-GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free
-software: you are free to change and redistribute it. There is NO WARRANTY, to
-the extent permitted by law.
+Copyright (C) 2012-2015 Ejwa Software and the GitinspectorGUI team. All rights
+reserved. License GPLv3+: GNU GPL version 3 or later
+<http://gnu.org/licenses/gpl.html>. This is free software: you are free to
+change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.
