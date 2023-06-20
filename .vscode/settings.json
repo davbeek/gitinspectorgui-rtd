@@ -25,7 +25,7 @@
     },
     //
     "esbonio.server.enabled": true,
-    "esbonio.server.installBehavior": "nothing",
+    "esbonio.server.installBehavior": "automatic",
     "esbonio.server.logLevel": "info",
     // "esbonio.server.logLevel": "debug",
     //
