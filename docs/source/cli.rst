@@ -41,20 +41,56 @@ Positional arguments
 Positional arguments are either for the GUI (``gui``) or for the CLI
 (``repo``, ``folder``, ``folders``, ``urls``, ``settings``):
 
+For the CLI, the output files generated depend on the output formats specified in the
+``-F`` or ``--format`` option. By default, output is generated in the files
+``gitinspect.ext``, where ``ext`` takes on the values belonging to the selected output
+formats.
+
+gui
+^^^
+
 ``gui``
   Start the GUI.
 
+repo
+^^^^
 ``repo``
-  ``[-h --help] [-f --fix PRE_POSTFIX] [-o --output FILE_BASE] REPO_PATH``
+  ``[-h --help] [-f --fix {pre,post,none}] [-o --output FILEBASE] REPOPATH``
 
-  Analyze the repository in ``REPO_PATH``. Functionality identical to GUI.
+  Analyze the repository in ``REPOPATH``. Functionality identical to GUI.
 
+``-f {pre,post,none}``, ``--fix {pre,post,none}``
+
+  * ``-f pre`` output file name is ``REPONAME_FILEBASE``.
+  * ``-f post`` output file name is ``FILEBASE_REPONAME``.
+  * ``-f none`` output file name is ``FILEBASE``.
+
+``-o FILE_BASE``, ``--output FILE_BASE``
+  The output filename, without extension and without parents is ``FILE_BASE``.
+  Default: ``gitinspect``.
+
+folder
+^^^^^^
 ``folder``
   ``[-h --help] [-o --output FILE_BASE] [-d --depth N] [-m --multiple-output-files] PATH``
 
   Analyze all repositories found in folder ``PATH``. Functionality identical to
   GUI.
 
+``-o FILE_BASE``, ``--output FILE_BASE``
+  The output filename, without extension and without parents is ``FILE_BASE``.
+  Default: ``gitinspect``.
+
+``-d N``, ``--depth N``
+  Positive integer value that represents the number of levels of subfolders
+  that is searched for repositories, *default* ``5``. For depth ``1``, only
+  the repository in ``PATH``, if present, is analysed.
+
+``--multiple-output-files``
+  Splits the output into separate output files, one for each repository.
+
+folders
+^^^^^^^
 ``folders``
   ``[-h --help] [-o --output-path O_PATH] [-d --depth N] [-m
   --multiple-output-files] PATHS``
@@ -62,44 +98,50 @@ Positional arguments are either for the GUI (``gui``) or for the CLI
   Analyze all repositories found in the given list of paths (``PATHS``) to input
   folders. Command unique for CLI.
 
+``-o O_PATH``, ``--output-path O_PATH``
+  Generate output in file paths ``O_PATH.ext``, where ``ext`` takes on the
+  values belonging to the selected output formats.
+
+  Default: generate output in the current directory in files ``gitinspect.ext``.
+
+``-d N``, ``--depth N``
+  Positive integer value that represents the number of levels of subfolders
+  that is searched for repositories, *default* ``5``. For depth ``1``, only
+  the repository in ``PATH``, if present, is analysed.
+
+``--multiple-ouput-files``
+  Splits the output into separate output files, one for each repository.
+
+urls
+^^^^
 ``urls``
   ``[-h --help] [-o --output PATH] URLS``
-
   Download and analyze repositories specified via URLS.
 
+``-o PATH``, ``--output PATH``
+  Output file path without extension is ``PATH``. Default: generate output in
+  the file named ``gitinspect`` in the current directory.
+
+settings
+^^^^^^^^
 ``settings``
-  ``[-h --help] {reset | show-location | change-location}``
+  ``[-h --help] {reset | show-location | change-location NEWPATH}``
 
   Reset global GUI settings or show/change settings file location.
 
-IO arguments
-------------
-``checkout_tag TAG_ID``
-  Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
-
-``-o BASEFILENAME``, ``--output BASEFILENAME``
-  Generate output in the current directory in files ``BASEFILENAME.ext``, where
-  ``ext`` takes on the values belonging to the selected output formats. Default:
-  ``BASEFILENAME=gitinspect``.
-
-``-d DEPTH``, ``--depth DEPTH``
-  Number of levels of subfolders of the input_folder that is searched for
-  repositories. ``DEPTH=1``, means that only the input_folder_path itself is
-  searched. Default value is 5.
-
-``--multiple_output_files``
-  Splits the output for the 'Multiple local repositories' option into separate
-  output files.
+Output formats
+--------------
+.. ``checkout_tag TAG_ID``
+..   Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
 
 ``-F FORMAT``, ``--format FORMAT``
   Defines in which ``FORMAT`` output is generated: ``text`` *default*, ``html``,
   ``htmlembedded``, ``json``, ``xml``. Format options can be specified multiple
-  times, to generated multiple output formats simulataneously. See
+  times, to generated multiple output formats simultaneously. See
   :doc:`output-formats`.
 
-
 Output formats excel and csv
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ``--scaled-percentages``
   For each column with output in percentages, e.g. ``Insertions %``, add a
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
@@ -114,7 +156,7 @@ Output formats excel and csv
   repository.
 
 Output formats text ... html
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Note that for these output formats, output from multiple repositories is always
 merged. This behavior is equivalent to the ``--merged-repositories`` option for
 the output formats excel and csv.

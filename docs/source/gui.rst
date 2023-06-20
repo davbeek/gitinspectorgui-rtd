@@ -71,7 +71,7 @@ Output File Path
   * :guilabel:`Prefix with repo`: ``/Users/apple/gitinspect-repo``.
   * :guilabel:`No prefix or postfix`: ``/Users/apple/gitinspect`` (default).
 
-  Note that the output file is not place inside of the repository, but in
+  Note that the output file is not placed inside of the repository, but in
   its parent folder.
 
 
@@ -84,7 +84,7 @@ Input Search Folder Path
 
 Search depth
   Positive integer value that represents the number of levels of subfolders
-  that is searched for repositories, *default* ``5``. For depth ``0``, only
+  that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in the Search Folder, if present, is analysed.
 
 Multiple output files
