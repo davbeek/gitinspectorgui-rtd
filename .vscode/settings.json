@@ -1,0 +1,82 @@
+{
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+    // Controls how the editor should render whitespace characters.
+    //  - none
+    //  - boundary: Render whitespace characters except for single spaces between words.
+    //  - selection: Render whitespace characters only on selected text.
+    //  - trailing: Render only trailing whitespace characters.
+    //  - all
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [
+        88,
+    ],
+    "[python]": {
+        "editor.rulers": [
+            88
+        ],
+    },
+    "[restructuredtext]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [
+            80,
+            88
+        ],
+    },
+    //
+    "esbonio.server.enabled": true,
+    "esbonio.server.installBehavior": "nothing",
+    "esbonio.server.logLevel": "info",
+    // "esbonio.server.logLevel": "debug",
+    //
+    // Set updateFrequency to never to prevent esbonio from auto-updating the
+    // server using pip instead of conda.
+    // Use manual update with poetry or conda instead.
+    "esbonio.server.updateFrequency": "never",
+    "esbonio.sphinx.buildDir": "${workspaceFolder}/_build/html",
+    "esbonio.sphinx.makeMode": false, // behave like sphinx -b
+    "esbonio.sphinx.numJobs": 1,
+    //
+    "evenBetterToml.semanticTokens": false,
+    //
+    "files.associations": {
+        "*.inc": "restructuredtext"
+    },
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    //
+    // analysis.include works much better than analysis.exclude to prevent unwanted analysis
+    "python.analysis.include": [
+        "/Users/dvbeek/1-repos/grading/gitinspectorgui/src/gitinspectorgui"
+    ],
+    "python.analysis.indexing": true,
+    "python.analysis.typeCheckingMode": "basic",
+    //
+    // Uncomment line below for Windows, or copy to User settings
+    // "python.defaultInterpreterPath": "${env:HOMEPATH}\\miniconda3\\python",
+    //
+    "python.formatting.provider": "black",
+    // Pylance, None, Jedi (Jedi DOES NOT WORK)
+    "python.languageServer": "Pylance",
+    "python.linting.flake8Enabled": true,
+    "python.linting.ignorePatterns": [
+        "/Users/dvbeek/miniconda3/**/*.py",
+    ],
+    //
+    "python.testing.pytestEnabled": true,
+    "python.terminal.activateEnvInCurrentTerminal": false,
+    "python.terminal.activateEnvironment": false,
+    // Error: basic info and errors
+    // Warning: = Error + warnings
+    // Information: = Warning + execution times and return info etc (Default)
+    // Trace: = Information + ?????
+    "python.analysis.logLevel": "Information",
+    //
+    "rewrap.autoWrap.enabled": true,
+    // Puts a single space between comment character "//" and comment text
+    "rewrap.reformat": true,
+    //
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+}
