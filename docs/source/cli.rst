@@ -9,8 +9,8 @@ Synopsis
                   [-F {html,htmlembedded,json,text,xml,excel,csv}]
                   [--scaled-percentages | --no-scaled-percentages] [-f N]
                   [--merged-repositories | --no-merged-repositories]
-                  [-m | --metrics | --no-metrics] [-T | --timeline | --no-timeline]
-                  [-u | --used-extensions | --no-used-extensions]
+                  [-m | --metrics | --no-metrics] [-t | --timeline | --no-timeline]
+                  [-l | --extensions-list | --no-extensions-list]
                   [-r | --responsibilities | --no-responsibilities] [-e EXTENSIONS]
                   [-H | --hard | --no-hard]
                   [-L | --localize-output | --no-localize-output]
@@ -164,12 +164,12 @@ the output formats excel and csv.
 ``-m``  ``--metrics`` ``--no-metrics``
   Include checks for certain metrics during the analysis of commits.
 
-``-T`` ``--timeline`` ``--no-timeline``
+``-t`` ``--timeline`` ``--no-timeline``
   Show commit timeline, including author names.
 
-``-u`` ``--used-extensions`` ``--no-used-extensions``
-  Show all file extensions used in the current branch of the
-  repository in the output.
+``-l`` ``--extensions-list`` ``--no-extensions-list``
+  Show a list of file extensions, used in the current branch of the
+  repository, in the output.
 
 ``-r``  ``--responsibilities`` ``--no-responsibilities``
   Show which files the different authors seem most responsible for.
@@ -177,9 +177,9 @@ the output formats excel and csv.
 
 General configuration
 ---------------------
-``-f EXTENSIONS`` ``--file-types EXTENSIONS``
+``-e EXTENSIONS`` ``--extensions EXTENSIONS``
   A comma separated list of file extensions to include when computing
-  statistics. The default ``EXTENSIONS`` used are: ``java, c, cc, cpp, h, hh,
+  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
   hpp, py, glsl, rb, js, sql``.
 
   Specifying a single ``*`` asterisk character includes files with no extension.
