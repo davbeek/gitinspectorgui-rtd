@@ -65,8 +65,8 @@ repo
   * ``-f post`` output file name is ``FILEBASE_REPONAME``.
   * ``-f none`` output file name is ``FILEBASE``.
 
-``-o FILE_BASE`` ``--output FILE_BASE``
-  The output filename, without extension and without parents is ``FILE_BASE``.
+``-o FILEBASE`` ``--output FILEBASE``
+  The output filename, without extension and without parents is ``FILEBASE``.
   Default: ``gitinspect``.
 
 folder
@@ -151,7 +151,7 @@ Output formats excel and csv
   Generate output for the first ``N`` files with the highest number of
   insertions for each repository.
 
-``--merged-repositories``
+``--merged-repositories`` ``--no-merged-repositories``
   Merge commit information from found repositories as if coming from a single
   repository.
 
