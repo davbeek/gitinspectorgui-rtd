@@ -3,7 +3,7 @@ CLI: Command Line Interface
 Synopsis
 --------
 
-.. code::
+.. code:: text
 
   gitinspectorgui [-h] [-V] [-a] [-v]
                   [-F {html,htmlembedded,json,text,xml,excel,csv}]
