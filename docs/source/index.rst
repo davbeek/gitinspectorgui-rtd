@@ -33,12 +33,13 @@ gitinspector repository <https://github.com/ejwa/gitinspector>`_. Until that
 time, we provide our extension of gitinspector as a separate repository at: *to
 be defined*.
 
-Author
-------
-Originally written by Adam Waldenberg. Extended and updated by the
-GitinspectorGUI team consisting of Jingjing Wang and Bert van Beek. Python
-functionality of gitinspectorgui mainly by Jingjing Wang. Documentation and
-design of gitinspectorgui mainly by Bert van Beek.
+Authors
+-------
+Gitinspector was written by Adam Waldenberg. It has been extended and updated by
+the GitinspectorGUI team:
+
+* Jingjing Wang: python functionality.
+* Bert van Beek: documentation and design.
 
 Reporting bugs
 --------------

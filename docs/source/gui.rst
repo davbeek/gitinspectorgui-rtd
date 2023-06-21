@@ -157,7 +157,7 @@ Merged repositories
 Output formats text ... html
 ----------------------------
 Note that for these output formats, output from multiple repositories is always
-merged. This behavior is equivalent to the ``--merged-repositories`` option for
+merged. This behavior is equivalent to the Merged repositories option for
 the output formats excel and csv.
 
 Format
