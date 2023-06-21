@@ -7,7 +7,7 @@ Synopsis
 
   gitinspectorgui [-h] [-V] [-a] [-v]
                   [-F {html,htmlembedded,json,text,xml,excel,csv}]
-                  [--scaled-percentages | --no-scaled-percentages] [-f NUMBER]
+                  [--scaled-percentages | --no-scaled-percentages] [-f N]
                   [--merged-repositories | --no-merged-repositories]
                   [-m | --metrics | --no-metrics] [-T | --timeline | --no-timeline]
                   [-u | --used-extensions | --no-used-extensions]
@@ -22,7 +22,7 @@ Synopsis
 
 Unique for CLI
 --------------
-``-h``, ``--help``
+``-h`` ``--help``
   Display help and exit.
 
 ``--version``
@@ -59,29 +59,29 @@ repo
 
   Analyze the repository in ``REPOPATH``. Functionality identical to GUI.
 
-``-f {pre,post,none}``, ``--fix {pre,post,none}``
+``-f {pre,post,none}`` ``--fix {pre,post,none}``
 
   * ``-f pre`` output file name is ``REPONAME_FILEBASE``.
   * ``-f post`` output file name is ``FILEBASE_REPONAME``.
   * ``-f none`` output file name is ``FILEBASE``.
 
-``-o FILE_BASE``, ``--output FILE_BASE``
+``-o FILE_BASE`` ``--output FILE_BASE``
   The output filename, without extension and without parents is ``FILE_BASE``.
   Default: ``gitinspect``.
 
 folder
 ^^^^^^
 ``folder``
-  ``[-h --help] [-o --output FILE_BASE] [-d --depth N] [-m --multiple-output-files] PATH``
+  ``[-h --help] [-o --output FILEBASE] [-d --depth N] [-m --multiple-output-files] PATH``
 
   Analyze all repositories found in folder ``PATH``. Functionality identical to
   GUI.
 
-``-o FILE_BASE``, ``--output FILE_BASE``
-  The output filename, without extension and without parents is ``FILE_BASE``.
+``-o FILEBASE`` ``--output FILEBASE``
+  The output filename, without extension and without parents is ``FILEBASE``.
   Default: ``gitinspect``.
 
-``-d N``, ``--depth N``
+``-d N`` ``--depth N``
   Positive integer value that represents the number of levels of subfolders
   that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in ``PATH``, if present, is analysed.
@@ -92,19 +92,19 @@ folder
 folders
 ^^^^^^^
 ``folders``
-  ``[-h --help] [-o --output-path O_PATH] [-d --depth N] [-m
-  --multiple-output-files] PATHS``
+  ``[-h --help] [-o --output PATH] [-d --depth N] [-m --multiple-output-files]
+  PATHS``
 
   Analyze all repositories found in the given list of paths (``PATHS``) to input
   folders. Command unique for CLI.
 
-``-o O_PATH``, ``--output-path O_PATH``
-  Generate output in file paths ``O_PATH.ext``, where ``ext`` takes on the
+``-o PATH`` ``--output PATH``
+  Generate output in file paths ``PATH.ext``, where ``ext`` takes on the
   values belonging to the selected output formats.
 
   Default: generate output in the current directory in files ``gitinspect.ext``.
 
-``-d N``, ``--depth N``
+``-d N`` ``--depth N``
   Positive integer value that represents the number of levels of subfolders
   that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in ``PATH``, if present, is analysed.
@@ -118,7 +118,7 @@ urls
   ``[-h --help] [-o --output PATH] URLS``
   Download and analyze repositories specified via URLS.
 
-``-o PATH``, ``--output PATH``
+``-o PATH`` ``--output PATH``
   Output file path without extension is ``PATH``. Default: generate output in
   the file named ``gitinspect`` in the current directory.
 
@@ -134,7 +134,7 @@ Output formats
 .. ``checkout_tag TAG_ID``
 ..   Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
 
-``-F FORMAT``, ``--format FORMAT``
+``-F FORMAT`` ``--format FORMAT``
   Defines in which ``FORMAT`` output is generated: ``text`` *default*, ``html``,
   ``htmlembedded``, ``json``, ``xml``. Format options can be specified multiple
   times, to generated multiple output formats simultaneously. See
@@ -142,13 +142,13 @@ Output formats
 
 Output formats excel and csv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-``--scaled-percentages``
+``--scaled-percentages --no-scaled-percentages``
   For each column with output in percentages, e.g. ``Insertions %``, add a
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
   multiplied by the number of authors in the repository.
 
-``--show-files NR_OF_FILES``
-  Generate output for the first ``NR_OF_FILES`` files with the highest number of
+``--show-files N``
+  Generate output for the first ``N`` files with the highest number of
   insertions for each repository.
 
 ``--merged-repositories``
@@ -161,26 +161,23 @@ Note that for these output formats, output from multiple repositories is always
 merged. This behavior is equivalent to the ``--merged-repositories`` option for
 the output formats excel and csv.
 
-``-m``,  ``--metrics BOOL``
+``-m``  ``--metrics`` ``--no-metrics``
   Include checks for certain metrics during the analysis of commits.
 
-``-T``, ``--timeline BOOL``
+``-T`` ``--timeline`` ``--no-timeline``
   Show commit timeline, including author names.
 
-``-l``, ``--list-file-types BOOL``
-  List all the file extensions available in the current branch of the
-  repository.
+``-u`` ``--used-extensions`` ``--no-used-extensions``
+  Show all file extensions used in the current branch of the
+  repository in the output.
 
-``-r``,  ``--responsibilities BOOL``
+``-r``  ``--responsibilities`` ``--no-responsibilities``
   Show which files the different authors seem most responsible for.
 
 
 General configuration
 ---------------------
-Mandatory arguments to long options are mandatory for short options too. Boolean
-arguments can only be given to long options.
-
-``-f``, ``--file-types EXTENSIONS``
+``-f EXTENSIONS`` ``--file-types EXTENSIONS``
   A comma separated list of file extensions to include when computing
   statistics. The default ``EXTENSIONS`` used are: ``java, c, cc, cpp, h, hh,
   hpp, py, glsl, rb, js, sql``.
@@ -189,15 +186,15 @@ arguments can only be given to long options.
   Specifying two consecutive ``**`` asterisk characters includes all files
   regardless of extension.
 
-``-H``, ``--hard BOOL``
+``-H`` ``--hard`` ``no-hard``
   .. include:: opt-hard.inc
 
-``-L``, ``--localize-output BOOL``
+``-L`` ``--localized-output`` ``--no-localized-output``
   By default, the generated statistics are in English. This flag localizes the
   generated output to the selected system language if a translation is
   available.
 
-``-w``, ``--weeks BOOL``
+``-w`` ``--weeks`` ``--no-weeks``
   Show all statistical information in weeks instead of in months.
 
 ``--since DATE``
