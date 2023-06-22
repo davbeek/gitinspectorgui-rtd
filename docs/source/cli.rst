@@ -31,20 +31,22 @@ Unique for CLI
 ``--examples``
   Show usage examples.
 
-``-v``, ``--verbose``
+``-v`` ``--verbose``
   More verbose output for each ``v``, e.g. ``-vv``.
 
 
 Positional arguments
 --------------------
 
-Positional arguments are either for the GUI (``gui``) or for the CLI
-(``repo``, ``folder``, ``folders``, ``urls``, ``settings``):
+Positional arguments are either for the GUI or the CLI:
 
-For the CLI, the output files generated depend on the output formats specified in the
-``-F`` or ``--format`` option. By default, output is generated in the files
-``gitinspect.ext``, where ``ext`` takes on the values belonging to the selected output
-formats.
+* GUI: ``gui``
+* CLI: ``repo`` ``folder`` ``folders`` ``urls`` ``settings``
+
+For the CLI, the output files generated depend on the output formats specified
+in the ``-F`` or ``--format`` option. By default, output is generated in the
+files ``gitinspect.ext``, where ``ext`` is defined by the selected :ref:`output
+formats <formats>`.
 
 gui
 ^^^
@@ -129,14 +131,16 @@ settings
 
   Reset global GUI settings or show/change settings file location.
 
+.. _formats:
+
 Output formats
 --------------
 .. ``checkout_tag TAG_ID``
 ..   Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
 
 ``-F FORMAT`` ``--format FORMAT``
-  Defines in which ``FORMAT`` output is generated: ``text`` *default*, ``html``,
-  ``htmlembedded``, ``json``, ``xml``. Format options can be specified multiple
+  Defines in which ``FORMAT`` output is generated: ``text`` *default* ``html``
+  ``htmlembedded`` ``json`` ``xml`` ``excel`` ``csv``. Format options can be specified multiple
   times, to generated multiple output formats simultaneously. See
   :doc:`output-formats`.
 
