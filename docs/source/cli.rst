@@ -155,7 +155,7 @@ Output formats excel and csv
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
   multiplied by the number of authors in the repository.
 
-``--show-files N``
+``-f N`` ``--show-files N``
   Generate output for the first ``N`` files with the highest number of
   insertions for each repository.
 
