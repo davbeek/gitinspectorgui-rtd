@@ -141,11 +141,12 @@ Output formats
 .. ``checkout_tag TAG_ID``
 ..   Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
 
+For more information about the various output formats, see :doc:`output-formats`.
+
 ``-F FORMAT`` ``--format FORMAT``
   Defines in which ``FORMAT`` output is generated: ``text`` *default* ``html``
-  ``htmlembedded`` ``json`` ``xml`` ``excel`` ``csv``. Format options can be specified multiple
-  times, to generated multiple output formats simultaneously. See
-  :doc:`output-formats`.
+  ``htmlembedded`` ``json`` ``xml`` ``excel`` ``csv``. Format options can be
+  specified multiple times, to generated multiple output formats simultaneously.
 
 Output formats excel and csv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,6 +189,9 @@ General configuration
   A comma separated list of file extensions to include when computing
   statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
   hpp, py, glsl, rb, js, sql``.
+
+  For more information, see the :ref:`supported languages table
+  <languages_table>` below.
 
   Specifying a single ``*`` asterisk character includes files with no extension.
   Specifying two consecutive ``**`` asterisk characters includes all files
@@ -256,3 +260,121 @@ can also be used as exclusion ``PATTERN``, e.g:
 
 ``--ex-email ".com$"``
   Filter out statistics from all email addresses ending with ``.com``.
+
+.. _languages_table:
+
+Supported languages
+-------------------
+
+.. list-table::
+
+  * - Language
+    - Comments
+    - Metrics
+    - File extensions
+    - Included in analysis by default
+  * - CIF 3
+    - Yes
+    - No
+    - cif
+    -  Yes
+  * - ToolDef
+    -  No
+    -  No
+    -  tooldef
+    -  Yes
+  * - ADA
+    - Yes
+    - No
+    - ada, adb, ads
+    - No
+  * - C
+    - Yes
+    - Yes
+    - c, h
+    - Yes
+  * - C++
+    - Yes
+    - Yes
+    - cc, h, hh, hpp
+    - Yes
+  * - C#
+    - Yes
+    - Yes
+    - cs
+    - No
+  * - GNU Gettext
+    - Yes
+    - No
+    - po, pot
+    - No
+  * - Haskell
+    - Yes
+    - No
+    - hs
+    - No
+  * - HTML
+    - Yes
+    - No
+    - html
+    - No
+  * - Java
+    - Yes
+    - Yes
+    - java
+    - Yes
+  * - JavaScript
+    - Yes
+    - Yes
+    - js
+    - Yes
+  * - LaTeX
+    - Yes
+    - No
+    - tex
+    - No
+  * - OCaml
+    - Yes
+    - No
+    - ml, mli
+    - No
+  * - OpenGL Shading Language
+    - Yes
+    - No
+    - glsl
+    - Yes
+  * - Perl
+    - Yes
+    - No
+    - pl
+    - No
+  * - PHP
+    - Yes
+    - No
+    - php
+    - No
+  * - Python
+    - Yes
+    - Yes
+    - py
+    - Yes
+  * - Ruby
+    - Yes
+    - No
+    - rb
+    - Yes
+  * - Scala
+    - Yes
+    - No
+    - scala
+    - No
+  * - SQL
+    - Yes
+    - No
+    - sql
+    - Yes
+  * - XML
+    - Yes
+    - No
+    - xml, jspx
+    - No

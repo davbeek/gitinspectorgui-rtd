@@ -1,7 +1,8 @@
 Output formats
 ==============
 Multiple output formats can be selected, resulting in a separate output
-file for every selected format.
+file for every selected format. See the :ref:`CLI documentation <formats>` for
+information on this option.
 
 Available output formats
 ------------------------
