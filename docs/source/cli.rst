@@ -76,17 +76,20 @@ folder
 ``folder``
   ``[-h --help] [-o --output FILEBASE] [-d --depth N] [-m --multiple-output-files] PATH``
 
-  Analyze all repositories found in folder ``PATH``. Functionality identical to
-  GUI.
+  Analyze all repositories found in input folder ``PATH``. Functionality
+  identical to GUI.
 
 ``-o FILEBASE`` ``--output FILEBASE``
   The output filename, without extension and without parents is ``FILEBASE``.
   Default: ``gitinspect``.
 
 ``-d N`` ``--depth N``
-  Positive integer value that represents the number of levels of subfolders
-  that is searched for repositories, *default* ``5``. For depth ``1``, only
-  the repository in ``PATH``, if present, is analysed.
+  Integer value bigger or equal to zero, that represents the number of levels of
+  subfolders that is searched for repositories, *default* ``5``.
+
+  * ``-d 0``: the input folder itself must be a repository.
+  * ``-d 1``: only the input folder is searched for repository folders for
+    analysis.
 
 ``--multiple-output-files``
   Splits the output into separate output files, one for each repository.
