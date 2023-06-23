@@ -209,12 +209,14 @@ General configuration
   Show all statistical information in weeks instead of in months.
 
 ``--since DATE``
-  Only show statistics for commits more recent than a specific date. E.g.
-  ``--since 2022-12-31``.
+  Only show statistics for commits more recent than a specific date. The
+  ``DATE`` format is YYYY-M-D, where leading zeros are optional for month and
+  day, e.g.
+  ``--since 2022-1-31`` or ``--since 2022-01-31``.
 
 ``--until DATE``
-  Only show statistics for commits older than a specific date. E.g.
-  ``--since 2022-12-31``.
+  Only show statistics for commits older than a specific date. See ``--since``
+  for the format of ``DATE``.
 
 
 Exclusion patterns
