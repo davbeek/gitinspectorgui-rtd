@@ -6,11 +6,11 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "Home GitinspectorGUI"
+project = "GitinspectorGUI"
 copyright = "2023, Adam Waldenberg and GitinspectorGUI Team"
 author = "GitinspectorGUI Team"
-version = "0.1"
-release = "0.1alpha"
+version = "0.1alpha"
+release = version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
