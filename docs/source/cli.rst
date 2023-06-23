@@ -254,12 +254,12 @@ statistics. Each exclusion option can be repeated multiple times.
 Apart from substring matching, as described above, regular expressions
 can also be used as exclusion ``PATTERN``, e.g:
 
-``--ex-author "\^(?!(John Smith))"``
+``--ex-author "^(?!(John Smith))"``
   Only show statistics from author ``John Smith``, by excluding all authors that
   are not John Smith. The backslash is needed to make sure that the CLI
   interpreter (bash) does not interpret the caret ``^``.
 
-``--ex-author "\^(?!([A-C]))"``
+``--ex-author "^(?!([A-C]))"``
   Only show statistics from authors starting with the letters ``A/B/C``.
 
 ``--ex-email ".com$"``
