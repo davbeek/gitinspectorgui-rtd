@@ -41,7 +41,6 @@ if your problem is mentioned in either the issue tracker of the original
 Copyright
 ---------
 Copyright (C) 2012-2023 Ejwa Software and the GitinspectorGUI team. All rights
-reserved. License GPLv3+: GNU GPL version 3 or later
-<http://gnu.org/licenses/gpl.html>. This is free software: you are free to
-change and redistribute it. There is NO WARRANTY, to the extent permitted by
-law.
+reserved. License: `GNU GPL <http://gnu.org/licenses/gpl.html>`_ version 3 or
+later (GPLv3+). This is free software: you are free to change and redistribute
+it. There is NO WARRANTY, to the extent permitted by law.
