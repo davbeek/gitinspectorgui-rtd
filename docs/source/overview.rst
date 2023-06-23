@@ -13,7 +13,7 @@ Origin
 GitinspectorGUI is an extension and update of the gitinspector tool by Adam
 Waldenberg. It is based on a fork from the `GitHub gitinspector repository
 <https://github.com/ejwa/gitinspector>`_. As such, the original GPLv3 license
-and copyrights of the gitinspector tool apply unchanged.
+and copyrights of the gitinspector tool apply.
 
 Aim
 ---
