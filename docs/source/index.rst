@@ -5,10 +5,9 @@ GitinspectorGUI documentation
   :maxdepth: 2
 
   overview
-  Getting started <start>
+  install
   gui
   cli
   output-formats
   background
   FAQ <faq>
-  Developer info <develop>
