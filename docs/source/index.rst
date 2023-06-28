@@ -11,3 +11,4 @@ GitinspectorGUI documentation
   output-formats
   background
   FAQ <faq>
+  develop
