@@ -18,8 +18,7 @@ Publish to TestPyPI via poetry
 
 .. code:: bash
 
-  poetry publish --repository testpypi --username __token__ --password
-  AUTHENTICATIONTOKEN
+  poetry publish --repository testpypi --username __token__ --password AUTHENTICATIONTOKEN
 
 Download gitinspectorgui from TestPyPI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

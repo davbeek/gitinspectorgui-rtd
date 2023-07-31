@@ -23,6 +23,9 @@ This row is unique to the GUI. It has the following buttons:
 Execute
   Execute the analysis, using the parameters given in the GUI.
 
+Save
+  Save all settings specified in the GUI.
+
 Clear
   Clear the console, which is the textual output box at the end of the GUI.
 
