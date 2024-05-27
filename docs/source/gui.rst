@@ -180,9 +180,6 @@ in the file in which commit the line was last changed, at which date and by
 which author.
 
 
-
-
-
 Output format text
 ------------------
 For this output format, output from multiple repositories is always merged as if
@@ -193,17 +190,9 @@ Format
   *default*, :guilabel:`html`, :guilabel:`htmlembedded`, :guilabel:`json`,
   :guilabel:`xml`. See :doc:`output-formats`.
 
-Metrics
-	Include checks for certain metrics during the analysis of commits.
 
-Timeline
-	Show commit timeline, including author names.
-
-List file types
+Extensions list
   List all the file extensions available in the current branch of the repository.
-
-Responsibilities
-	Show which files the different authors seem most responsible for.
 
 
 .. _general_config:
