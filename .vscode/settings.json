@@ -1,21 +1,17 @@
 {
-    "editor.formatOnSave": true,
     "editor.detectIndentation": false,
+    //
     // Controls how the editor should render whitespace characters.
     //  - none
     //  - boundary: Render whitespace characters except for single spaces between words.
     //  - selection: Render whitespace characters only on selected text.
     //  - trailing: Render only trailing whitespace characters.
     //  - all
+    "editor.formatOnSave": true,
     "editor.renderWhitespace": "boundary",
     "editor.rulers": [
         88,
     ],
-    "[python]": {
-        "editor.rulers": [
-            88
-        ],
-    },
     "[restructuredtext]": {
         "editor.tabSize": 2,
         "editor.rulers": [
@@ -24,18 +20,18 @@
         ],
     },
     //
+    // "esbonio.logging.level": "debug",
+    // "esbonio.logging.level": "warning",
+    "esbonio.logging.level": "error",
+    // "esbonio.logging.level": "info",
     "esbonio.server.enabled": true,
-    "esbonio.server.installBehavior": "automatic",
-    "esbonio.server.logLevel": "info",
-    // "esbonio.server.logLevel": "debug",
-    //
-    // Set updateFrequency to never to prevent esbonio from auto-updating the
-    // server using pip instead of conda.
-    // Use manual update with poetry or conda instead.
-    "esbonio.server.updateFrequency": "never",
-    "esbonio.sphinx.buildDir": "${workspaceFolder}/_build/html",
-    "esbonio.sphinx.makeMode": false, // behave like sphinx -b
-    "esbonio.sphinx.numJobs": 1,
+    "esbonio.sphinx.buildCommand": [
+        "sphinx-build",
+        "-M",
+        "html",
+        "docs/source",
+        "_build"
+    ],
     //
     "evenBetterToml.semanticTokens": false,
     //
@@ -47,27 +43,41 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     //
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.rulers": [
+            88
+        ],
+        //
+        // required for isort, see setting "isort.args"
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+    },
     // analysis.include works much better than analysis.exclude to prevent unwanted analysis
     "python.analysis.include": [
         "/Users/dvbeek/1-repos/grading/gitinspectorgui/src/gitinspectorgui"
     ],
     "python.analysis.indexing": true,
     "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.callArgumentNames": "off",
+    // "python.analysis.inlayHints.callArgumentNames": "partial",
+    "python.analysis.inlayHints.variableTypes": false,
     //
-    // Uncomment line below for Windows, or copy to User settings
-    // "python.defaultInterpreterPath": "${env:HOMEPATH}\\miniconda3\\python",
-    //
-    "python.formatting.provider": "black",
     // Pylance, None, Jedi (Jedi DOES NOT WORK)
     "python.languageServer": "Pylance",
-    "python.linting.flake8Enabled": true,
-    "python.linting.ignorePatterns": [
-        "/Users/dvbeek/miniconda3/**/*.py",
-    ],
-    //
     "python.testing.pytestEnabled": true,
     "python.terminal.activateEnvInCurrentTerminal": false,
     "python.terminal.activateEnvironment": false,
+    //
     // Error: basic info and errors
     // Warning: = Error + warnings
     // Information: = Warning + execution times and return info etc (Default)
