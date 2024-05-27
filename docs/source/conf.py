@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "GitinspectorGUI"
-copyright = "2023, Adam Waldenberg and GitinspectorGUI Team"
 author = "GitinspectorGUI Team"
+copyright = "GitinspectorGUI Team"
 version = "0.1alpha"
 release = version
 

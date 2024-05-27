@@ -1,14 +1,6 @@
 Developer info
 ==============
 
-
-
-
-
-
-
-
-
 Working with TestPyPI
 ---------------------
 Before publishing to PyPI, the code and publishing scripts can be tested via TestPyPI.

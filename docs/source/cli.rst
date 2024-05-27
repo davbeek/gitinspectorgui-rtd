@@ -5,19 +5,18 @@ Synopsis
 
 .. code:: text
 
-  gitinspectorgui [-h] [-V] [-a] [-v]
-                  [-F {html,htmlembedded,json,text,xml,excel,csv}]
-                  [--scaled-percentages | --no-scaled-percentages] [-f N]
-                  [--merged-repositories | --no-merged-repositories]
-                  [-m | --metrics | --no-metrics] [-t | --timeline | --no-timeline]
-                  [-l | --extensions-list | --no-extensions-list]
-                  [-r | --responsibilities | --no-responsibilities] [-e EXTENSIONS]
-                  [-H | --hard | --no-hard]
-                  [-L | --localize-output | --no-localize-output]
-                  [-w | --weeks | --no-weeks] [--since SINCE] [--until UNTIL]
-                  [--ex-file PATTERN] [--ex-author PATTERN] [--ex-email PATTERN]
-                  [--ex-revision PATTERN] [--ex-message PATTERN]
-                  {gui,repo,folder,folders,urls,settings} ...
+    gitinspectorgui [-h] [--gui] [--gui-from-cli] [-V] [-v] [--profile] [-d DEPTH]
+                       [-o FILEBASE] [--fix {pre,post,none}] [-F {text,excel}]
+                       [--scaled-percentages | --no-scaled-percentages]
+                       [--skip-blame | --no-skip-blame]
+                       [--blame-folder-path BLAME_FOLDER_PATH] [-n N | -f PATTERN]
+                       [-l | --extensions-list | --no-extensions-list] [-e EXTENSIONS]
+                       [--whitespace-diff | --no-whitespace-diff] [--track-cp-mv N]
+                       [-M | --months | --no-months] [--since SINCE] [--until UNTIL]
+                       [--ex-file PATTERN] [--ex-author PATTERN] [--ex-email PATTERN]
+                       [--ex-revision PATTERN] [--ex-message PATTERN]
+                       [--settings-show-location | --settings-reset | --settings-change-location PATH]
+                       [PATH ...]
 
 
 Unique for CLI
@@ -27,9 +26,6 @@ Unique for CLI
 
 ``--version``
   Output version information and exit.
-
-``--examples``
-  Show usage examples.
 
 ``-v`` ``--verbose``
   More verbose output for each ``v``, e.g. ``-vv``.

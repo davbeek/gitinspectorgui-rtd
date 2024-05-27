@@ -9,6 +9,4 @@ GitinspectorGUI documentation
   gui
   cli
   output-formats
-  background
-  FAQ <faq>
   develop
