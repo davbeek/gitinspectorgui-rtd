@@ -18,66 +18,48 @@ Synopsis
                        [--settings-show-location | --settings-reset | --settings-change-location PATH]
                        [PATH ...]
 
+Overview
+--------
+The command line interface (CLI) can be used to start the GUI and provide it
+with starting values for its options, or to analyze repositories directly from
+the command line.
+
+Unique for GUI
+--------------
+The GUI can be started in two ways:
+
+-  Via option ``--gui``: this starts the GUI with settings loaded from the
+   settings file.
+-  Via option ``--gui-from-cli``: this starts the GUI by first loading the
+   settings from the settings file and then overwriting some of the settings with the
+   options provided on the command line.
 
 Unique for CLI
 --------------
+Without options ``--gui`` or ``--gui-from-cli``, the CLI is used to analyse
+repositories.
+
 ``-h`` ``--help``
   Display help and exit.
 
 ``--version``
   Output version information and exit.
 
-``-v`` ``--verbose``
-  More verbose output for each ``v``, e.g. ``-vv``.
+``--profile``
+  Output profiling information.
 
+Input
+-----
+``PATH ...``
+  The path to the folder containing the repositories to be analysed. Multiple
+  paths can be specified and all paths are searched for repositories.
 
-Positional arguments
---------------------
+  IF ``PATH`` is a repository, that repository is analyzed.
 
-Positional arguments are either for the GUI or the CLI:
-
-* GUI: ``gui``
-* CLI: ``repo`` ``folder`` ``folders`` ``urls`` ``settings``
-
-For the CLI, the output files generated depend on the output formats specified
-in the ``-F`` or ``--format`` option. By default, output is generated in the
-files ``gitinspect.ext``, where ``ext`` is defined by the selected :ref:`output
-formats <formats>`.
-
-gui
-^^^
-
-``gui``
-  Start the GUI.
-
-repo
-^^^^
-``repo``
-  ``[-h --help] [-f --fix {pre,post,none}] [-o --output FILEBASE] REPOPATH``
-
-  Analyze the repository in ``REPOPATH``. Functionality identical to GUI.
-
-``-f {pre,post,none}`` ``--fix {pre,post,none}``
-
-  * ``-f pre`` output file name is ``REPONAME_FILEBASE``.
-  * ``-f post`` output file name is ``FILEBASE_REPONAME``.
-  * ``-f none`` output file name is ``FILEBASE``.
-
-``-o FILEBASE`` ``--output FILEBASE``
-  The output filename, without extension and without parents is ``FILEBASE``.
-  Default: ``gitinspect``.
-
-folder
-^^^^^^
-``folder``
-  ``[-h --help] [-o --output FILEBASE] [-d --depth N] [-m --multiple-output-files] PATH``
-
-  Analyze all repositories found in input folder ``PATH``. Functionality
-  identical to GUI.
-
-``-o FILEBASE`` ``--output FILEBASE``
-  The output filename, without extension and without parents is ``FILEBASE``.
-  Default: ``gitinspect``.
+  If ``PATH`` is a folder, but not a repository, all folder and subfolders up to
+  the value of the ``--depth``  option are searched for repositories and the
+  repositories found are analysed. The output file for each repository is placed
+  in the parent directory of the repository.
 
 ``-d N`` ``--depth N``
   Integer value bigger or equal to zero, that represents the number of levels of
@@ -87,65 +69,33 @@ folder
   * ``-d 1``: only the input folder is searched for repository folders for
     analysis.
 
-``--multiple-output-files``
-  Splits the output into separate output files, one for each repository.
+Output
+------
+For the CLI, the output files generated depend on the output formats specified
+in the ``-F`` or ``--format`` option. By default, output is generated in the
+file ``gitinspect.ext``, where ``ext`` is defined by the selected :ref:`output
+formats <formats>`.
 
-folders
-^^^^^^^
-``folders``
-  ``[-h --help] [-o --output PATH] [-d --depth N] [-m --multiple-output-files]
-  PATHS``
+``-o FILEBASE`` ``--output FILEBASE``
+  The output filename, without extension and without parents is ``FILEBASE``.
+  Default: ``gitinspect``.
 
-  Analyze all repositories found in the given list of paths (``PATHS``) to input
-  folders. Command unique for CLI.
+``--fix {pre,post,none}``
 
-``-o PATH`` ``--output PATH``
-  Generate output in file paths ``PATH.ext``, where ``ext`` takes on the
-  values belonging to the selected output formats.
-
-  Default: generate output in the current directory in files ``gitinspect.ext``.
-
-``-d N`` ``--depth N``
-  Positive integer value that represents the number of levels of subfolders
-  that is searched for repositories, *default* ``5``. For depth ``1``, only
-  the repository in ``PATH``, if present, is analysed.
-
-``--multiple-ouput-files``
-  Splits the output into separate output files, one for each repository.
-
-urls
-^^^^
-``urls``
-  ``[-h --help] [-o --output PATH] URLS``
-  Download and analyze repositories specified via URLS.
-
-``-o PATH`` ``--output PATH``
-  Output file path without extension is ``PATH``. Default: generate output in
-  the file named ``gitinspect`` in the current directory.
-
-settings
-^^^^^^^^
-``settings``
-  ``[-h --help] {reset | show-location | change-location NEWPATH}``
-
-  Reset global GUI settings or show/change settings file location.
+  * ``-f pre`` output file name is ``REPONAME-FILEBASE``.
+  * ``-f post`` output file name is ``FILEBASE-REPONAME``.
+  * ``-f none`` output file name is ``FILEBASE``.
 
 .. _formats:
 
-Output formats
---------------
-.. ``checkout_tag TAG_ID``
-..   Checkout tag ``TAG_ID`` for all repositories found in ``input_folder``.
-
-For more information about the various output formats, see :doc:`output-formats`.
-
 ``-F FORMAT`` ``--format FORMAT``
-  Defines in which ``FORMAT`` output is generated: ``text`` *default* ``html``
-  ``htmlembedded`` ``json`` ``xml`` ``excel`` ``csv``. Format options can be
-  specified multiple times, to generated multiple output formats simultaneously.
+  Defines in which ``FORMAT`` output is generated: ``text`` *default* or
+  ``excel``. Format options can be specified multiple times, to generated
+  multiple output formats simultaneously. For more information about the various
+  output formats, see :doc:`output-formats`.
 
-Output formats excel and csv
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Output format excel
+^^^^^^^^^^^^^^^^^^^
 ``--scaled-percentages --no-scaled-percentages``
   For each column with output in percentages, e.g. ``Insertions %``, add a
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
@@ -153,30 +103,31 @@ Output formats excel and csv
 
 ``-f N`` ``--show-files N``
   Generate output for the first ``N`` files with the highest number of
-  insertions for each repository.
+  insertions for each repository. For excel, this results in three worksheets:
+  :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
+  worksheet :guilabel:`Authors` combines the results of all files, the worksheet
+  :guilabel:`Authors-Files` shows results per author and per file, and the
+  worksheet :guilabel:`Files` combines the results of all authors.
 
-``--merged-repositories`` ``--no-merged-repositories``
-  Merge commit information from found repositories as if coming from a single
-  repository.
+  In addition, for each of the N files, a blame worksheet is generated, unless
+  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets`.
 
-Output formats text ... html
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Note that for these output formats, output from multiple repositories is always
-merged. This behavior is equivalent to the ``--merged-repositories`` option for
-the output formats excel and csv.
+``-f PATTERN``, ``--show-files PATTERN``
+  Show only those files matching the specified pattern. If a pattern is
+  specified, it takes priority over the value of ``N`` in option
+  ``--show-n-files``, which is then ignored.
 
-``-m``  ``--metrics`` ``--no-metrics``
-  Include checks for certain metrics during the analysis of commits.
+  If options ``--show-files`` and ``--show-files-pattern`` are both missing, a
+  deault value of ``--show-n-files 5`` is used.
 
-``-t`` ``--timeline`` ``--no-timeline``
-  Show commit timeline, including author names.
+Output formats text
+^^^^^^^^^^^^^^^^^^^
+For this output format, output from multiple repositories is always merged as if
+coming from a single repository.
 
 ``-l`` ``--extensions-list`` ``--no-extensions-list``
-  Show a list of file extensions, used in the current branch of the
-  repository, in the output.
-
-``-r``  ``--responsibilities`` ``--no-responsibilities``
-  Show which files the different authors seem most responsible for.
+  Output a list of file extensions used in the current branch of the
+  repository.
 
 
 General configuration
@@ -184,7 +135,7 @@ General configuration
 ``-e EXTENSIONS`` ``--extensions EXTENSIONS``
   A comma separated list of file extensions to include when computing
   statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
-  hpp, py, glsl, rb, js, sql``.
+  hpp, py, glsl, rb, js, sql, cif, tooldef``.
 
   For more information, see the :ref:`supported languages table
   <languages_table>` below.
@@ -193,16 +144,11 @@ General configuration
   Specifying two consecutive ``**`` asterisk characters includes all files
   regardless of extension.
 
-``-H`` ``--hard`` ``no-hard``
+``--track-cp-mv N``
   .. include:: opt-hard.inc
 
-``-L`` ``--localized-output`` ``--no-localized-output``
-  By default, the generated statistics are in English. This flag localizes the
-  generated output to the selected system language if a translation is
-  available.
-
-``-w`` ``--weeks`` ``--no-weeks``
-  Show all statistical information in weeks instead of in months.
+``--months`` ``--no-months``
+  Show all statistical information in months instead of in weeks.
 
 ``--since DATE``
   Only show statistics for commits more recent than a specific date. The
@@ -261,120 +207,139 @@ can also be used as exclusion ``PATTERN``, e.g:
 ``--ex-email ".com$"``
   Filter out statistics from all email addresses ending with ``.com``.
 
+Saved GUI settings
+------------------
+``--settings-reset``
+  Reset the saved GUI settings to their default values.
+
+``--settings-show-location``
+  Print the location of the GUI settings file.
+
+``--settings-change-location PATH``
+  Change the location of the GUI settings file to ``PATH``.
+
+Debugging
+---------
+``-v``, ``--verbose``
+  More verbose output for each ``v``, e.g. ``-vv``.
+
+
 .. _languages_table:
 
 Supported languages
 -------------------
 
-.. list-table::
+To be defined.
 
-  * - Language
-    - Comments
-    - Metrics
-    - File extensions
-    - Included in analysis by default
-  * - CIF 3
-    - Yes
-    - No
-    - cif
-    -  Yes
-  * - ToolDef
-    -  No
-    -  No
-    -  tooldef
-    -  Yes
-  * - ADA
-    - Yes
-    - No
-    - ada, adb, ads
-    - No
-  * - C
-    - Yes
-    - Yes
-    - c, h
-    - Yes
-  * - C++
-    - Yes
-    - Yes
-    - cc, h, hh, hpp
-    - Yes
-  * - C#
-    - Yes
-    - Yes
-    - cs
-    - No
-  * - GNU Gettext
-    - Yes
-    - No
-    - po, pot
-    - No
-  * - Haskell
-    - Yes
-    - No
-    - hs
-    - No
-  * - HTML
-    - Yes
-    - No
-    - html
-    - No
-  * - Java
-    - Yes
-    - Yes
-    - java
-    - Yes
-  * - JavaScript
-    - Yes
-    - Yes
-    - js
-    - Yes
-  * - LaTeX
-    - Yes
-    - No
-    - tex
-    - No
-  * - OCaml
-    - Yes
-    - No
-    - ml, mli
-    - No
-  * - OpenGL Shading Language
-    - Yes
-    - No
-    - glsl
-    - Yes
-  * - Perl
-    - Yes
-    - No
-    - pl
-    - No
-  * - PHP
-    - Yes
-    - No
-    - php
-    - No
-  * - Python
-    - Yes
-    - Yes
-    - py
-    - Yes
-  * - Ruby
-    - Yes
-    - No
-    - rb
-    - Yes
-  * - Scala
-    - Yes
-    - No
-    - scala
-    - No
-  * - SQL
-    - Yes
-    - No
-    - sql
-    - Yes
-  * - XML
-    - Yes
-    - No
-    - xml, jspx
-    - No
+.. .. list-table::
+
+..   * - Language
+..     - Comments
+..     - Metrics
+..     - File extensions
+..     - Included in analysis by default
+..   * - CIF
+..     - Yes
+..     - No
+..     - cif
+..     -  Yes
+..   * - ToolDef
+..     -  No
+..     -  No
+..     -  tooldef
+..     -  Yes
+..   * - ADA
+..     - Yes
+..     - No
+..     - ada, adb, ads
+..     - No
+..   * - C
+..     - Yes
+..     - Yes
+..     - c, h
+..     - Yes
+..   * - C++
+..     - Yes
+..     - Yes
+..     - cc, h, hh, hpp
+..     - Yes
+..   * - C#
+..     - Yes
+..     - Yes
+..     - cs
+..     - No
+..   * - GNU Gettext
+..     - Yes
+..     - No
+..     - po, pot
+..     - No
+..   * - Haskell
+..     - Yes
+..     - No
+..     - hs
+..     - No
+..   * - HTML
+..     - Yes
+..     - No
+..     - html
+..     - No
+..   * - Java
+..     - Yes
+..     - Yes
+..     - java
+..     - Yes
+..   * - JavaScript
+..     - Yes
+..     - Yes
+..     - js
+..     - Yes
+..   * - LaTeX
+..     - Yes
+..     - No
+..     - tex
+..     - No
+..   * - OCaml
+..     - Yes
+..     - No
+..     - ml, mli
+..     - No
+..   * - OpenGL Shading Language
+..     - Yes
+..     - No
+..     - glsl
+..     - Yes
+..   * - Perl
+..     - Yes
+..     - No
+..     - pl
+..     - No
+..   * - PHP
+..     - Yes
+..     - No
+..     - php
+..     - No
+..   * - Python
+..     - Yes
+..     - Yes
+..     - py
+..     - Yes
+..   * - Ruby
+..     - Yes
+..     - No
+..     - rb
+..     - Yes
+..   * - Scala
+..     - Yes
+..     - No
+..     - scala
+..     - No
+..   * - SQL
+..     - Yes
+..     - No
+..     - sql
+..     - Yes
+..   * - XML
+..     - Yes
+..     - No
+..     - xml, jspx
+..     - No

@@ -131,11 +131,8 @@ Search depth
 
 Output format excel
 -------------------
-
-Output format
-^^^^^^^^^^^^^
-  Selects whether output for the :guilabel:`excel` format is generated. See
-  :doc:`output-formats`.
+Selects whether output for the :guilabel:`excel` format is generated. See
+:doc:`output-formats`.
 
 Options
 ^^^^^^^
@@ -165,7 +162,7 @@ Show N files
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets`.
 
 Show files
-  Show only those files matching the specified pattern. It a pattern is
+  Show only those files matching the specified pattern. If a pattern is
   specified, it takes priority over the value of N in option :guilabel:`Show N
   files`, which is then ignored.
 
@@ -182,17 +179,13 @@ which author.
 
 Output format text
 ------------------
-For this output format, output from multiple repositories is always merged as if
-coming from a single repository.
-
-Format
-  Selects the formats for which  output is generated: :guilabel:`text`
-  *default*, :guilabel:`html`, :guilabel:`htmlembedded`, :guilabel:`json`,
-  :guilabel:`xml`. See :doc:`output-formats`.
-
+Selects whether output for the :guilabel:`text` format is generated. See
+:doc:`output-formats`. For this output format, output from multiple repositories
+is always merged as if coming from a single repository.
 
 Extensions list
-  List all the file extensions available in the current branch of the repository.
+  Output a list of file extensions used in the current branch of the
+  repository.
 
 
 .. _general_config:
@@ -219,7 +212,7 @@ Until
 Extensions
     A comma separated list of file extensions to include when computing
     statistics. The default extensions used are: java, c, cc, cpp, h, hh,
-    hpp, py, glsl, rb, js, sql.
+    hpp, py, glsl, rb, js, sql, cif, tooldef.
 
     Specifying a single ``*`` asterisk character includes files with no extension.
     Specifying two consecutive ``**`` asterisk characters includes all files
