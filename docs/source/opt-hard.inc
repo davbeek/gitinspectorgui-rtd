@@ -27,9 +27,11 @@ command:
 A file is considered to be a renamed or copied version of another file if they
 share 50% or more lines.
 
-Note that this option does not affect the value of insertions and deletions in
-the first two Excel worksheets :guilabel:`Authors`, :guilabel:`Authors-Files`
-and :guilabel:`Files`, even though the ``git log`` command has similar ``-M``
-and ``-C`` options. This means that where the blame worksheets may show the same
-author for a copied or moved set of lines, the insertions and deletions of those
-lines in the first three worksheets may be attributed to different authors.
+Note that the ``--track-cp-mv`` option does not affect the value of insertions
+and deletions in the first three Excel worksheets :guilabel:`Authors`,
+:guilabel:`Authors-Files` and :guilabel:`Files`.
+
+The problem is that even though ``git log``, which is used to calculate
+insertions and deletions, can detect moved or copied lines and show them in
+different colors, it cannot use this information for the calculation of
+insertions and deletions.
