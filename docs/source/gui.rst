@@ -87,7 +87,6 @@ Search depth
   Ignored in this case.
 
 
-
 Input folder path is a folder but not a repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. figure:: _files/gui-folder-select.png
@@ -175,7 +174,6 @@ Excel blame worksheets
 A blame worksheet shows the contents of each file and indicates for each line
 in the file in which commit the line was last changed, at which date and by
 which author.
-
 
 Output format text
 ------------------

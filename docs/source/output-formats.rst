@@ -22,14 +22,17 @@ Available output formats
 	This is the default output format of the CLI.
 
 
-Excel columns
--------------
+Output columns
+--------------
 
 Default columns
 ^^^^^^^^^^^^^^^
 
+We discuss the columns that are present in the output by default in the text
+output and in the Authors sheet of the Excel output.
+
 :guilabel:`Repository`
-  Name of the repisotry folder
+  Name of the repository folder
 
 :guilabel:`Author`
   Author name(s). If the same author uses multiple names, they are
@@ -55,11 +58,11 @@ Default columns
   Total number of deletions in in :guilabel:`Repository` done by
   :guilabel:`Author`.
 
-:guilabel:`LOC`
-  Total number of Lines Of Code that the :guilabel:`Author` `owns`. An
-  :guilabel:`Author` is said to `own` a line of a file, when that
+:guilabel:`Lines`
+  Total number of Lines of code that the :guilabel:`Author` owns.
+  An :guilabel:`Author` is said to own a line of a file, when that
   :guilabel:`Author` is the one who made the last change to that line. The
-  `owner` of each line in a file is shown by `Git Blame
+  owner of each line in a file is shown by `Git Blame
   <https://git-scm.com/docs/git-blame>`_.
 
 :guilabel:`Insertions %`
@@ -74,66 +77,58 @@ Default columns
   The sum of :guilabel:`Insertions %` of the :guilabel:`NrAuthors` authors
   equals 100%.
 
-:guilabel:`Changes %`
-  Percentage of changes done by this author.
 
-  :guilabel:`Changes` = :guilabel:`Insertions` + :guilabel:`Deletions`.
+:guilabel:`Lines %`
+  Percentage of lines of code owned by this author.
 
-  :guilabel:`Changes %` = 100 :guilabel:`Changes` / :guilabel:`SumChanges`
+  :guilabel:`Lines %` = 100 :guilabel:`Lines` / :guilabel:`SumLines`
 
-  Where :guilabel:`SumChanges` is defined similar to :guilabel:`SumInsertions`.
-
-:guilabel:`LOC %`
-  Percentage of lines of code `owned` by this author.
-
-  :guilabel:`LOC %` = 100 :guilabel:`LOC` / :guilabel:`SumLOC`
-
-  Where :guilabel:`SumLOC` is the sum the values of :guilabel:`LOC` for each of
+  Where :guilabel:`SumLines` is the sum the values of :guilabel:`Lines` for each of
   the :guilabel:`NrAuthors` authors of the repository.
 
 
 :guilabel:`Stability %`
-  :guilabel:`Stability %` = 100 :guilabel:`LOC` / :guilabel:`Insertions`.
+  :guilabel:`Stability %` = 100 :guilabel:`Lines` / :guilabel:`Insertions`.
 
   For example:
 
-  1. When :guilabel:`Insertions` = :guilabel:`LOC`, we get maximum stability of
+  1. When :guilabel:`Insertions` = :guilabel:`Lines`, we get maximum stability of
      100%.
   2. When on average each line is changed once, then
 
-    :guilabel:`Insertions` = 2 :guilabel:`LOC`
+    :guilabel:`Insertions` = 2 :guilabel:`Lines`
 
     since for the initial version of the file :guilabel:`Insertions` =
-    :guilabel:`LOC`. Then
+    :guilabel:`Lines`. Then
 
-    :guilabel:`Stability` = 100 :guilabel:`LOC` / 2 :guilabel:`LOC` = 50%.
-
+    :guilabel:`Stability` = 100 :guilabel:`Lines` / 2 :guilabel:`Lines` = 50%.
 
 :guilabel:`Age`
-  The average of the ages of the lines `owned` by :guilabel:`Author`.
+  The average of the ages of the lines inserted by :guilabel:`Author`.
   :guilabel:`Age` is expressed in either weeks or months, depending on the value
   of option :guilabel:`Weeks` in :ref:`general_config`.
 
-1. The :guilabel:`Age` of a line is the difference between the current time and
-   the time of the commit of the last change of that line.
-2. The :guilabel:`Age` of a file, with :guilabel:`n` lines, is the average of
-   the ages :guilabel:`Age_i` of each line :guilabel:`i`:
+1. The :guilabel:`Age` of an inserted line is the difference between the current time and
+   the time of the commit of the insertion.
+2. The :guilabel:`Age` of a file is the average of
+   the ages :guilabel:`Age_i` of each line inserted in the file over the
+   lifetime of the file.
 
-   (:guilabel:`Age_1` + ... + :guilabel:`Age_n`)/:guilabel:`n`.
-
-3. The :guilabel:`Age` of an author is the average of all lines `owned` by that
-   author, so the average of the ages of all lines last changed by that author.
+3. The :guilabel:`Age` of an author is the average of the ages of all lines
+   inserted by that author.
 4. In general, the :guilabel:`Age` of a combination of authors or files, is the
-   average of the ages of the lines belonging to that combination of authors or
-   files. The number of lines belonging to a specific combination of files or
-   authors is the :guilabel:`LOC` value, so to calculate the average of the
-   ages of each line, we have the formula:
+   average of the ages of each inserted line by that combination of authors
+   or files:
 
    :guilabel:`Age` = (:guilabel:`Age_1` + ... +
-   :guilabel:`Age_LOC`)/:guilabel:`LOC`.
+   :guilabel:`Age_n`)/:guilabel:`n`
+
+   where :guilabel:`n` is the total of all lines inserted by the combination of
+   authors and files over the complete lifetime of the files, inclusing insertions in previous versions of the file
+   in the case of file renames.
 
 :guilabel:`Comments %`
-  Percentage of comment lines in the :guilabel:`LOC` lines `owned` by author. A
+  Percentage of comment lines in the :guilabel:`Lines` owned by an author. A
   comment line is either a single or multi comment line. Only full line comments
   are considered comment lines. For instance, for Python, the following line is
   comment line:
@@ -150,9 +145,7 @@ Default columns
 
   If we define :guilabel:`Comments` as the number of comment lines, then:
 
-  :guilabel:`Comments %` = :guilabel:`Comments` / :guilabel:`LOC`
-
-
+  :guilabel:`Comments %` = 100 * :guilabel:`Comments` / :guilabel:`Lines`
 
 
 Additional columns
@@ -167,8 +160,5 @@ number of authors. This is achieved by multiplying the :guilabel:`%` column by
 :guilabel:`Scaled insertions %`
   Scaled percentage of :guilabel:`Insertions %`.
 
-:guilabel:`Scaled changes %`
-  Scaled percentage of :guilabel:`Changes %`.
-
-:guilabel:`Scaled LOC %`
-  Scaled percentage of :guilabel:`LOC %`.
+:guilabel:`Scaled Lines %`
+  Scaled percentage of :guilabel:`Lines %`.
