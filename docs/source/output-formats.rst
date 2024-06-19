@@ -31,8 +31,9 @@ Default columns
 We discuss the columns that are present in the output by default in the text
 output and in the Authors sheet of the Excel output.
 
-:guilabel:`Repository`
-  Name of the repository folder
+.. :guilabel:`Repository`
+..   Name of the repository folder. Present only when multiple repositories are
+..   analysed simultaneously and results are combined in one output file.
 
 :guilabel:`Author`
   Author name(s). If the same author uses multiple names, they are
@@ -47,22 +48,24 @@ output and in the Authors sheet of the Excel output.
   Email address(es) of :guilabel:`Author`. If the same author uses multiple
   email addresses, they are separated by the ``|`` symbol.
 
-:guilabel:`Commits`
-  Number of commits in :guilabel:`Repository` done by :guilabel:`Author`.
-
-:guilabel:`Insertions`
-  Total number of insertions in in :guilabel:`Repository` done by
-  :guilabel:`Author`.
-
-:guilabel:`Deletions`
-  Total number of deletions in in :guilabel:`Repository` done by
-  :guilabel:`Author`.
-
 :guilabel:`Lines`
   Total number of Lines of the :guilabel:`Author`. The :guilabel:`Author` of a
   line in a file is the one who made the last change to that line. The author of
   each line in a file is shown by `Git Blame
   <https://git-scm.com/docs/git-blame>`_.
+
+:guilabel:`Insertions`
+  Total number of insertions in in :guilabel:`Repository` done by
+  :guilabel:`Author`.
+
+:guilabel:`Lines %`
+  Percentage of lines of code of this author. The author of a line
+  is the author who last changed the line.
+
+  :guilabel:`Lines %` = 100 :guilabel:`Lines` / :guilabel:`SumLines`
+
+  Where :guilabel:`SumLines` is the sum the values of :guilabel:`Lines` for each of
+  the :guilabel:`NrAuthors` authors of the repository.
 
 :guilabel:`Insertions %`
   Percentage of insertions done by this author.
@@ -75,17 +78,6 @@ output and in the Authors sheet of the Excel output.
 
   The sum of :guilabel:`Insertions %` of the :guilabel:`NrAuthors` authors
   equals 100%.
-
-
-:guilabel:`Lines %`
-  Percentage of lines of code of this author. The author of a line
-  is the author who last changed the line.
-
-  :guilabel:`Lines %` = 100 :guilabel:`Lines` / :guilabel:`SumLines`
-
-  Where :guilabel:`SumLines` is the sum the values of :guilabel:`Lines` for each of
-  the :guilabel:`NrAuthors` authors of the repository.
-
 
 :guilabel:`Stability %`
   :guilabel:`Stability %` = 100 :guilabel:`Lines` / :guilabel:`Insertions`.
@@ -102,6 +94,13 @@ output and in the Authors sheet of the Excel output.
     :guilabel:`Lines`. Then
 
     :guilabel:`Stability` = 100 :guilabel:`Lines` / 2 :guilabel:`Lines` = 50%.
+
+:guilabel:`Commits`
+  Number of commits in :guilabel:`Repository` done by :guilabel:`Author`.
+
+:guilabel:`Deletions`
+  Total number of deletions in in :guilabel:`Repository` done by
+  :guilabel:`Author`.
 
 :guilabel:`Age`
   The average of the ages of the lines inserted by :guilabel:`Author`.
@@ -157,8 +156,8 @@ column for the authors in the repository is always 100, independently of the
 number of authors. This is achieved by multiplying the :guilabel:`%` column by
 :guilabel:`NrAuthors` in each repository to get the :guilabel:`Scaled %` column.
 
-:guilabel:`Scaled insertions %`
-  Scaled percentage of :guilabel:`Insertions %`.
-
 :guilabel:`Scaled Lines %`
   Scaled percentage of :guilabel:`Lines %`.
+
+:guilabel:`Scaled insertions %`
+  Scaled percentage of :guilabel:`Insertions %`.

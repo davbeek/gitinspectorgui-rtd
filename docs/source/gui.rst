@@ -84,7 +84,7 @@ Output prepostfix
   its parent folder.
 
 Search depth
-  Ignored in this case.
+  Disabled and ignored in this case.
 
 
 Input folder path is a folder but not a repository
@@ -151,26 +151,25 @@ File selection
 ^^^^^^^^^^^^^^
 Show N files
   Generate output for the first `N` files with the highest number of insertions
-  for each repository. For excel, this results in three worksheets:
+  for each repository. For excel, this results in four worksheets:
   :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
   worksheet :guilabel:`Authors` combines the results of all files, the worksheet
-  :guilabel:`Authors-Files` shows results per author and per file, and the
-  worksheet :guilabel:`Files` combines the results of all authors.
+  :guilabel:`Authors-Files` and :guilabel:`Files-Authors` show results per
+  author and per file, and the worksheet :guilabel:`Files` combines the results
+  of all authors.
 
   In addition, for each of the N files, a blame worksheet is generated, unless
-  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets`.
+  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
 
 Show files
   Show only those files matching the specified pattern. If a pattern is
   specified, it takes priority over the value of N in option :guilabel:`Show N
   files`, which is then ignored.
 
-
-.. _blame-sheets:
+.. _blame-sheets-gui:
 
 Excel blame worksheets
 ^^^^^^^^^^^^^^^^^^^^^^
-
 A blame worksheet shows the contents of each file and indicates for each line
 in the file in which commit the line was last changed, at which date and by
 which author.
@@ -224,7 +223,6 @@ Comments
 
 Copy move
   .. include:: opt-hard.inc
-
 
 Months
 	Show all statistical information in weeks instead of in months.

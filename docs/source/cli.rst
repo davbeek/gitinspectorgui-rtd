@@ -5,18 +5,22 @@ Synopsis
 
 .. code:: text
 
-    gitinspectorgui [-h] [--gui] [--gui-from-cli] [-V] [-v] [--profile] [-d DEPTH]
-                       [-o FILEBASE] [--fix {pre,post,none}] [-F {text,excel}]
-                       [--scaled-percentages | --no-scaled-percentages]
-                       [--skip-blame | --no-skip-blame]
-                       [--blame-folder-path BLAME_FOLDER_PATH] [-n N | -f PATTERN]
-                       [-l | --extensions-list | --no-extensions-list] [-e EXTENSIONS]
-                       [--whitespace-diff | --no-whitespace-diff] [--track-cp-mv N]
-                       [-M | --months | --no-months] [--since SINCE] [--until UNTIL]
-                       [--ex-file PATTERN] [--ex-author PATTERN] [--ex-email PATTERN]
-                       [--ex-revision PATTERN] [--ex-message PATTERN]
-                       [--settings-show-location | --settings-reset | --settings-change-location PATH]
-                       [PATH ...]
+  gitinspectorgui
+    [-h] [--gui] [--gui-from-cli] [-V] [--profile] [-d DEPTH]
+    [-o FILEBASE] [--fix {pre,post,none}] [-F {text,excel}]
+    [--scaled-percentages | --no-scaled-percentages]
+    [--skip-blame | --no-skip-blame] [--subfolder SUBFOLDER]
+    [-n N | -f PATTERN]
+    [-l | --extensions-list | --no-extensions-list] [-e EXTENSIONS]
+    [-M | --months | --no-months] [--since SINCE] [--until UNTIL]
+    [--deletions | --no-deletions] [--whitespace | --no-whitespace]
+    [--empty-lines | --no-empty-lines] [--comments | --no-comments]
+    [--copy-move N] [--ex-file PATTERN] [--ex-author PATTERN]
+    [--ex-email PATTERN] [--ex-revision PATTERN]
+    [--ex-message PATTERN]
+    [--settings-show-location | --settings-reset | --settings-change-location PATH]
+    [-v]
+    [PATH ...]
 
 Overview
 --------
@@ -95,22 +99,34 @@ formats <formats>`.
   output formats, see :doc:`output-formats`.
 
 Output format excel
-^^^^^^^^^^^^^^^^^^^
+-------------------
+Options
+^^^^^^^
 ``--scaled-percentages --no-scaled-percentages``
   For each column with output in percentages, e.g. ``Insertions %``, add a
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
   multiplied by the number of authors in the repository.
 
+``--skip-blame``
+  Do not output Excel blame sheets, as explained below.
+
+``--subfolder``
+  Restrict analysis of the files of the repository to the files in this folder
+  and its subfolders.
+
+File selection
+^^^^^^^^^^^^^^
 ``-f N`` ``--show-files N``
   Generate output for the first ``N`` files with the highest number of
-  insertions for each repository. For excel, this results in three worksheets:
+  insertions for each repository. For excel, this results in four worksheets:
   :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
-  worksheet :guilabel:`Authors` combines the results of all files, the worksheet
-  :guilabel:`Authors-Files` shows results per author and per file, and the
-  worksheet :guilabel:`Files` combines the results of all authors.
+  worksheet :guilabel:`Authors` combines the results of all files, the
+  worksheets :guilabel:`Authors-Files` and :guilabel:`Files-Authors` show
+  results per author and per file, and the worksheet :guilabel:`Files` combines
+  the results of all authors.
 
   In addition, for each of the N files, a blame worksheet is generated, unless
-  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets`.
+  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
 
 ``-f PATTERN``, ``--show-files PATTERN``
   Show only those files matching the specified pattern. If a pattern is
@@ -120,8 +136,16 @@ Output format excel
   If options ``--show-files`` and ``--show-files-pattern`` are both missing, a
   deault value of ``--show-n-files 5`` is used.
 
-Output formats text
-^^^^^^^^^^^^^^^^^^^
+.. _blame-sheets-cli:
+
+Excel blame worksheets
+^^^^^^^^^^^^^^^^^^^^^^
+A blame worksheet shows the contents of each file and indicates for each line
+in the file in which commit the line was last changed, at which date and by
+which author.
+
+Output format text
+------------------
 For this output format, output from multiple repositories is always merged as if
 coming from a single repository.
 
@@ -132,19 +156,39 @@ coming from a single repository.
 
 General configuration
 ---------------------
-``-e EXTENSIONS`` ``--extensions EXTENSIONS``
-  A comma separated list of file extensions to include when computing
-  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
-  hpp, py, glsl, rb, js, sql, cif, tooldef``.
+``--deletions``
+  Include a column for Deletions in the output. This does not affect the blame
+  output, because deleted lines cannot be shown. The default is not to include
+  deletions.
 
-  For more information, see the :ref:`supported languages table
-  <languages_table>` below.
+``--whitespace``
+    Include whitespace changes in the statistics. This affects the statics and
+    the blame output. The default setting is to ignore whitespace changes.
 
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
+``--empty-lines``
+  Include empty lines in the blame calculations. This affects the color of the
+  empty lines in the blame sheets.
 
-``--track-cp-mv N``
+  The default is not to include them and show all empty lines in the blame
+  sheets as white.
+
+  When this setting is active, empty lines are shown in the color of their
+  author.
+
+``--comments``
+  Include whole line comments in the blame calculations. This affects the number
+  of lines of each author.
+
+  The default is not to include whole line comments, which means that such lines
+  are not attributed to any author and are shown in the blame sheets as white.
+  Whole line coments are not counted in the Lines column of the statistics
+  output, potentially causing the sum of the Lines column to be less than the
+  total number of lines in the file.
+
+  When this setting is active, whole line comments are shown in the color as of
+  their author and are counted in the Lines column of the statistics output.
+
+``--copy-move N``
   .. include:: opt-hard.inc
 
 ``--months`` ``--no-months``
@@ -159,6 +203,18 @@ General configuration
 ``--until DATE``
   Only show statistics for commits older than a specific date. See ``--since``
   for the format of ``DATE``.
+
+``-e EXTENSIONS`` ``--extensions EXTENSIONS``
+  A comma separated list of file extensions to include when computing
+  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
+  hpp, py, glsl, rb, js, sql, cif, tooldef``.
+
+  For more information, see the :ref:`supported languages table
+  <languages_table>` below.
+
+  Specifying a single ``*`` asterisk character includes files with no extension.
+  Specifying two consecutive ``**`` asterisk characters includes all files
+  regardless of extension.
 
 
 Exclusion patterns
