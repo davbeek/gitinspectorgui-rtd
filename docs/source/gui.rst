@@ -43,8 +43,8 @@ Percentage box
 
   Adjusting the percentage box immediately updates the height of the input and
   console parts of the GUI. The height and width of the GUI can be changed by
-  dragging the edges of the the GUI. The height of the input and console parts are
-  updated when the height of the GUI has become stable after dragging.
+  dragging the edges of the the GUI. The height of the input and console parts
+  are updated when the height of the GUI has become stable after dragging.
 
 
 IO configuration
@@ -190,14 +190,44 @@ Extensions list
 
 General configuration
 ---------------------
+Deletions
+  Include a column for Deletions in the output. This does not affect the blame
+  output, because deleted lines cannot be shown. The default is not to include
+  deletions.
+
+Whitespace
+    Include whitespace changes in the statistics. This affects the statics and
+    the blame output. The default setting is to ignore whitespace changes.
+
+Empty lines
+  Include empty lines in the blame calculations. This affects the color of the
+  empty lines in the blame sheets.
+
+  The default is not to include them and show all empty lines in the blame
+  sheets as white.
+
+  When this setting is active, empty lines are shown in the color of their
+  author.
+
+Comments
+  Include whole line comments in the blame calculations. This affects the number
+  of lines of each author.
+
+  The default is not to include whole line comments, which means that such lines
+  are not attributed to any author and are shown in the blame sheets as white.
+  Whole line coments are not counted in the Lines column of the statistics
+  output, potentially causing the sum of the Lines column to be less than the
+  total number of lines in the file.
+
+  When this setting is active, whole line comments are shown in the color as of
+  their author and are counted in the Lines column of the statistics output.
+
+Copy move
+  .. include:: opt-hard.inc
+
+
 Months
 	Show all statistical information in weeks instead of in months.
-
-Whitespace diff
-    Include whitespace changes in the statistics.
-
-Track copy move
-  .. include:: opt-hard.inc
 
 Since
 	Enter a date in the text box in the format 31/12/2022, or select one using the

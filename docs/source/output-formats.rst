@@ -59,10 +59,9 @@ output and in the Authors sheet of the Excel output.
   :guilabel:`Author`.
 
 :guilabel:`Lines`
-  Total number of Lines of code that the :guilabel:`Author` owns.
-  An :guilabel:`Author` is said to own a line of a file, when that
-  :guilabel:`Author` is the one who made the last change to that line. The
-  owner of each line in a file is shown by `Git Blame
+  Total number of Lines of the :guilabel:`Author`. The :guilabel:`Author` of a
+  line in a file is the one who made the last change to that line. The author of
+  each line in a file is shown by `Git Blame
   <https://git-scm.com/docs/git-blame>`_.
 
 :guilabel:`Insertions %`
@@ -79,7 +78,8 @@ output and in the Authors sheet of the Excel output.
 
 
 :guilabel:`Lines %`
-  Percentage of lines of code owned by this author.
+  Percentage of lines of code of this author. The author of a line
+  is the author who last changed the line.
 
   :guilabel:`Lines %` = 100 :guilabel:`Lines` / :guilabel:`SumLines`
 

@@ -21,16 +21,16 @@ Summary of main features
 GUI and CLI interface
   The GUI and CLI interface have the same options and functionality. The GUI
   interface is based on PySimpleGUI, which has recently changed from an open
-  source to a commercial license. The license is free for "hobby" use, but
-  requires a (free) registration. We are working on an additional GUI interface
-  based on `DearPyGUI <https://github.com/hoffstadt/DearPyGui>`_, which is open
-  source. For the time being, we use the latest open source release from
-  PySimpleGUI in the Windows and Mac GitinspectorGUI executables.
+  source to a commercial license. The PySimpleGUI license is free for "hobby"
+  use, but requires a (free) registration. We are working on an additional GUI
+  interface based on `DearPyGUI <https://github.com/hoffstadt/DearPyGui>`_,
+  which is open source. For the time being, we use the latest open source
+  release from PySimpleGUI in the Windows and Mac GitinspectorGUI executables.
 
 Excel backend
-  The Excel backend gives git statistics per author, per author subdivided by file, per
-  file subdiveded by author, and per file. It also provided detailed blame
-  information for each file.
+  The Excel backend gives git statistics per author, per author subdivided by
+  file, per file subdivided by author, and per file. It also provided detailed
+  blame information for each file.
 
 Available as executable app and PyPI package
   Executable apps with GUI interface are available for Mac and Windows. In

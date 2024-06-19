@@ -1,10 +1,10 @@
 This option, with values from 0 to 4, affects only the Excel blame worksheets:
 
 0. Do not detect moved or copied lines. This means that the author that moves or
-   copies a set of lines becomes the new owner of the lines.
-1. Detect moved or copied lines within a file. This means that the author that
-   was the owner of the original lines remains the owner of the lines,
-   independently of whoever copies or moves the lines.
+   copies a set of lines becomes the new author of the lines.
+1. Detect moved or copied lines within a file. This means that the (original)
+   author of the lines that are moved or copied remains the author of the
+   lines, independently of whoever copies or moves the lines.
 2. Follow moved or copied lines across files. Consider as potential origin of a
    set of lines only files that were changed in the same commit.
 3. Same as 2, but in addition, consider as potential origin of a set of lines
@@ -27,11 +27,12 @@ command:
 A file is considered to be a renamed or copied version of another file if they
 share 50% or more lines.
 
-Note that the ``--track-cp-mv`` option does not affect the value of insertions
-and deletions in the first three Excel worksheets :guilabel:`Authors`,
-:guilabel:`Authors-Files` and :guilabel:`Files`.
+The ``--copy-move`` option does not affect the value of insertions and deletions
+in the statistics worksheets :guilabel:`Authors`,
+:guilabel:`Authors-Files`, :guilabel:`Files-Authors` and :guilabel:`Files`.
 
-The problem is that even though ``git log``, which is used to calculate
-insertions and deletions, can detect moved or copied lines and show them in
-different colors, it cannot use this information for the calculation of
-insertions and deletions.
+The problem is that even tough ``git log --follow``, which is used by
+gitinspectorgui to calculate insertions and deletions, does detect file
+rename and copy operations, it does not detect moved or copied lines. Insertions
+and deletions are always attributed to the author who does the change, even if
+the lines are moved or copied from another file.
