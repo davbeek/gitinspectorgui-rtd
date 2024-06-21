@@ -48,16 +48,6 @@ output and in the Authors sheet of the Excel output.
   Email address(es) of :guilabel:`Author`. If the same author uses multiple
   email addresses, they are separated by the ``|`` symbol.
 
-:guilabel:`Lines`
-  Total number of Lines of the :guilabel:`Author`. The :guilabel:`Author` of a
-  line in a file is the one who made the last change to that line. The author of
-  each line in a file is shown by `Git Blame
-  <https://git-scm.com/docs/git-blame>`_.
-
-:guilabel:`Insertions`
-  Total number of insertions in in :guilabel:`Repository` done by
-  :guilabel:`Author`.
-
 :guilabel:`Lines %`
   Percentage of lines of code of this author. The author of a line
   is the author who last changed the line.
@@ -78,6 +68,16 @@ output and in the Authors sheet of the Excel output.
 
   The sum of :guilabel:`Insertions %` of the :guilabel:`NrAuthors` authors
   equals 100%.
+
+:guilabel:`Lines`
+  Total number of Lines of the :guilabel:`Author`. The :guilabel:`Author` of a
+  line in a file is the one who made the last change to that line. The author of
+  each line in a file is shown by `Git Blame
+  <https://git-scm.com/docs/git-blame>`_.
+
+:guilabel:`Insertions`
+  Total number of insertions in in :guilabel:`Repository` done by
+  :guilabel:`Author`.
 
 :guilabel:`Stability %`
   :guilabel:`Stability %` = 100 :guilabel:`Lines` / :guilabel:`Insertions`.

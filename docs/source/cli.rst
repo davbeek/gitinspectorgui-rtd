@@ -129,9 +129,10 @@ File selection
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
 
 ``-f PATTERN``, ``--show-files PATTERN``
-  Show only those files matching the specified pattern. If a pattern is
-  specified, it takes priority over the value of ``N`` in option
-  ``--show-n-files``, which is then ignored.
+  Show only files matching the specified pattern. If a pattern is specified, it
+  takes priority over the default value of ``N`` in option ``--show-n-files``.
+  The options ``--show-files`` and ``--show-files-pattern`` are mutually
+  exclusive.
 
   If options ``--show-files`` and ``--show-files-pattern`` are both missing, a
   deault value of ``--show-n-files 5`` is used.
@@ -224,44 +225,33 @@ emails, revisions or commit messages that should be excluded from the
 statistics. Each exclusion option can be repeated multiple times.
 
 ``--ex-file PATTERN``
-  Filter out all files (or paths) containing any of the comma separated strings
+  Filter out files (or paths) containing any of the comma separated strings
   in ``PATTERN``. E.g. ``--ex-file myfile,test`` excludes files ``myfile.py``
   and ``testing.c``.
 
 ``--ex-author PATTERN``
-  Filter out all author names containing any of the comma separated strings in
+  Filter out author names containing any of the comma separated strings in
   ``PATTERN``. E.g. ``--ex-author John`` excludes author ``John Smith``.
 
 ``--ex-email PATTERN``
-  Filter out all email addresses containing any of the comma separated strings
+  Filter out email addresses containing any of the comma separated strings
   in ``PATTERN``. E.g. ``--ex-email @gmail.com`` excludes all authors with a
   gmail address.
 
 ``--ex-revision PATTERN``
-  Filter out all revisions containing any of the comma separated hashes/SHAs
-  in ``PATTERN``. E.g. ``--ex-revision 8755fb33,12345678`` excludes revisions
-  that have ``8755fb33`` or ``12345678`` occuring somewhere in their commit
-  hash/RSA.
+  Filter out revisions containing any of the comma separated hashes/SHAs
+  in ``PATTERN``. When used with short hashes, the caret ``^`` is needed to make
+  sure that only hashes starting with the specified string are excluded. E.g.
+  ``--ex-revision ^8755fb33,^12345678`` excludes revisions
+  that start with ``8755fb33`` or ``12345678``.
 
 ``--ex-message PATTERN``
-  Filter out all commit messages containing any of the comma separated strings
+  Filter out commit messages containing any of the comma separated strings
   in ``PATTERN``. E.g. ``--ex-message bug,fix`` excludes commits from analysis
   with commit messages such as ``Bugfix`` or ``Fixing issue #15``.
 
-
-Apart from substring matching, as described above, regular expressions
-can also be used as exclusion ``PATTERN``, e.g:
-
-``--ex-author "^(?!(John Smith))"``
-  Only show statistics from author ``John Smith``, by excluding all authors that
-  are not John Smith. The backslash is needed to make sure that the CLI
-  interpreter (bash) does not interpret the caret ``^``.
-
-``--ex-author "^(?!([A-C]))"``
-  Only show statistics from authors starting with the letters ``A/B/C``.
-
-``--ex-email ".com$"``
-  Filter out statistics from all email addresses ending with ``.com``.
+Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
+``John`` matches `john` and `John`.
 
 Saved GUI settings
 ------------------
@@ -273,6 +263,24 @@ Saved GUI settings
 
 ``--settings-change-location PATH``
   Change the location of the GUI settings file to ``PATH``.
+
+Matching is based on `python regular expressions
+<https://docs.python.org/3/library/re.html>`_. Some additional examples of
+patterns for ``--ex-file``:
+
+``^init``
+  Filter out statistics from all files starting with ``init``, e.g. ``init.py``.
+
+``init$``
+  Filter out statistics from all files ending with ``init``, e.g. ``myinit``.
+
+``^init$``
+  Filter out statistics from the file ``init``.
+
+``init``
+  Filter out statistics from all files containing ``init``, e.g. ``myinit``,
+  ``init.py`` or ``myinit.py``.
+
 
 Debugging
 ---------

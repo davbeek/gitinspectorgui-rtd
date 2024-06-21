@@ -162,9 +162,12 @@ Show N files
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
 
 Show files
-  Show only those files matching the specified pattern. If a pattern is
+  Show only files matching the specified pattern. If a pattern is
   specified, it takes priority over the value of N in option :guilabel:`Show N
-  files`, which is then ignored.
+  files`, which is then ignored. When a pattern is present, the :guilabel:`Show
+  N files` option is disabled.
+
+  To show all files, use the pattern ``.*``.
 
 .. _blame-sheets-gui:
 
@@ -250,34 +253,47 @@ Extensions
 Exclusion patterns
 ------------------
 File/Path
-	Filter out all files (or paths) containing any of the comma separated strings
-	in the text box, e.g. myfile, test.
+  Filter out files (or paths) containing any of the comma separated strings
+  in the text box. E.g. ``myfile, test`` excludes files ``myfile.py`` and
+  ``testing.c``.
 
 Author
-  Filter out all author names containing any of the comma separated strings in
-  the text box, e.g. John, Mary.
+  Filter out author names containing any of the comma separated strings in
+  the text box. E.g. ``John`` excludes author ``John Smith``.
 
 Email
-  Filter out all email addresses containing any of the comma separated strings in
-  the text box, e.g. @gmail.com, john.
+  Filter out email addresses containing any of the comma separated strings
+  in the text box. E.g. ``@gmail.com`` excludes all authors with a gmail
+  address.
 
 Revision hash
-  Filter out all revisions containing any of the comma separated hashes/SHAs in
-  the text box, e.g. 8755fb33, 12345678.
+  Filter out revisions containing any of the comma separated hashes/SHAs in the
+  text box. When used with short hashes, the caret ``^`` is needed to make sure
+  that only hashes starting with the specified string are excluded. E.g.
+  ``^8755fb33,^12345678`` excludes revisions that start with ``8755fb33`` or
+  ``12345678``.
 
 Commit message
-  Filter out all commit messages containing any of the comma separated strings in
-  the text box, e.g. fix, bug.
+  Filter out commit messages containing any of the comma separated strings in
+  the text box. E.g. ``bug, fix`` excludes commits from analysis with commit
+  messages such as ``Bugfix`` or ``Fixing issue #15``.
 
-Apart from substring matching, as described above, regular expressions
-can also be used as exclusion pattern, e.g.:
+Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
+``John`` matches `john` and `John`.
 
-* Author text box is: ``^(?!(John Smith))``
-  Only show statistics from author ``John Smith``, by excluding all authors that
-  are not John Smith.
+Matching is based on `python regular expressions
+<https://docs.python.org/3/library/re.html>`_. Some additional examples of
+patterns in the File text box:
 
-* Author test box is: ``^(?!([A-C]))``
-  Only show statistics from authors starting with the letters ``A/B/C``.
+``^init``
+  Filter out statistics from all files starting with ``init``, e.g. ``init.py``.
 
-* Email text box is: ``.com$``
-  Filter out statistics from all email addresses ending with ``.com``.
+``init$``
+  Filter out statistics from all files ending with ``init``, e.g. ``myinit``.
+
+``^init$``
+  Filter out statistics from the file ``init``.
+
+``init``
+  Filter out statistics from all files containing ``init``, e.g. ``myinit``,
+  ``init.py`` or ``myinit.py``.
