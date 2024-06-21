@@ -137,6 +137,8 @@ File selection
   If options ``--show-files`` and ``--show-files-pattern`` are both missing, a
   deault value of ``--show-n-files 5`` is used.
 
+  To show all files, use the pattern ``.*``.
+
 .. _blame-sheets-cli:
 
 Excel blame worksheets
