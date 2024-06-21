@@ -279,7 +279,7 @@ Commit message
   messages such as ``Bugfix`` or ``Fixing issue #15``.
 
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
-``John`` matches `john` and `John`.
+``John`` matches ``john`` and ``John``.
 
 Matching is based on `python regular expressions
 <https://docs.python.org/3/library/re.html>`_. Some additional examples of

@@ -251,18 +251,7 @@ statistics. Each exclusion option can be repeated multiple times.
   with commit messages such as ``Bugfix`` or ``Fixing issue #15``.
 
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
-``John`` matches `john` and `John`.
-
-Saved GUI settings
-------------------
-``--settings-reset``
-  Reset the saved GUI settings to their default values.
-
-``--settings-show-location``
-  Print the location of the GUI settings file.
-
-``--settings-change-location PATH``
-  Change the location of the GUI settings file to ``PATH``.
+``John`` matches ``john`` and ``John``.
 
 Matching is based on `python regular expressions
 <https://docs.python.org/3/library/re.html>`_. Some additional examples of
@@ -280,6 +269,19 @@ patterns for ``--ex-file``:
 ``init``
   Filter out statistics from all files containing ``init``, e.g. ``myinit``,
   ``init.py`` or ``myinit.py``.
+
+
+Saved GUI settings
+------------------
+``--settings-reset``
+  Reset the saved GUI settings to their default values.
+
+``--settings-show-location``
+  Print the location of the GUI settings file.
+
+``--settings-change-location PATH``
+  Change the location of the GUI settings file to ``PATH``.
+
 
 
 Debugging
