@@ -6,20 +6,32 @@ information on this option.
 
 Available output formats
 ------------------------
-:guilabel:`excel`
-  Excel output is generated in the form of a table. Tables are suited for
-  sorting and filtering the analysis results. Each column header in the table
-  has a triangle button, which activates a dropdown menu for sorting and
-  filtering.
+:guilabel:`html` and :guilabel:`excel`
+  Output is generated in the form of tables and saved in a file per repository.
 
-  When multiple repositories are analysed simultaneously, excel presents the
-  data for each repository separately from the other repositories, using an
-  additional column for the repository name. This is unlike the text, html, json
-  and xml options, where the results for all repositories are merged.
+  :guilabel:`html` output is suitable for viewing in a web browser. For single
+  repositories and for ten or fewer multiple repositories, the output is shown
+  in a single window in the system web browser. For multiple repositories, each
+  repository is shown in a separate tab.
+
+  :guilabel:`Excel` tables are very similar to :guilabel:`html` tables, but have
+  more options. Each column header in an excel table has a triangle button which
+  activates a dropdown menu for sorting and filtering. For single repositories,
+  the output is opened in Excel for viewing.
+
+:guilabel:`auto`
+  The output for option :guilabel:`auto` is always :guilabel:`html`. The exact
+  form depends on the number of repositories analysed:
+
+  - For single repositories, the :guilabel:`auto` option  is the only case where
+    no file output is generated. The generated html output is shown in a web
+    viewer (default for CLI).
+  - For multiple repositories, the :guilabel:`auto` option generates
+    :guilabel:`html` output which is saved in a file and shown in the default
+    system browser (default for CLI).
 
 :guilabel:`text`
-	Plain text with some very simple ANSI formatting, suitable for console output.
-	This is the default output format of the CLI.
+	Plain text with some very simple ANSI formatting.
 
 
 Output columns
@@ -27,7 +39,6 @@ Output columns
 
 Default columns
 ^^^^^^^^^^^^^^^
-
 We discuss the columns that are present in the output by default in the text
 output and in the Authors sheet of the Excel output.
 

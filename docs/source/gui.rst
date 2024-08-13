@@ -11,47 +11,62 @@ Below, a picture of the complete GUI on macOS.
 
 The two main parts of the GUI are:
 
-1. The grey input part at the top where the options are defined. This part can
+1. The input part where the options are defined. This part can
    be scrolled up and down using the top scroll bar at the right.
-2. The white console output part, where progress output is presented to the user
+2. The console output part, where progress output is presented to the user
    while the repositories are analysed. The console has its own scrollbar.
 
 Top row buttons
 ---------------
-This row is unique to the GUI. It has the following buttons:
 
 Execute
-  Execute the analysis, using the parameters given in the GUI.
-
-Save
-  Save all settings specified in the GUI.
+  Start the analysis, using the parameters given in the GUI.
 
 Clear
-  Clear the console, which is the textual output box at the end of the GUI.
+  Clear the console, the textual output box at the bottom.
+
+Save
+  Save all settings specified in the GUI to the currently active settings file.
+
+Save As
+  Save the settings specified in the GUI to a file. This file becomes the
+  currently active settings file for the :guilabel:`Save` button.
+
+Load
+  Open a browse dialog to select a settings file to load. This file becomes the
+  currently active settings file.
+
+Reset
+  Reset all options to their default values and reset the location of the
+  currently active settings file to its default, operating system dependent,
+  location.
+
+About
+  Opens a dialog with information about the application.
 
 Help
-  Presents a link to this online documentation to the user.
+  Prints a few lines op help output in the console.
 
 Exit
-  Leave the GUI
+  Leave the GUI.
 
 Percentage box
-  The percentage box at the far right, has small up and down triangles to
-  increase or decrease the percentage. It defines the percentage of the total
-  GUI, that is taken up by the input part of the GUI. The console takes up the
-  remaining percentage.
+  The percentage box at the far right has small up and down triangles to
+  increase or decrease the maximum percentage of the height of the total GUI
+  window that is taken up by the input part. The console takes up the remaining
+  percentage.
 
-  Adjusting the percentage box immediately updates the height of the input and
-  console parts of the GUI. The height and width of the GUI can be changed by
-  dragging the edges of the the GUI. The height of the input and console parts
-  are updated when the height of the GUI has become stable after dragging.
+  When the height of the GUI window is changed by dragging the top or bottom
+  edges of the window, the height of the input part is kept unchanged while
+  dragging. When the window height has become stable after dragging, the height
+  of the input part is adjusted to the percentage value.
 
 
 IO configuration
 ----------------
 Input folder path
-  Enter a folder path in the text box, or select one using the :guilabel:`Browse`
-  button.
+  Enter one or more comma separated folder paths in the text box, or select one
+  using the :guilabel:`Browse` button.
 
 .. _input-is-repo:
 
@@ -63,14 +78,14 @@ If the input folder path is a repository, that repository is analysed and no
 search for addtional repositories takes place.
 
 Output file base
-  The output filename, without extension and without parents. Default:
-  ``gitinspect``.
+  The output filename without extension and without directories, default
+  ``gitinspect``. See bottom right of the IO configuration panel.
 
 Output file path
-  Output file path depends on selected output prepostfix (see next option). In
-  the example figure, the input folder path is the path of the repository
-  gitinspectorgui. Depending on the selected pre or postfix, the output file
-  path is:
+  The output file path depends on the selected output prepostfix (see next
+  option). In the example figure, the input folder path is the path of the
+  repository gitinspectorgui. Depending on the selected pre or postfix, the
+  output file path is:
 
   * :guilabel:`Postfix with repo`: ``/Users/.../1-repos/grading/gitinspectorgui-gitinspect``.
   * :guilabel:`Prefix with repo`: ``/Users/.../1-repos/grading/gitinspect-gitinspectorgui``.
@@ -127,29 +142,84 @@ Search depth
   that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in the input folder path, if present, is analysed.
 
+.. _output-formats:
 
-Output format excel
--------------------
-Selects whether output for the :guilabel:`excel` format is generated. See
-:doc:`output-formats`.
+Output generation and formatting
+--------------------------------
+Selects for which file formats output is generated. Available choices are
+:guilabel:`auto`, :guilabel:`html`, :guilabel:`excel` and :guilabel:`text`. When
+option :guilabel:`auto` is selected, the other output formats are deselected.
+When one or more of the other output formats are selected, the :guilabel:`auto`
+format is deselected.
+
+Assuming that the :ref:`viewer option <general-config>` is set to
+:guilabel:`auto`, the output for the :guilabel:`auto` output format is as
+follows:
+
+- Single repositories are opened in the special purpose webviewer without
+  generating any output file.
+
+- For multiple repositories, output is generated in html files which are opened
+  in the system's web browser, each one in its own tab. Up to a maximum of ten
+  tabs can be opened.
+
+When one or more of the options :guilabel:`html`, :guilabel:`excel` and
+:guilabel:`text` are selected, output files are generated in the selected
+format(s). Html output files are opened in the system's web browser, each in a
+separate tab. The other output formats are opened in the default application for
+that format, but in the case of Excel or text, only for output of a single
+repository.
 
 Options
 ^^^^^^^
+Show renames
+  Show previous file names and alternative author names and emails in the
+  output.
+
+  Some authors use multiple names and emails in various commits.
+  Gitinspectorgui can detect this if there is overlap in either the name or
+  email in author-email combinations in commits. If show-renames is active, all
+  names and emails of each author are shown. If inactive, only a single name and
+  email are shown per author.
+
+  For files that have been renamed at some point in their history, all previous
+  names are shown in the output.
+
 Scaled percentages
   For each column with output in percentages, e.g. :guilabel:`Changes %`, add a
   column :guilabel:`Scaled changes %`, which equals the value of
   :guilabel:`Changes %` multiplied by the number of authors in the repository.
 
+Blame color all
+
+
 Skip blame
-  Do not output Excel blame sheets, as explained below.
+  Do not output Excel blame sheets.
 
-Subfolder
-  Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders.
+A blame worksheet or html tab shows the contents of each file and indicates for
+each line in the file in which commit the line was last changed, at which date
+and by which author.
 
-File selection
-^^^^^^^^^^^^^^
-Show N files
+Viewer
+  Select :guilabel:`auto` or :guilabel:`none`.
+
+  * :guilabel:`auto`: open the viewer for the selected output format as
+    specified in the :ref:`output-formats` section.
+
+  * :guilabel:`none`: never open any viewer.
+
+Debug
+
+Dry run
+
+List extensions
+  Output a list of file extensions used in the current branch of the
+  repository.
+
+
+Inclusions and exclusions
+-------------------------
+N files
   Generate output for the first `N` files with the highest number of insertions
   for each repository. For excel, this results in four worksheets:
   :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
@@ -161,7 +231,7 @@ Show N files
   In addition, for each of the N files, a blame worksheet is generated, unless
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
 
-Show files
+File pattern
   Show only files matching the specified pattern. If a pattern is
   specified, it takes priority over the value of N in option :guilabel:`Show N
   files`, which is then ignored. When a pattern is present, the :guilabel:`Show
@@ -169,13 +239,31 @@ Show files
 
   To show all files, use the pattern ``.*``.
 
+Subfolder
+  Restrict analysis of the files of the repository to the files in this folder
+  and its subfolders.
+
+Since
+	Enter a date in the text box in the format 31/12/2022, or select one using the
+	:guilabel:`.` button. Only show statistics for commits more recent than the
+	given date.
+
+Until
+	Only show statistics for commits older than the given date.
+
+Extensions
+    A comma separated list of file extensions to include when computing
+    statistics. The default extensions used are: java, c, cc, cpp, h, hh,
+    hpp, py, glsl, rb, js, sql, cif, tooldef.
+
+    Specifying a single ``*`` asterisk character includes files with no extension.
+    Specifying two consecutive ``**`` asterisk characters includes all files
+    regardless of extension.
+
+
+
 .. _blame-sheets-gui:
 
-Excel blame worksheets
-^^^^^^^^^^^^^^^^^^^^^^
-A blame worksheet shows the contents of each file and indicates for each line
-in the file in which commit the line was last changed, at which date and by
-which author.
 
 Output format text
 ------------------
@@ -183,15 +271,12 @@ Selects whether output for the :guilabel:`text` format is generated. See
 :doc:`output-formats`. For this output format, output from multiple repositories
 is always merged as if coming from a single repository.
 
-Extensions list
-  Output a list of file extensions used in the current branch of the
-  repository.
 
 
-.. _general_config:
+.. _general-config:
 
-General configuration
----------------------
+Analysis options
+----------------
 Deletions
   Include a column for Deletions in the output. This does not affect the blame
   output, because deleted lines cannot be shown. The default is not to include
@@ -227,25 +312,7 @@ Comments
 Copy move
   .. include:: opt-hard.inc
 
-Months
-	Show all statistical information in weeks instead of in months.
 
-Since
-	Enter a date in the text box in the format 31/12/2022, or select one using the
-	:guilabel:`.` button. Only show statistics for commits more recent than the
-	given date.
-
-Until
-	Only show statistics for commits older than the given date.
-
-Extensions
-    A comma separated list of file extensions to include when computing
-    statistics. The default extensions used are: java, c, cc, cpp, h, hh,
-    hpp, py, glsl, rb, js, sql, cif, tooldef.
-
-    Specifying a single ``*`` asterisk character includes files with no extension.
-    Specifying two consecutive ``**`` asterisk characters includes all files
-    regardless of extension.
 
 
 .. _exclusion_pattern:
