@@ -115,8 +115,7 @@ output and in the Authors sheet of the Excel output.
 
 :guilabel:`Age`
   The average of the ages of the lines inserted by :guilabel:`Author`.
-  :guilabel:`Age` is expressed in either weeks or months, depending on the value
-  of option :guilabel:`Weeks` in :ref:`general_config`.
+  :guilabel:`Age` is expressed as ``YYYY-MM-DD``, as in ``2024-12-31``.
 
 1. The :guilabel:`Age` of an inserted line is the difference between the current time and
    the time of the commit of the insertion.
