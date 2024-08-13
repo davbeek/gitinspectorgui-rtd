@@ -152,9 +152,8 @@ option :guilabel:`auto` is selected, the other output formats are deselected.
 When one or more of the other output formats are selected, the :guilabel:`auto`
 format is deselected.
 
-Assuming that the :ref:`viewer option <general-config>` is set to
-:guilabel:`auto`, the output for the :guilabel:`auto` output format is as
-follows:
+Assuming that the viewer option is set to :guilabel:`auto`, the output for the
+:guilabel:`auto` output format is as follows:
 
 - Single repositories are opened in the special purpose webviewer without
   generating any output file.
@@ -169,6 +168,7 @@ format(s). Html output files are opened in the system's web browser, each in a
 separate tab. The other output formats are opened in the default application for
 that format, but in the case of Excel or text, only for output of a single
 repository.
+
 
 Options
 ^^^^^^^
@@ -196,6 +196,11 @@ Blame color all
 Skip blame
   Do not output Excel blame sheets.
 
+
+.. _blame-sheets-gui:
+
+Excel blame worksheets
+^^^^^^^^^^^^^^^^^^^^^^
 A blame worksheet or html tab shows the contents of each file and indicates for
 each line in the file in which commit the line was last changed, at which date
 and by which author.
@@ -262,18 +267,8 @@ Extensions
 
 
 
-.. _blame-sheets-gui:
 
 
-Output format text
-------------------
-Selects whether output for the :guilabel:`text` format is generated. See
-:doc:`output-formats`. For this output format, output from multiple repositories
-is always merged as if coming from a single repository.
-
-
-
-.. _general-config:
 
 Analysis options
 ----------------
