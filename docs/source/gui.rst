@@ -135,18 +135,16 @@ Output prepostfix
   file. Each worksheet has an additional column which specifies the name of the
   repository. No blame worksheets are generated.
 
-  For output format text, the single text file contains the analysis results of
-  all repositories merged together as if coming from a single repository.
-
 Search depth
   Positive integer value that represents the number of levels of subfolders
   that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in the input folder path, if present, is analysed.
 
-.. _output-formats-gui:
 
 Output generation and formatting
 --------------------------------
+.. _output-formats-gui:
+
 Output formats
 ^^^^^^^^^^^^^^
 Selects for which file formats output is generated. Available choices are

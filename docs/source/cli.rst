@@ -86,7 +86,7 @@ Output
 For the CLI, the output files generated depend on the output formats specified
 in the ``-F`` or ``--format`` option. By default, output is generated in the
 file ``gitinspect.ext``, where ``ext`` is defined by the selected :ref:`output
-formats <formats>`.
+formats <output-formats-cli>`.
 
 ``-o FILEBASE`` ``--output FILEBASE``
   The output filename, without extension and without parents is ``FILEBASE``.
@@ -99,10 +99,13 @@ formats <formats>`.
   * ``-f none`` output file name is ``FILEBASE``.
 
 
-.. _output-formats-cli:
 
 Output generation and formatting
 --------------------------------
+.. _output-formats-cli:
+
+Output formats
+^^^^^^^^^^^^^^
 ``-F FORMAT`` ``--format FORMAT``
   Selects for which file formats output is generated. Available choices are
   ``auto``, ``html``, ``excel`` and ``text``.
