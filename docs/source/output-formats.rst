@@ -20,15 +20,23 @@ Available output formats
   the output is opened in Excel for viewing.
 
 :guilabel:`auto`
-  The output for option :guilabel:`auto` is always :guilabel:`html`. The exact
-  form depends on the number of repositories analysed:
+  The output for option :guilabel:`auto` (default for CLI) is always
+  :guilabel:`html`. The exact form depends on the number of repositories
+  analysed:
 
   - For single repositories, the :guilabel:`auto` option  is the only case where
     no file output is generated. The generated html output is shown in a web
-    viewer (default for CLI).
+    viewer.
   - For multiple repositories, the :guilabel:`auto` option generates
     :guilabel:`html` output which is saved in a file and shown in the default
-    system browser (default for CLI).
+    system browser.
+
+  Multiple output formats can be selected at the same time, resulting for each
+  repository in a separate output file for every selected format. In such a
+  case, no output viewers are opened after analysis.
+
+  When :guilabel:`auto` is selected, the other output formats are automatically
+  deselected.
 
 :guilabel:`text`
 	Plain text with some very simple ANSI formatting.
@@ -39,8 +47,8 @@ Output columns
 
 Default columns
 ^^^^^^^^^^^^^^^
-We discuss the columns that are present in the output by default in the text
-output and in the Authors sheet of the Excel output.
+The default columns in the text output and in the Authors sheet of the Excel
+output follow below.
 
 .. :guilabel:`Repository`
 ..   Name of the repository folder. Present only when multiple repositories are
@@ -115,7 +123,8 @@ output and in the Authors sheet of the Excel output.
 
 :guilabel:`Age`
   The average of the ages of the lines inserted by :guilabel:`Author`.
-  :guilabel:`Age` is expressed as ``YYYY-MM-DD``, as in ``2024-12-31``.
+  :guilabel:`Age` is expressed as ``Y-M-D``, as in ``1-4-20`` meaning one year,
+  4 months and 20 days old.
 
 1. The :guilabel:`Age` of an inserted line is the difference between the current time and
    the time of the commit of the insertion.

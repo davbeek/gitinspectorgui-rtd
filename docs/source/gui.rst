@@ -26,7 +26,8 @@ Clear
   Clear the console, the textual output box at the bottom.
 
 Save
-  Save all settings specified in the GUI to the currently active settings file.
+  Save all settings specified in the GUI to the currently active settings file,
+  as is shown on the last line of the console in the figure of the GUI window.
 
 Save As
   Save the settings specified in the GUI to a file. This file becomes the
@@ -146,29 +147,13 @@ Search depth
 
 Output generation and formatting
 --------------------------------
+Output formats
+^^^^^^^^^^^^^^
 Selects for which file formats output is generated. Available choices are
-:guilabel:`auto`, :guilabel:`html`, :guilabel:`excel` and :guilabel:`text`. When
-option :guilabel:`auto` is selected, the other output formats are deselected.
-When one or more of the other output formats are selected, the :guilabel:`auto`
-format is deselected.
+:guilabel:`auto`, :guilabel:`html`, :guilabel:`excel` and :guilabel:`text`. For
+more information on the output formats, see :doc:`output-formats`.
 
-Assuming that the viewer option is set to :guilabel:`auto`, the output for the
-:guilabel:`auto` output format is as follows:
-
-- Single repositories are opened in the special purpose webviewer without
-  generating any output file.
-
-- For multiple repositories, output is generated in html files which are opened
-  in the system's web browser, each one in its own tab. Up to a maximum of ten
-  tabs can be opened.
-
-When one or more of the options :guilabel:`html`, :guilabel:`excel` and
-:guilabel:`text` are selected, output files are generated in the selected
-format(s). Html output files are opened in the system's web browser, each in a
-separate tab. The other output formats are opened in the default application for
-that format, but in the case of Excel or text, only for output of a single
-repository.
-
+.. _blame-sheets-gui:
 
 Options
 ^^^^^^^
@@ -190,20 +175,32 @@ Scaled percentages
   column :guilabel:`Scaled changes %`, which equals the value of
   :guilabel:`Changes %` multiplied by the number of authors in the repository.
 
-Blame color all
+Blame omit exclusions
+  Blame lines can be excluded for three reasons:
+
+  1. The author of the blame line is excluded by the :guilabel:`Author`
+     :guilabel:`Exclusion pattern`.
+  2. The blame line is a comment line. By default, comment lines are excluded.
+     They can be included by the option :guilabel:`Comments`.
+  3. The blame line is an empty line. By default, empty lines are excluded. They
+     can be included by the option :guilabel:`Empty lines`.
+
+Excluded lines are not attributed to their author as blame lines. They are shown
+in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
+omit exclusions` is active, the blame sheets omit the excluded lines from the
+blame output.
 
 
 Skip blame
-  Do not output Excel blame sheets.
+  Do not output html blame tabs or Excel blame sheets.
 
+.. note::
 
-.. _blame-sheets-gui:
+  A blame worksheet or html blame tab shows the contents of a file and indicates
+  for each line in the file in which commit the line was last changed, at which
+  date and by which author. The color of the line indicates the author of the
+  last change. The blame output is generated for each file that is analysed.
 
-Excel blame worksheets
-^^^^^^^^^^^^^^^^^^^^^^
-A blame worksheet or html tab shows the contents of each file and indicates for
-each line in the file in which commit the line was last changed, at which date
-and by which author.
 
 Viewer
   Select :guilabel:`auto` or :guilabel:`none`.
@@ -214,8 +211,19 @@ Viewer
   * :guilabel:`none`: never open any viewer.
 
 Debug
+  - 0: No debug output (default).
+  - 1: Show debug output in the console. Corresponds to the ``-v`` option
+    in the CLI.
+  - 2: Show more detailed debug output in the console. Corresponds to the
+    ``-vv`` option in the CLI.
+
 
 Dry run
+  - 0: Normal analysis and output (default).
+  - 1: Perform all required analysis and show the output in the console, but do
+    not write any output files and do not open any viewers.
+  - 2: Do not perform any analysis and do not produce any file or viewer output,
+    but do print output lines to the console.
 
 List extensions
   Output a list of file extensions used in the current branch of the
@@ -297,7 +305,7 @@ Comments
 
   The default is not to include whole line comments, which means that such lines
   are not attributed to any author and are shown in the blame sheets as white.
-  Whole line coments are not counted in the Lines column of the statistics
+  Whole line comments are not counted in the Lines column of the statistics
   output, potentially causing the sum of the Lines column to be less than the
   total number of lines in the file.
 
