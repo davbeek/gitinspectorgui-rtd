@@ -6,51 +6,59 @@ Synopsis
 .. code:: text
 
   gitinspectorgui
-    [-h] [--gui] [--gui-from-cli] [-V] [--profile] [-d DEPTH]
-    [-o FILEBASE] [--fix {pre,post,none}] [-F {text,excel}]
+    [-h]
+    [--gui | -V | --show-settings | --save | --save-as PATH | --load PATH | --reset]
+    [-d DEPTH] [-o FILEBASE] [--fix {prefix,postfix,nofix}]
+    [-F {auto,html,excel,text}] [--show-renames | --no-show-renames]
     [--scaled-percentages | --no-scaled-percentages]
-    [--skip-blame | --no-skip-blame] [--subfolder SUBFOLDER]
-    [-n N | -f PATTERN]
-    [-l | --extensions-list | --no-extensions-list] [-e EXTENSIONS]
-    [-M | --months | --no-months] [--since SINCE] [--until UNTIL]
-    [--deletions | --no-deletions] [--whitespace | --no-whitespace]
+    [--blame-omit-exclusions | --no-blame-omit-exclusions]
+    [--skip-blame | --no-skip-blame] [--viewer {auto,none}] [-v]
+    [--dry-run {0,1,2}]
+    [-l | --list-extensions | --no-list-extensions]
+    [-n N | -f PATTERN] [--subfolder SUBFOLDER] [--since SINCE]
+    [--until UNTIL] [-e EXTENSIONS] [--deletions | --no-deletions]
+    [--whitespace | --no-whitespace]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
-    [--copy-move N] [--ex-file PATTERN] [--ex-author PATTERN]
-    [--ex-email PATTERN] [--ex-revision PATTERN]
-    [--ex-message PATTERN]
-    [--settings-show-location | --settings-reset | --settings-change-location PATH]
-    [-v]
+    [--copy-move N] [--multi-thread | --no-multi-thread]
+    [--multi-core | --no-multi-core] [--ex-file PATTERN]
+    [--ex-author PATTERN] [--ex-email PATTERN]
+    [--ex-revision PATTERN] [--ex-message PATTERN] [--profile N]
     [PATH ...]
 
 Overview
 --------
-The command line interface (CLI) can be used to start the GUI and provide it
-with starting values for its options, or to analyze repositories directly from
-the command line.
-
-Unique for GUI
---------------
-The GUI can be started in two ways:
-
--  Via option ``--gui``: this starts the GUI with settings loaded from the
-   settings file.
--  Via option ``--gui-from-cli``: this starts the GUI by first loading the
-   settings from the settings file and then overwriting some of the settings with the
-   options provided on the command line.
-
-Unique for CLI
---------------
-Without options ``--gui`` or ``--gui-from-cli``, the CLI is used to analyse
-repositories.
+The command line interface (CLI) can be used to start the GUI or to analyse
+repositories directly from the command line. GUI and CLI share the same settings
+file. They start by loading the settings from the settings file.
 
 ``-h`` ``--help``
   Display help and exit.
 
-``--version``
+
+Mutually exclusive options
+--------------------------
+
+``--gui``
+  Start the GUI with settings loaded from the settings file.
+
+``-V`` ``--version``
   Output version information and exit.
 
-``--profile``
-  Output profiling information.
+``--show-settings``
+  Output the location of the settings file and its values, then exit.
+
+``--save``
+  Save the current settings to the settings file.
+
+``--save-as PATH``
+  Save the current settings to the specified file.
+
+``--load PATH``
+  Load settings from the specified file.
+
+``--reset``
+  Reset the settings to their default values.
+
 
 Input
 -----
@@ -90,33 +98,88 @@ formats <formats>`.
   * ``-f post`` output file name is ``FILEBASE-REPONAME``.
   * ``-f none`` output file name is ``FILEBASE``.
 
-.. _formats:
 
+.. _output-formats-cli:
+
+Output generation and formatting
+--------------------------------
 ``-F FORMAT`` ``--format FORMAT``
-  Defines in which ``FORMAT`` output is generated: ``text`` *default* or
-  ``excel``. Format options can be specified multiple times, to generated
-  multiple output formats simultaneously. For more information about the various
-  output formats, see :doc:`output-formats`.
+  Selects for which file formats output is generated. Available choices are
+  ``auto``, ``html``, ``excel`` and ``text``.
+  For more information on the output formats, see :doc:`output-formats`.
 
-Output format excel
--------------------
 Options
 ^^^^^^^
-``--scaled-percentages --no-scaled-percentages``
+``--show-renames``
+  Show previous file names and alternative author names and emails in the
+  output.
+
+  Some authors use multiple names and emails in various commits.
+  Gitinspectorgui can detect this if there is overlap in either the name or
+  email in author-email combinations in commits. If show-renames is active, all
+  names and emails of each author are shown. If inactive, only a single name and
+  email are shown per author.
+
+  For files that have been renamed at some point in their history, all previous
+  names are shown in the output.
+
+``--scaled-percentages``
   For each column with output in percentages, e.g. ``Insertions %``, add a
   column ``Scaled insertions %``, which equals the value of ``Insertions %``
   multiplied by the number of authors in the repository.
 
+``--blame-omit-exclusions``
+  Blame lines can be excluded for three reasons:
+
+  1. The author of the blame line is excluded by the ``--ex-author PATTERN``
+     exclusion pattern.
+  2. The blame line is a comment line. By default, comment lines are excluded.
+     They can be included by the option ``--comments``.
+  3. The blame line is an empty line. By default, empty lines are excluded. They
+     can be included by the option ``--empty-lines``.
+
+Excluded lines are not attributed to their author as blame lines. They are shown
+in the blame sheets as white, uncolored lines. When the option
+``--blame-omit-exclusions`` is active, the blame sheets omit the excluded lines
+from the blame output.
+
 ``--skip-blame``
   Do not output Excel blame sheets, as explained below.
 
-``--subfolder``
-  Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders.
+.. _blame-sheets-cli:
 
-File selection
-^^^^^^^^^^^^^^
-``-f N`` ``--show-files N``
+.. note::
+
+  A blame worksheet or html blame tab shows the contents of a file and indicates
+  for each line in the file in which commit the line was last changed, at which
+  date and by which author. The color of the line indicates the author of the
+  last change. The blame output is generated for each file that is analysed.
+
+
+``--viewer {auto,none}``
+
+  * ``auto``: open the viewer for the selected output format as
+    specified in the :ref:`output-formats-cli` section.
+
+  * ``none``: never open any viewer.
+
+``-v``, ``--verbosity``
+  More verbose output for each ``v``, e.g. ``-vv``.
+
+``--dry-run {0,1,2}``
+  Do not perform the analysis, but output the commands that would be executed.
+  The value of ``0`` means no dry run, ``1`` means a dry run with the commands
+  that would be executed
+
+``-l`` ``--extensions-list`` ``--no-extensions-list``
+  Output a list of file extensions used in the current branch of the
+  repository.
+
+
+
+Inclusions and exclusions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+``-n N`` ``--n-files N``
   Generate output for the first ``N`` files with the highest number of
   insertions for each repository. For excel, this results in four worksheets:
   :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
@@ -128,37 +191,46 @@ File selection
   In addition, for each of the N files, a blame worksheet is generated, unless
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
 
-``-f PATTERN``, ``--show-files PATTERN``
+``-f PATTERN``, ``--file-pattern PATTERN``
   Show only files matching the specified pattern. If a pattern is specified, it
   takes priority over the default value of ``N`` in option ``--show-n-files``.
   The options ``--show-files`` and ``--show-files-pattern`` are mutually
   exclusive.
 
-  If options ``--show-files`` and ``--show-files-pattern`` are both missing, a
-  deault value of ``--show-n-files 5`` is used.
+  If options ``-n-files N`` and ``--file-pattern PATTERN`` are both missing, a
+  default value of ``--n-files 5`` is used.
 
   To show all files, use the pattern ``.*``.
 
-.. _blame-sheets-cli:
+``--subfolder``
+  Restrict analysis of the files of the repository to the files in this folder
+  and its subfolders.
 
-Excel blame worksheets
-^^^^^^^^^^^^^^^^^^^^^^
-A blame worksheet shows the contents of each file and indicates for each line
-in the file in which commit the line was last changed, at which date and by
-which author.
+``--since DATE``
+  Only show statistics for commits more recent than a specific date. The
+  ``DATE`` format is YYYY-M-D, where leading zeros are optional for month and
+  day, e.g.
+  ``--since 2022-1-31`` or ``--since 2022-01-31``.
 
-Output format text
-------------------
-For this output format, output from multiple repositories is always merged as if
-coming from a single repository.
+``--until DATE``
+  Only show statistics for commits older than a specific date. See ``--since``
+  for the format of ``DATE``.
 
-``-l`` ``--extensions-list`` ``--no-extensions-list``
-  Output a list of file extensions used in the current branch of the
-  repository.
+``-e EXTENSIONS`` ``--extensions EXTENSIONS``
+  A comma separated list of file extensions to include when computing
+  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
+  hpp, py, glsl, rb, js, sql, cif, tooldef``.
+
+  For more information, see the :ref:`supported languages table
+  <languages_table>` below.
+
+  Specifying a single ``*`` asterisk character includes files with no extension.
+  Specifying two consecutive ``**`` asterisk characters includes all files
+  regardless of extension.
 
 
-General configuration
----------------------
+Analysis options
+----------------
 ``--deletions``
   Include a column for Deletions in the output. This does not affect the blame
   output, because deleted lines cannot be shown. The default is not to include
@@ -194,30 +266,6 @@ General configuration
 ``--copy-move N``
   .. include:: opt-hard.inc
 
-``--months`` ``--no-months``
-  Show all statistical information in months instead of in weeks.
-
-``--since DATE``
-  Only show statistics for commits more recent than a specific date. The
-  ``DATE`` format is YYYY-M-D, where leading zeros are optional for month and
-  day, e.g.
-  ``--since 2022-1-31`` or ``--since 2022-01-31``.
-
-``--until DATE``
-  Only show statistics for commits older than a specific date. See ``--since``
-  for the format of ``DATE``.
-
-``-e EXTENSIONS`` ``--extensions EXTENSIONS``
-  A comma separated list of file extensions to include when computing
-  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
-  hpp, py, glsl, rb, js, sql, cif, tooldef``.
-
-  For more information, see the :ref:`supported languages table
-  <languages_table>` below.
-
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
 
 
 Exclusion patterns
@@ -272,24 +320,10 @@ patterns for ``--ex-file``:
   Filter out statistics from all files containing ``init``, e.g. ``myinit``,
   ``init.py`` or ``myinit.py``.
 
-
-Saved GUI settings
-------------------
-``--settings-reset``
-  Reset the saved GUI settings to their default values.
-
-``--settings-show-location``
-  Print the location of the GUI settings file.
-
-``--settings-change-location PATH``
-  Change the location of the GUI settings file to ``PATH``.
-
-
-
-Debugging
----------
-``-v``, ``--verbose``
-  More verbose output for each ``v``, e.g. ``-vv``.
+Logging
+-------
+``--profile``
+  Output profiling information.
 
 
 .. _languages_table:

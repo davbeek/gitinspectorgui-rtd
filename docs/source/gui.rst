@@ -143,7 +143,7 @@ Search depth
   that is searched for repositories, *default* ``5``. For depth ``1``, only
   the repository in the input folder path, if present, is analysed.
 
-.. _output-formats:
+.. _output-formats-gui:
 
 Output generation and formatting
 --------------------------------
@@ -153,7 +153,6 @@ Selects for which file formats output is generated. Available choices are
 :guilabel:`auto`, :guilabel:`html`, :guilabel:`excel` and :guilabel:`text`. For
 more information on the output formats, see :doc:`output-formats`.
 
-.. _blame-sheets-gui:
 
 Options
 ^^^^^^^
@@ -194,6 +193,8 @@ blame output.
 Skip blame
   Do not output html blame tabs or Excel blame sheets.
 
+.. _blame-sheets-gui:
+
 .. note::
 
   A blame worksheet or html blame tab shows the contents of a file and indicates
@@ -206,7 +207,7 @@ Viewer
   Select :guilabel:`auto` or :guilabel:`none`.
 
   * :guilabel:`auto`: open the viewer for the selected output format as
-    specified in the :ref:`output-formats` section.
+    specified in the :ref:`output-formats-gui` section.
 
   * :guilabel:`none`: never open any viewer.
 
