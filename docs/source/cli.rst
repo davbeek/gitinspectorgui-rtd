@@ -111,8 +111,17 @@ Output formats
   ``auto``, ``html``, ``excel`` and ``text``.
   For more information on the output formats, see :doc:`output-formats`.
 
+.. _blame-sheets-cli:
+
 Options
 ^^^^^^^
+.. note::
+
+  A blame worksheet or html blame tab shows the contents of a file and indicates
+  for each line in the file in which commit the line was last changed, at which
+  date and by which author. The color of the line indicates the author of the
+  last change. The blame output is generated for each file that is analysed.
+
 ``--show-renames``
   Show previous file names and alternative author names and emails in the
   output.
@@ -149,14 +158,6 @@ from the blame output.
 ``--skip-blame``
   Do not output Excel blame sheets, as explained below.
 
-.. _blame-sheets-cli:
-
-.. note::
-
-  A blame worksheet or html blame tab shows the contents of a file and indicates
-  for each line in the file in which commit the line was last changed, at which
-  date and by which author. The color of the line indicates the author of the
-  last change. The blame output is generated for each file that is analysed.
 
 
 ``--viewer {auto,none}``
