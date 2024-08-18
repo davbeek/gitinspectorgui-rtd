@@ -46,13 +46,17 @@ Mutually exclusive options
   Save the current settings to the settings file.
 
 ``--save-as PATH``
-  Save the current settings to the specified file.
+  Save the current settings to the specified file. This file becomes the
+  currently active settings file.
 
 ``--load PATH``
-  Load settings from the specified file.
+  Load settings from the specified file. This file becomes the currently active
+  settings file.
 
 ``--reset``
-  Reset the settings to their default values.
+  Reset all settings to their default values and reset the location of the
+  currently active settings file to its default, operating system dependent,
+  location.
 
 ``-V`` ``--version``
   Output version information and exit.
@@ -64,7 +68,8 @@ Input
   The path to the folder containing the repositories to be analysed. Multiple
   paths can be specified and all paths are searched for repositories.
 
-  IF ``PATH`` is a repository, that repository is analyzed.
+  IF ``PATH`` is a repository, that repository is analyzed and no search for
+  addtional repositories takes place.
 
   If ``PATH`` is a folder, but not a repository, all folder and subfolders up to
   the value of the ``--depth``  option are searched for repositories and the

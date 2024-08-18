@@ -31,14 +31,14 @@ Save
 
 Save As
   Save the settings specified in the GUI to another file. This file becomes the
-  currently active settings file for the :guilabel:`Save` button.
+  currently active settings file.
 
 Load
   Open a browse dialog to select a settings file to load. This file becomes the
   currently active settings file.
 
 Reset
-  Reset all options to their default values and reset the location of the
+  Reset all settings to their default values and reset the location of the
   currently active settings file to its default, operating system dependent,
   location.
 
@@ -67,7 +67,7 @@ IO configuration
 ----------------
 Input folder path
   Enter one or more comma separated folder paths in the text box, or select one
-  using the :guilabel:`Browse` button.
+  using the :guilabel:`Browse` button. The paths are searched for repositories.
 
 .. _input-is-repo:
 
@@ -85,11 +85,11 @@ Output file base
 Output file path
   The output file path depends on the selected output prepostfix (see next
   option). In the example figure, the input folder path is the path of the
-  repository gitinspectorgui. Depending on the selected pre or postfix, the
+  repository ``1dh``. Depending on the selected pre or postfix, the
   output file path is:
 
-  * :guilabel:`Postfix with repo`: ``/Users/.../1-repos/grading/gitinspectorgui-gitinspect``.
-  * :guilabel:`Prefix with repo`: ``/Users/.../1-repos/grading/gitinspect-gitinspectorgui``.
+  * :guilabel:`Postfix with repo`: ``/Users/.../1-repos/grading/1dh-gitinspect``.
+  * :guilabel:`Prefix with repo`: ``/Users/.../1-repos/grading/gitinspect-1dh``.
   * :guilabel:`No prefix or postfix`: ``/Users/.../1-repos/grading/gitinspect``.
 
 Output prepostfix
