@@ -26,11 +26,11 @@ Clear
   Clear the console, the textual output box at the bottom.
 
 Save
-  Save all settings specified in the GUI to the currently active settings file,
-  as is shown on the last line of the console in the figure of the GUI window.
+  Save all settings specified in the GUI to the currently active settings file
+  and print this file name to the console, see the above figure.
 
 Save As
-  Save the settings specified in the GUI to a file. This file becomes the
+  Save the settings specified in the GUI to another file. This file becomes the
   currently active settings file for the :guilabel:`Save` button.
 
 Load

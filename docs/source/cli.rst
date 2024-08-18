@@ -31,8 +31,6 @@ The command line interface (CLI) can be used to start the GUI or to analyse
 repositories directly from the command line. GUI and CLI share the same settings
 file. They start by loading the settings from the settings file.
 
-``-h`` ``--help``
-  Display help and exit.
 
 
 Mutually exclusive options
@@ -40,9 +38,6 @@ Mutually exclusive options
 
 ``--gui``
   Start the GUI with settings loaded from the settings file.
-
-``-V`` ``--version``
-  Output version information and exit.
 
 ``--show-settings``
   Output the location of the settings file and its values, then exit.
@@ -58,6 +53,9 @@ Mutually exclusive options
 
 ``--reset``
   Reset the settings to their default values.
+
+``-V`` ``--version``
+  Output version information and exit.
 
 
 Input
@@ -324,8 +322,11 @@ patterns for ``--ex-file``:
   Filter out statistics from all files containing ``init``, e.g. ``myinit``,
   ``init.py`` or ``myinit.py``.
 
-Logging
--------
+Additional options
+------------------
+``-h`` ``--help``
+  Display help and exit.
+
 ``--profile``
   Output profiling information.
 
@@ -335,117 +336,94 @@ Logging
 Supported languages
 -------------------
 
-To be defined.
 
-.. .. list-table::
+.. list-table::
 
-..   * - Language
-..     - Comments
-..     - Metrics
-..     - File extensions
-..     - Included in analysis by default
-..   * - CIF
-..     - Yes
-..     - No
-..     - cif
-..     -  Yes
-..   * - ToolDef
-..     -  No
-..     -  No
-..     -  tooldef
-..     -  Yes
-..   * - ADA
-..     - Yes
-..     - No
-..     - ada, adb, ads
-..     - No
-..   * - C
-..     - Yes
-..     - Yes
-..     - c, h
-..     - Yes
-..   * - C++
-..     - Yes
-..     - Yes
-..     - cc, h, hh, hpp
-..     - Yes
-..   * - C#
-..     - Yes
-..     - Yes
-..     - cs
-..     - No
-..   * - GNU Gettext
-..     - Yes
-..     - No
-..     - po, pot
-..     - No
-..   * - Haskell
-..     - Yes
-..     - No
-..     - hs
-..     - No
-..   * - HTML
-..     - Yes
-..     - No
-..     - html
-..     - No
-..   * - Java
-..     - Yes
-..     - Yes
-..     - java
-..     - Yes
-..   * - JavaScript
-..     - Yes
-..     - Yes
-..     - js
-..     - Yes
-..   * - LaTeX
-..     - Yes
-..     - No
-..     - tex
-..     - No
-..   * - OCaml
-..     - Yes
-..     - No
-..     - ml, mli
-..     - No
-..   * - OpenGL Shading Language
-..     - Yes
-..     - No
-..     - glsl
-..     - Yes
-..   * - Perl
-..     - Yes
-..     - No
-..     - pl
-..     - No
-..   * - PHP
-..     - Yes
-..     - No
-..     - php
-..     - No
-..   * - Python
-..     - Yes
-..     - Yes
-..     - py
-..     - Yes
-..   * - Ruby
-..     - Yes
-..     - No
-..     - rb
-..     - Yes
-..   * - Scala
-..     - Yes
-..     - No
-..     - scala
-..     - No
-..   * - SQL
-..     - Yes
-..     - No
-..     - sql
-..     - Yes
-..   * - XML
-..     - Yes
-..     - No
-..     - xml, jspx
-..     - No
+  * - Language
+    - Comments
+    - File extensions
+    - Included in analysis by default
+  * - C
+    - Yes
+    - c, h
+    - Yes
+  * - C++
+    - Yes
+    - cc, h, hh, hpp
+    - Yes
+  * - CIF
+    - Yes
+    - cif
+    - Yes
+  * - Java
+    - Yes
+    - java
+    - Yes
+  * - JavaScript
+    - Yes
+    - js
+    - Yes
+  * - OpenGL Shading Language
+    - Yes
+    - glsl
+    - Yes
+  * - Python
+    - Yes
+    - py
+    - Yes
+  * - Ruby
+    - Yes
+    - rb
+    - Yes
+  * - SQL
+    - Yes
+    - sql
+    - Yes
+  * - ADA
+    - Yes
+    - ada, adb, ads
+    - No
+  * - C#
+    - Yes
+    - cs
+    - No
+  * - GNU Gettext
+    - Yes
+    - po, pot
+    - No
+  * - Haskell
+    - Yes
+    - hs
+    - No
+  * - HTML
+    - Yes
+    - html
+    - No
+  * - LaTeX
+    - Yes
+    - tex
+    - No
+  * - OCaml
+    - Yes
+    - ml, mli
+    - No
+  * - Perl
+    - Yes
+    - pl
+    - No
+  * - PHP
+    - Yes
+    - php
+    - No
+  * - Scala
+    - Yes
+    - scala
+    - No
+  * - ToolDef
+    - No
+    - tooldef
+    - No
+  * - XML
+    - Yes
+    - xml, jspx
+    - No
