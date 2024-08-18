@@ -95,11 +95,11 @@ formats <output-formats-cli>`.
   The output filename, without extension and without parents is ``FILEBASE``.
   Default: ``gitinspect``.
 
-``--fix {pre,post,none}``
+``--fix {prefix,postfix,nofix}``
 
-  * ``-f pre`` output file name is ``REPONAME-FILEBASE``.
-  * ``-f post`` output file name is ``FILEBASE-REPONAME``.
-  * ``-f none`` output file name is ``FILEBASE``.
+  * ``-f prefix`` output file name is ``REPONAME-FILEBASE``.
+  * ``-f postfix`` output file name is ``FILEBASE-REPONAME``.
+  * ``-f nofix`` output file name is ``FILEBASE``.
 
 
 
@@ -111,7 +111,8 @@ Output formats
 ^^^^^^^^^^^^^^
 ``-F FORMAT`` ``--format FORMAT``
   Selects for which file formats output is generated. Available choices are
-  ``auto``, ``html``, ``excel`` and ``text``.
+  ``auto``, ``html``, ``excel`` and ``text``. To select more than one output
+  format, repeat the option, e.g. ``-F html -F excel``.
   For more information on the output formats, see :doc:`output-formats`.
 
 .. _blame-sheets-cli:
@@ -159,7 +160,7 @@ in the blame sheets as white, uncolored lines. When the option
 from the blame output.
 
 ``--skip-blame``
-  Do not output Excel blame sheets, as explained below.
+  Do not output html blame tabs or Excel blame sheets.
 
 
 
@@ -171,12 +172,17 @@ from the blame output.
   * ``none``: never open any viewer.
 
 ``-v``, ``--verbosity``
-  More verbose output for each ``v``, e.g. ``-vv``.
+  More verbose output for each ``v``: ``-v`` or ``-vv``. This corresponds to the
+  ``Debug`` option in the GUI. The maximum value 2 of the debug option in the
+  GUI corresponds to ``-vv`` in the CLI.
 
 ``--dry-run {0,1,2}``
-  Do not perform the analysis, but output the commands that would be executed.
-  The value of ``0`` means no dry run, ``1`` means a dry run with the commands
-  that would be executed
+
+  - 0: Normal analysis and output (default).
+  - 1: Perform all required analysis and show the output in the console, but do
+    not write any output files and do not open any viewers.
+  - 2: Do not perform any analysis and do not produce any file or viewer output,
+    but do print output lines to the console.
 
 ``-l`` ``--extensions-list`` ``--no-extensions-list``
   Output a list of file extensions used in the current branch of the
@@ -200,8 +206,8 @@ Inclusions and exclusions
 
 ``-f PATTERN``, ``--file-pattern PATTERN``
   Show only files matching the specified pattern. If a pattern is specified, it
-  takes priority over the default value of ``N`` in option ``--show-n-files``.
-  The options ``--show-files`` and ``--show-files-pattern`` are mutually
+  takes priority over the value of ``N`` in option ``--n-files``, which is then
+  ignored. The options ``--n-files`` and ``--file-pattern`` are mutually
   exclusive.
 
   If options ``-n-files N`` and ``--file-pattern PATTERN`` are both missing, a
@@ -215,7 +221,7 @@ Inclusions and exclusions
 
 ``--since DATE``
   Only show statistics for commits more recent than a specific date. The
-  ``DATE`` format is YYYY-M-D, where leading zeros are optional for month and
+  ``DATE`` format is YYYY-MM-DD, where leading zeros are optional for month and
   day, e.g.
   ``--since 2022-1-31`` or ``--since 2022-01-31``.
 

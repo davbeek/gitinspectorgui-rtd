@@ -242,10 +242,10 @@ N files
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
 
 File pattern
-  Show only files matching the specified pattern. If a pattern is
-  specified, it takes priority over the value of N in option :guilabel:`Show N
-  files`, which is then ignored. When a pattern is present, the :guilabel:`Show
-  N files` option is disabled.
+  Show only files matching the specified pattern. If a pattern is specified, it
+  takes priority over the value of N in option :guilabel:`Show N files`, which
+  is then ignored. When a pattern is present, the :guilabel:`Show N files`
+  option is disabled.
 
   To show all files, use the pattern ``.*``.
 
