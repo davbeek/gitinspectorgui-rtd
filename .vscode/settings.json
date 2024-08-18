@@ -20,9 +20,9 @@
         ],
     },
     //
-    // "esbonio.logging.level": "debug",
+    "esbonio.logging.level": "debug",
     // "esbonio.logging.level": "warning",
-    "esbonio.logging.level": "error",
+    // "esbonio.logging.level": "error",
     // "esbonio.logging.level": "info",
     "esbonio.server.enabled": true,
     "esbonio.sphinx.buildCommand": [
