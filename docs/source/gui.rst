@@ -254,22 +254,21 @@ Subfolder
   and its subfolders.
 
 Since
-	Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are
+  Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are
   optional for month and day, or select one using the :guilabel:`.` button. Only
-	show statistics for commits more recent than the given date.
+  show statistics for commits more recent than the given date.
 
 Until
 	Only show statistics for commits older than the given date. See Since for the
 	date format.
 
 Extensions
-    A comma separated list of file extensions to include when computing
-    statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
-    hpp, java, js, py, rb, sql.
-
-    Specifying a single ``*`` asterisk character includes files with no extension.
-    Specifying two consecutive ``**`` asterisk characters includes all files
-    regardless of extension.
+  A comma separated list of file extensions to include when computing
+  statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
+  hpp, java, js, py, rb, sql.
+  Specifying a single ``*`` asterisk character includes files with no extension.
+  Specifying two consecutive ``**`` asterisk characters includes all files
+  regardless of extension.
 
 
 
