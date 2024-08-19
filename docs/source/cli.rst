@@ -15,14 +15,14 @@ Synopsis
     [--skip-blame | --no-skip-blame] [--viewer {auto,none}] [-v]
     [--dry-run {0,1,2}]
     [-l | --list-extensions | --no-list-extensions]
-    [-n N | -f PATTERN] [--subfolder SUBFOLDER] [--since SINCE]
+    [-n N | -f PATTERNS] [--subfolder SUBFOLDER] [--since SINCE]
     [--until UNTIL] [-e EXTENSIONS] [--deletions | --no-deletions]
     [--whitespace | --no-whitespace]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
     [--copy-move N] [--multi-thread | --no-multi-thread]
-    [--multi-core | --no-multi-core] [--ex-file PATTERN]
-    [--ex-author PATTERN] [--ex-email PATTERN]
-    [--ex-revision PATTERN] [--ex-message PATTERN] [--profile N]
+    [--multi-core | --no-multi-core] [--ex-files PATTERNS]
+    [--ex-authors PATTERNS] [--ex-emails PATTERNS]
+    [--ex-revisions PATTERNS] [--ex-messages PATTERNS] [--profile N]
     [PATH ...]
 
 Overview
@@ -147,7 +147,7 @@ Options
 ``--blame-omit-exclusions``
   Blame lines can be excluded for three reasons:
 
-  1. The author of the blame line is excluded by the ``--ex-author PATTERN``
+  1. The author of the blame line is excluded by the ``--ex-author PATTERNS``
      exclusion pattern.
   2. The blame line is a comment line. By default, comment lines are excluded.
      They can be included by the option ``--comments``.
@@ -192,7 +192,7 @@ from the blame output.
 
 Inclusions and exclusions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-``-n N`` ``--n-files N``
+``-n N`` ``--n-files N`` ``--include-n-files N``
   Generate output for the first ``N`` files with the highest number of
   insertions for each repository. For excel, this results in four worksheets:
   :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
@@ -204,13 +204,13 @@ Inclusions and exclusions
   In addition, for each of the N files, a blame worksheet is generated, unless
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
 
-``-f PATTERN``, ``--file-pattern PATTERN``
-  Show only files matching the specified pattern. If a pattern is specified, it
-  takes priority over the value of ``N`` in option ``--n-files``, which is then
-  ignored. The options ``--n-files`` and ``--file-pattern`` are mutually
-  exclusive.
+``-f PATTERNS``, ``--inc-files PATTERNS``, ``--include-files PATTERNS``
+  Show only files matching any of the specified patterns. If a pattern is
+  specified, it takes priority over the value of ``N`` in option ``--n-files``,
+  which is then ignored. The options ``--n-files N`` and ``--include-file
+  PATTERNS`` are mutually exclusive.
 
-  If options ``-n-files N`` and ``--file-pattern PATTERN`` are both missing, a
+  If options ``-n-files N`` and ``--include-files PATTERNS`` are both missing, a
   default value of ``--n-files 5`` is used.
 
   To show all files, use the pattern ``.*``.
@@ -231,8 +231,8 @@ Inclusions and exclusions
 
 ``-e EXTENSIONS`` ``--extensions EXTENSIONS``
   A comma separated list of file extensions to include when computing
-  statistics. The default extensions used are: ``java, c, cc, cpp, h, hh,
-  hpp, py, glsl, rb, js, sql, cif, tooldef``.
+  statistics. The default extensions used are: ``c, cc, cif, cpp, glsl, h, hh,
+  hpp, java, js, py, rb, sql``.
 
   For more information, see the :ref:`supported languages table
   <languages_table>` below.
@@ -276,6 +276,20 @@ Analysis options
   When this setting is active, whole line comments are shown in the color as of
   their author and are counted in the Lines column of the statistics output.
 
+  A comment line is either a single or multi comment line. Only full line
+  comments are considered comment lines. For instance, for Python, the following
+  line is comment line:
+
+  .. code-block:: python
+
+    # Start of variable declarations
+
+  wheras the following line is not a comment line:
+
+  .. code-block:: python
+
+    x = 1  # Initialize x
+
 ``--copy-move N``
   .. include:: opt-hard.inc
 
@@ -283,34 +297,34 @@ Analysis options
 
 Exclusion patterns
 ------------------
-Specify exclusion patterns ``PATTERN``, describing file paths, author names or
+Specify exclusion patterns ``PATTERNS``, describing file paths, author names or
 emails, revisions or commit messages that should be excluded from the
 statistics. Each exclusion option can be repeated multiple times.
 
-``--ex-file PATTERN``
+``--ex-files PATTERNS`` ``--exclude-files PATTERNS``
   Filter out files (or paths) containing any of the comma separated strings
-  in ``PATTERN``. E.g. ``--ex-file myfile,test`` excludes files ``myfile.py``
+  in ``PATTERNS``. E.g. ``--ex-file myfile,test`` excludes files ``myfile.py``
   and ``testing.c``.
 
-``--ex-author PATTERN``
+``--ex-authors PATTERNS`` ``--exclude-authors PATTERNS``
   Filter out author names containing any of the comma separated strings in
-  ``PATTERN``. E.g. ``--ex-author John`` excludes author ``John Smith``.
+  ``PATTERNS``. E.g. ``--ex-author John`` excludes author ``John Smith``.
 
-``--ex-email PATTERN``
+``--ex-emails PATTERNS``
   Filter out email addresses containing any of the comma separated strings
-  in ``PATTERN``. E.g. ``--ex-email @gmail.com`` excludes all authors with a
+  in ``PATTERNS``. E.g. ``--ex-email @gmail.com`` excludes all authors with a
   gmail address.
 
-``--ex-revision PATTERN``
+``--ex-revisions PATTERNS`` ``--exclude-revisions PATTERNS``
   Filter out revisions containing any of the comma separated hashes/SHAs
-  in ``PATTERN``. When used with short hashes, the caret ``^`` is needed to make
+  in ``PATTERNS``. When used with short hashes, the caret ``^`` is needed to make
   sure that only hashes starting with the specified string are excluded. E.g.
   ``--ex-revision ^8755fb33,^12345678`` excludes revisions
   that start with ``8755fb33`` or ``12345678``.
 
-``--ex-message PATTERN``
+``--ex-messages PATTERNS`` ``--exclude-messages PATTERNS``
   Filter out commit messages containing any of the comma separated strings
-  in ``PATTERN``. E.g. ``--ex-message bug,fix`` excludes commits from analysis
+  in ``PATTERNS``. E.g. ``--ex-message bug,fix`` excludes commits from analysis
   with commit messages such as ``Bugfix`` or ``Fixing issue #15``.
 
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and

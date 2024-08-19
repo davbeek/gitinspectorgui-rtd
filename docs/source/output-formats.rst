@@ -14,7 +14,7 @@ Available output formats
   in a single window in the system web browser. For multiple repositories, each
   repository is shown in a separate tab.
 
-  :guilabel:`Excel` tables are very similar to :guilabel:`html` tables, but have
+  :guilabel:`Excel` tables are similar to :guilabel:`html` tables, but have
   more options. Each column header in an excel table has a triangle button which
   activates a dropdown menu for sorting and filtering. For single repositories,
   the output is opened in Excel for viewing.
@@ -73,8 +73,8 @@ output follow below.
 
   :guilabel:`Lines %` = 100 :guilabel:`Lines` / :guilabel:`SumLines`
 
-  Where :guilabel:`SumLines` is the sum the values of :guilabel:`Lines` for each of
-  the :guilabel:`NrAuthors` authors of the repository.
+  Where :guilabel:`SumLines` is the sum the values of :guilabel:`Lines` for each
+  of the :guilabel:`NrAuthors` authors of the repository.
 
 :guilabel:`Insertions %`
   Percentage of insertions done by this author.
@@ -103,8 +103,8 @@ output follow below.
 
   For example:
 
-  1. When :guilabel:`Insertions` = :guilabel:`Lines`, we get maximum stability of
-     100%.
+  1. When :guilabel:`Insertions` = :guilabel:`Lines`, we get maximum stability
+     of 100%.
   2. When on average each line is changed once, then
 
     :guilabel:`Insertions` = 2 :guilabel:`Lines`
@@ -126,8 +126,8 @@ output follow below.
   :guilabel:`Age` is expressed as ``Y-M-D``, as in ``1-4-20`` meaning one year,
   4 months and 20 days old.
 
-1. The :guilabel:`Age` of an inserted line is the difference between the current time and
-   the time of the commit of the insertion.
+1. The :guilabel:`Age` of an inserted line is the difference between the current
+   time and the time of the commit of the insertion.
 2. The :guilabel:`Age` of a file is the average of
    the ages :guilabel:`Age_i` of each line inserted in the file over the
    lifetime of the file.
@@ -142,28 +142,8 @@ output follow below.
    :guilabel:`Age_n`)/:guilabel:`n`
 
    where :guilabel:`n` is the total of all lines inserted by the combination of
-   authors and files over the complete lifetime of the files, inclusing insertions in previous versions of the file
-   in the case of file renames.
-
-:guilabel:`Comments %`
-  Percentage of comment lines in the :guilabel:`Lines` owned by an author. A
-  comment line is either a single or multi comment line. Only full line comments
-  are considered comment lines. For instance, for Python, the following line is
-  comment line:
-
-  .. code-block:: python
-
-    # Start of variable declarations
-
-  wheras the following line is not a comment line:
-
-  .. code-block:: python
-
-    x = 1  # Initialize x
-
-  If we define :guilabel:`Comments` as the number of comment lines, then:
-
-  :guilabel:`Comments %` = 100 * :guilabel:`Comments` / :guilabel:`Lines`
+   authors and files over the complete lifetime of the files, inclusing
+   insertions in previous versions of the file in the case of file renames.
 
 
 Additional columns

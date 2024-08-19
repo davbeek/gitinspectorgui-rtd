@@ -241,11 +241,11 @@ N files
   In addition, for each of the N files, a blame worksheet is generated, unless
   the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
 
-File pattern
-  Show only files matching the specified pattern. If a pattern is specified, it
-  takes priority over the value of N in option :guilabel:`Show N files`, which
-  is then ignored. When a pattern is present, the :guilabel:`Show N files`
-  option is disabled.
+File patterns
+  Show only files matching any of the specified pattern. If a pattern is
+  specified, it takes priority over the value of N in option :guilabel:`Show N
+  files`, which is then ignored. When a pattern is present, the :guilabel:`Show
+  N files` option is disabled.
 
   To show all files, use the pattern ``.*``.
 
@@ -254,17 +254,18 @@ Subfolder
   and its subfolders.
 
 Since
-	Enter a date in the text box in the format 31/12/2022, or select one using the
-	:guilabel:`.` button. Only show statistics for commits more recent than the
-	given date.
+	Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are
+  optional for month and day, or select one using the :guilabel:`.` button. Only
+	show statistics for commits more recent than the given date.
 
 Until
-	Only show statistics for commits older than the given date.
+	Only show statistics for commits older than the given date. See Since for the
+	date format.
 
 Extensions
     A comma separated list of file extensions to include when computing
-    statistics. The default extensions used are: java, c, cc, cpp, h, hh,
-    hpp, py, glsl, rb, js, sql, cif, tooldef.
+    statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
+    hpp, java, js, py, rb, sql.
 
     Specifying a single ``*`` asterisk character includes files with no extension.
     Specifying two consecutive ``**`` asterisk characters includes all files
@@ -309,38 +310,50 @@ Comments
   When this setting is active, whole line comments are shown in the color as of
   their author and are counted in the Lines column of the statistics output.
 
+  A comment line is either a single or multi comment line. Only full line
+  comments are considered comment lines. For instance, for Python, the following
+  line is comment line:
+
+  .. code-block:: python
+
+    # Start of variable declarations
+
+  wheras the following line is not a comment line:
+
+  .. code-block:: python
+
+    x = 1  # Initialize x
+
 Copy move
   .. include:: opt-hard.inc
-
-
 
 
 .. _exclusion_pattern:
 
 Exclusion patterns
 ------------------
-File/Path
+Files/Paths
   Filter out files (or paths) containing any of the comma separated strings
   in the text box. E.g. ``myfile, test`` excludes files ``myfile.py`` and
   ``testing.c``.
 
-Author
+Authors
   Filter out author names containing any of the comma separated strings in
   the text box. E.g. ``John`` excludes author ``John Smith``.
 
-Email
+Emails
   Filter out email addresses containing any of the comma separated strings
   in the text box. E.g. ``@gmail.com`` excludes all authors with a gmail
   address.
 
-Revision hash
+Revision hashes
   Filter out revisions containing any of the comma separated hashes/SHAs in the
   text box. When used with short hashes, the caret ``^`` is needed to make sure
   that only hashes starting with the specified string are excluded. E.g.
   ``^8755fb33,^12345678`` excludes revisions that start with ``8755fb33`` or
   ``12345678``.
 
-Commit message
+Commit messages
   Filter out commit messages containing any of the comma separated strings in
   the text box. E.g. ``bug, fix`` excludes commits from analysis with commit
   messages such as ``Bugfix`` or ``Fixing issue #15``.
