@@ -7,7 +7,7 @@ Synopsis
 
   gitinspectorgui
     [-h]
-    [--gui | -V | --show-settings | --save | --save-as PATH | --load PATH | --reset]
+    [--gui | -V | --show | --save | --save-as PATH | --load PATH | --reset]
     [-d DEPTH] [-o FILEBASE] [--fix {prefix,postfix,nofix}]
     [-F {auto,html,excel,text}] [--show-renames | --no-show-renames]
     [--scaled-percentages | --no-scaled-percentages]
@@ -39,7 +39,7 @@ Mutually exclusive options
 ``--gui``
   Start the GUI with settings loaded from the settings file.
 
-``--show-settings``
+``--show``
   Output the location of the settings file and its values, then exit.
 
 ``--save``
