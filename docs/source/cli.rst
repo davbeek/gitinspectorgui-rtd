@@ -193,16 +193,9 @@ from the blame output.
 Inclusions and exclusions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 ``-n N`` ``--n-files N`` ``--include-n-files N``
-  Generate output for the first ``N`` files with the highest number of
-  insertions for each repository. For excel, this results in four worksheets:
-  :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
-  worksheet :guilabel:`Authors` combines the results of all files, the
-  worksheets :guilabel:`Authors-Files` and :guilabel:`Files-Authors` show
-  results per author and per file, and the worksheet :guilabel:`Files` combines
-  the results of all authors.
-
-  In addition, for each of the N files, a blame worksheet is generated, unless
-  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
+  Generate output for the ``N`` biggest files for each repository. The number of
+  files for which results are generated can be smaller than ``N`` due to files
+  being excluded by filters.
 
 ``-f PATTERNS``, ``--inc-files PATTERNS``, ``--include-files PATTERNS``
   Show only files matching any of the specified patterns. If a pattern is

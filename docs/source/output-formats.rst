@@ -42,8 +42,32 @@ Available output formats
 	Plain text with some very simple ANSI formatting.
 
 
-Output columns
---------------
+Output tabs and sheets
+----------------------
+For html and excel, output is generated in tables. Tables are divided in two
+parts: numerical analysis tables and blame tables. The format of the tables is
+described in more detail in the next sections.
+
+Numerical analysis tables
+  Shown in four tables, each table in a separate tab (html) or worksheet:
+  :guilabel:`Authors`, :guilabel:`Authors-Files` :guilabel:`Files-Authors` and
+  :guilabel:`Files`. The worksheet :guilabel:`Authors` combines the results of
+  all files, the worksheets :guilabel:`Authors-Files` and
+  :guilabel:`Files-Authors` show results per author and per file, and the
+  worksheet :guilabel:`Files` combines the results of all authors. The tables
+  show among others the total number of insertions per author, per file, or per
+  author-file combination. Also shown is the number of lines per author in the
+  final version of each file.
+
+Blame tables
+  The options :guilabel:`N files` (``--n-files``) or :guilabel:`File pattern`
+  (``--include-files``) select the files for analysis. For each of the selected
+  files, a blame tab or worksheet is generated, unless the option
+  :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
+
+
+Output columns numerical analysis tables
+----------------------------------------
 
 Default columns
 ^^^^^^^^^^^^^^^
@@ -160,3 +184,36 @@ number of authors. This is achieved by multiplying the :guilabel:`%` column by
 
 :guilabel:`Scaled insertions %`
   Scaled percentage of :guilabel:`Insertions %`.
+
+
+Output columns blame tables
+---------------------------
+:guilabel:`ID`
+  ID of the author shown in the second column. The author with ID 1 is the
+  author of the most lines in the file. The author with ID 2 is the author of
+  the second most lines in the file, and so on. The author of a line in the file
+  in a blame tab or blame sheet is the author who last changed the line. All
+  lines of the same author in the file have the same color. The first six
+  authors have unique colors, the other authors share the same color.
+
+:guilabel:`Author`
+  The name of the author of the line.
+
+:guilabel:`Date`
+  Date of the commit.
+
+:guilabel:`Message`
+  Commit message.
+
+:guilabel:`SHA`
+  Short, seven character version of the commit hash.
+
+:guilabel:`Commit number`
+  Number of the commit in the repository, starting with number 1 for the initial
+  commit. The commits or order by the time of the commit.
+
+:guilabel:`Line`
+  Line number in the file.
+
+:guilabel:`Code`
+  Code of the line.

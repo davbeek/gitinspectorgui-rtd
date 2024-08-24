@@ -230,16 +230,9 @@ List extensions
 Inclusions and exclusions
 -------------------------
 N files
-  Generate output for the first `N` files with the highest number of insertions
-  for each repository. For excel, this results in four worksheets:
-  :guilabel:`Authors`, :guilabel:`Authors-Files` and :guilabel:`Files`. The
-  worksheet :guilabel:`Authors` combines the results of all files, the worksheet
-  :guilabel:`Authors-Files` and :guilabel:`Files-Authors` show results per
-  author and per file, and the worksheet :guilabel:`Files` combines the results
-  of all authors.
-
-  In addition, for each of the N files, a blame worksheet is generated, unless
-  the option :guilabel:`Skip blame` is active, see :ref:`blame-sheets-gui`.
+  Generate output for the `N` biggest files for each repository. The number of
+  files for which results are generated can be smaller than `N` due to files
+  being excluded by filters.
 
 File patterns
   Show only files matching any of the specified pattern. If a pattern is
