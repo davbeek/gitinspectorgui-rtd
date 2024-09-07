@@ -25,6 +25,9 @@ Execute
 Clear
   Clear the console, the textual output box at the bottom.
 
+Show
+  Show the location of the settings file in the console.
+
 Save
   Save all settings specified in the GUI to the currently active settings file
   and print this file name to the console, see the above figure.
@@ -148,7 +151,7 @@ Output generation and formatting
 Output formats
 ^^^^^^^^^^^^^^
 Selects for which file formats output is generated. Available choices are
-:guilabel:`auto`, :guilabel:`html`, :guilabel:`excel` and :guilabel:`text`. For
+:guilabel:`auto`, :guilabel:`html` and :guilabel:`excel`. For
 more information on the output formats, see :doc:`output-formats`.
 
 .. _blame-sheets-gui:
@@ -195,8 +198,7 @@ in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
 omit exclusions` is active, the blame sheets omit the excluded lines from the
 blame output.
 
-
-Skip blame
+Blame skip
   Do not output html blame tabs or Excel blame sheets.
 
 Viewer
@@ -221,10 +223,6 @@ Dry run
     not write any output files and do not open any viewers.
   - 2: Do not perform any analysis and do not produce any file or viewer output,
     but do print output lines to the console.
-
-List extensions
-  Output a list of file extensions used in the current branch of the
-  repository.
 
 
 Inclusions and exclusions

@@ -6,18 +6,15 @@ Synopsis
 .. code:: text
 
   gitinspectorgui
-    [-h]
-    [--gui | -V | --show | --save | --save-as PATH | --load PATH | --reset]
+    [-h | --gui | -V | --show | --save | --save-as PATH | --load PATH | --reset]
     [-d DEPTH] [-o FILEBASE] [--fix {prefix,postfix,nofix}]
-    [-F {auto,html,excel,text}] [--show-renames | --no-show-renames]
+    [-F {auto,html,excel}] [--show-renames | --no-show-renames]
     [--scaled-percentages | --no-scaled-percentages]
     [--blame-omit-exclusions | --no-blame-omit-exclusions]
-    [--skip-blame | --no-skip-blame] [--viewer {auto,none}] [-v]
-    [--dry-run {0,1,2}]
-    [-l | --list-extensions | --no-list-extensions]
-    [-n N | -f PATTERNS] [--subfolder SUBFOLDER] [--since SINCE]
-    [--until UNTIL] [-e EXTENSIONS] [--deletions | --no-deletions]
-    [--whitespace | --no-whitespace]
+    [--blame-skip | --no-blame-skip] [--viewer {auto,none}] [-v]
+    [--dry-run {0,1,2}] [-n N | -f PATTERNS] [--subfolder SUBFOLDER]
+    [--since SINCE] [--until UNTIL] [-e EXTENSIONS]
+    [--deletions | --no-deletions] [--whitespace | --no-whitespace]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
     [--copy-move N] [--multi-thread | --no-multi-thread]
     [--multi-core | --no-multi-core] [--ex-files PATTERNS]
@@ -35,6 +32,9 @@ file. They start by loading the settings from the settings file.
 
 Mutually exclusive options
 --------------------------
+
+``-h`` ``--help``
+  Display help and exit. This has priority over the other settings.
 
 ``--gui``
   Start the GUI with settings loaded from the settings file.
@@ -111,7 +111,7 @@ Output formats
 ^^^^^^^^^^^^^^
 ``-F FORMAT`` ``--format FORMAT``
   Selects for which file formats output is generated. Available choices are
-  ``auto``, ``html``, ``excel`` and ``text``. To select more than one output
+  ``auto``, ``html``and ``excel``. To select more than one output
   format, repeat the option, e.g. ``-F html -F excel``.
   For more information on the output formats, see :doc:`output-formats`.
 
@@ -159,10 +159,8 @@ in the blame sheets as white, uncolored lines. When the option
 ``--blame-omit-exclusions`` is active, the blame sheets omit the excluded lines
 from the blame output.
 
-``--skip-blame``
+``--blame-skip``
   Do not output html blame tabs or Excel blame sheets.
-
-
 
 ``--viewer {auto,none}``
 
@@ -183,11 +181,6 @@ from the blame output.
     not write any output files and do not open any viewers.
   - 2: Do not perform any analysis and do not produce any file or viewer output,
     but do print output lines to the console.
-
-``-l`` ``--extensions-list`` ``--no-extensions-list``
-  Output a list of file extensions used in the current branch of the
-  repository.
-
 
 
 Inclusions and exclusions

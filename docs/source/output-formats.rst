@@ -38,9 +38,6 @@ Available output formats
   When :guilabel:`auto` is selected, the other output formats are automatically
   deselected.
 
-:guilabel:`text`
-	Plain text with some very simple ANSI formatting.
-
 
 Output tabs and sheets
 ----------------------
