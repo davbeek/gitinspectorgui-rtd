@@ -10,4 +10,5 @@ GitinspectorGUI documentation
   cli
   output-formats
   FAQ <faq>
+  changelog
   develop
