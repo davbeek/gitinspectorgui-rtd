@@ -9,7 +9,7 @@
 project = "GitinspectorGUI"
 author = "GitinspectorGUI Team"
 copyright = "GitinspectorGUI Team"
-version = "0.1"
+version = "0.3"
 release = version
 
 # -- General configuration ---------------------------------------------------
