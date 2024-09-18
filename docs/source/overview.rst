@@ -1,8 +1,8 @@
 Overview
 ========
 
-Summary of main features
-------------------------
+Features
+--------
 The Python ``gitinspectorgui`` tool facilitates detailed quantitative analysis
 of the contribution of each author to selected repositories.
 
