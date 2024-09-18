@@ -47,7 +47,8 @@ licensed. We are working on an additional GUI interface based on `DearPyGUI
 GitinspectorGUI team
 --------------------
 For the first few years, all development work based on the GPL3 gitinspector
-version from Adam Waldenberg has been done by Jingjing Wang. The rewrite to the
-MIT version was done by Bert van Beek. Work on GitinspectorGUI is part of the
+version from Adam Waldenberg was done by Jingjing Wang. The rewrite to the
+MIT version was done by Bert van Beek, with additional contributions from Albert
+Hofkamp. Work on GitinspectorGUI is part of the
 TU/e BOOST project `Time and Place Independent Learning
 <https://boost.tue.nl/projects/ict-tools-to-support-tpil-in-project-groups/>`_.
