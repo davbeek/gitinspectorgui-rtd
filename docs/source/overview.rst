@@ -1,12 +1,34 @@
 Overview
 ========
 
-Introduction
-------------
-The Python ``gitinspectorgui`` tool facilitates detailed quantative analysis of
-the contribution of each author to selected repositories. The tool comes with a
-GUI (Graphical User Interface) and CLI (Command Line Interface) interface.
-Executable apps are available for Mac and Windows.
+Summary of main features
+------------------------
+The Python ``gitinspectorgui`` tool facilitates detailed quantitative analysis
+of the contribution of each author to selected repositories.
+
+HTML and Excel backends
+  The html and Excel backends provide detailed Git statistics:
+
+  - per author
+  - per author subdivided by file
+  - per file subdivided by author
+  - per file
+
+  They also provide detailed blame information for each file. All output lines
+  are colored by author, allowing for easy visual inspection and tracking of
+  author contributions.
+
+GUI and CLI interface
+  The GUI and CLI interface have the same options and functionality.
+
+Available as executable app and PyPI package
+  Executable apps with GUI interface are available for macOS and Windows. In
+  addition, a Python package can be installed from PyPI.
+
+Download and installation
+-------------------------
+For download and installation instructions, see the `GitinspectorGUI GitHub
+website <https://github.com/davbeek/gitinspectorgui>`_.
 
 Origin
 ------
@@ -14,20 +36,6 @@ Development of GitinspectorGUI started as an update and extension of the
 `gitinspector <https://github.com/ejwa/gitinspector>`_ CLI tool by Adam
 Waldenberg. Recently, GitinspectorGUI has been completely rewritten and no
 longer uses any code from the gitinspector tool.
-
-Summary of main features
-------------------------
-GUI and CLI interface
-  The GUI and CLI interface have the same options and functionality.
-
-Excel backend
-  The Excel backend gives git statistics per author, per author subdivided by
-  file, per file subdivided by author, and per file. It also provided detailed
-  blame information for each file.
-
-Available as executable app and PyPI package
-  Executable apps with GUI interface are available for Mac and Windows. In
-  addition, a Python package can be installed from PyPI.
 
 License
 -------

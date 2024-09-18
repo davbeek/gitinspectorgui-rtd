@@ -1,7 +1,7 @@
 Frequently Asked Questions
 ==========================
 
-The html output window is blank. What should I do?
+What to do when the html output window is blank?
   - This can occur when you are not properly connected to the internet. Check
     your internet connection and try again.
   - If you are connected to the internet, close the blank output window and
@@ -10,4 +10,4 @@ The html output window is blank. What should I do?
     sheets are downloaded, they are be stored in the brower's cache and the
     output window should display the html content.
   - Note that the output window that opens when the output format is set to
-    :guilabel:`auto` is also html output window.
+    :guilabel:`auto` is also an html output window.
