@@ -1,11 +1,11 @@
-Output formats
-==============
+Output
+======
 Multiple output formats can be selected, resulting in a separate output file for
 every selected format. See the :ref:`GUI documentation <output-formats-gui>` or
 :ref:`CLI documentation <output-formats-cli>` for information on this option.
 
-Available output formats
-------------------------
+Output formats and viewers
+--------------------------
 :guilabel:`html` and :guilabel:`excel`
   Output is generated in the form of tables and saved in a file per repository.
 
@@ -39,11 +39,14 @@ Available output formats
   deselected.
 
 
-Output tabs and sheets
-----------------------
-For html and excel, output is generated in tables. Tables are divided in two
-parts: numerical analysis tables and blame tables. The format of the tables is
-described in more detail in the next sections.
+Output tables
+-------------
+For html and excel, output is generated in tables. Html tables are show in a
+browser window
+
+
+There are two kinds of tables: numerical analysis tables and blame tables. The
+format of the tables is described in more detail in the next sections.
 
 Numerical analysis tables
   Shown in four tables, each table in a separate tab (html) or worksheet:
@@ -63,8 +66,8 @@ Blame tables
   :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
 
 
-Output columns numerical analysis tables
-----------------------------------------
+Numerical analysis tables
+-------------------------
 
 Default columns
 ^^^^^^^^^^^^^^^
@@ -183,8 +186,9 @@ number of authors. This is achieved by multiplying the :guilabel:`%` column by
   Scaled percentage of :guilabel:`Insertions %`.
 
 
-Output columns blame tables
----------------------------
+Blame tables
+------------
+
 :guilabel:`ID`
   ID of the author shown in the second column. The author with ID 1 is the
   author of the most lines in the file. The author with ID 2 is the author of

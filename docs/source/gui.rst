@@ -25,31 +25,11 @@ Execute
 Clear
   Clear the console, the textual output box at the bottom.
 
-Show
-  Show the location of the settings file in the console.
-
-Save
-  Save all settings specified in the GUI to the currently active settings file
-  and print this file name to the console, see the above figure.
-
-Save As
-  Save the settings specified in the GUI to another file. This file becomes the
-  currently active settings file.
-
-Load
-  Open a browse dialog to select a settings file to load. This file becomes the
-  currently active settings file.
-
-Reset
-  Reset all settings to their default values and reset the location of the
-  currently active settings file to its default, operating system dependent,
-  location.
+Help
+  Prints a few lines op help output in the console.
 
 About
   Opens a dialog with information about the application.
-
-Help
-  Prints a few lines op help output in the console.
 
 Exit
   Leave the GUI.
@@ -150,20 +130,45 @@ Output generation and formatting
 
 Output formats
 ^^^^^^^^^^^^^^
-Selects for which file formats output is generated. Available choices are
-:guilabel:`auto`, :guilabel:`html` and :guilabel:`excel`. For
-more information on the output formats, see :doc:`output-formats`.
+Tick box :guilabel:`view` defines whether a viewer is opened on the analysis
+results. The other tick boxes define for which file formats output is generated.
+Available output formats are :guilabel:`html` and :guilabel:`excel`. For more
+information on the output formats, see :doc:`output-formats`.
 
 .. _blame-sheets-gui:
 
-Options
-^^^^^^^
+Blame options
+^^^^^^^^^^^^^
 .. note::
 
   A blame worksheet or html blame tab shows the contents of a file and indicates
   for each line in the file in which commit the line was last changed, at which
   date and by which author. The color of the line indicates the author of the
-  last change. The blame output is generated for each file that is analysed.
+  last change. The blame output is generated for each file that is analyzed.
+
+Blame exclusions
+  By means of this option, excluded blame lines can be hidden or shown or
+  removed from the blame output.
+
+  Blame lines can be excluded for three reasons:
+
+  1. The author of the blame line is excluded by the :guilabel:`Author`
+     :guilabel:`Exclusion pattern`.
+  2. The blame line is a comment line. By default, comment lines are excluded.
+     They can be included by the option :guilabel:`Comments`.
+  3. The blame line is an empty line. By default, empty lines are excluded. They
+     can be included by the option :guilabel:`Empty lines`.
+
+Excluded lines are not attributed to their author as blame lines. They are shown
+in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
+omit exclusions` is active, the blame sheets omit the excluded lines from the
+blame output.
+
+Blame skip
+  Do not output html blame tabs or Excel blame sheets.
+
+Options
+^^^^^^^
 
 Show renames
   Show previous file names and alternative author names and emails in the
@@ -183,32 +188,6 @@ Scaled percentages
   column :guilabel:`Scaled changes %`, which equals the value of
   :guilabel:`Changes %` multiplied by the number of authors in the repository.
 
-Blame omit exclusions
-  Blame lines can be excluded for three reasons:
-
-  1. The author of the blame line is excluded by the :guilabel:`Author`
-     :guilabel:`Exclusion pattern`.
-  2. The blame line is a comment line. By default, comment lines are excluded.
-     They can be included by the option :guilabel:`Comments`.
-  3. The blame line is an empty line. By default, empty lines are excluded. They
-     can be included by the option :guilabel:`Empty lines`.
-
-Excluded lines are not attributed to their author as blame lines. They are shown
-in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
-omit exclusions` is active, the blame sheets omit the excluded lines from the
-blame output.
-
-Blame skip
-  Do not output html blame tabs or Excel blame sheets.
-
-Viewer
-  Select :guilabel:`auto` or :guilabel:`none`.
-
-  * :guilabel:`auto`: open the viewer for the selected output format as
-    specified in the :ref:`output-formats-gui` section.
-
-  * :guilabel:`none`: never open any viewer.
-
 Debug
   - 0: No debug output (default).
   - 1: Show debug output in the console. Corresponds to the ``-v`` option
@@ -216,13 +195,33 @@ Debug
   - 2: Show more detailed debug output in the console. Corresponds to the
     ``-vv`` option in the CLI.
 
-
 Dry run
   - 0: Normal analysis and output (default).
   - 1: Perform all required analysis and show the output in the console, but do
     not write any output files and do not open any viewers.
   - 2: Do not perform any analysis and do not produce any file or viewer output,
     but do print output lines to the console.
+
+
+Settings
+--------
+Save
+  Save all settings specified in the GUI to the currently active settings file
+  and print this file name to the console, see the above figure.
+
+Save As
+  Save the settings specified in the GUI to another file. This file becomes the
+  currently active settings file.
+
+Load
+  Open a browse dialog to select a settings file to load. This file becomes the
+  currently active settings file.
+
+Reset
+  Reset all settings to their default values and reset the location of the
+  currently active settings file to its default, operating system dependent,
+  location.
+
 
 
 Inclusions and exclusions
@@ -242,7 +241,8 @@ File patterns
 
 Subfolder
   Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders.
+  and its subfolders. Remove the subfolder from the path of the files in the
+  output.
 
 Since
   Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are

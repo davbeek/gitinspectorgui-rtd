@@ -5,9 +5,9 @@ GitinspectorGUI documentation
   :maxdepth: 2
 
   overview
-  gui
-  cli
-  output-formats
+  GUI <gui>
+  CLI <cli>
+  output
   FAQ <faq>
   changelog
   develop

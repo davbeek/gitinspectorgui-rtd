@@ -20,18 +20,19 @@
         ],
     },
     //
-    // "esbonio.logging.level": "debug",
-    "esbonio.logging.level": "warning",
     // "esbonio.logging.level": "error",
-    // "esbonio.logging.level": "info",
+    // "esbonio.logging.level": "warning",
+    "esbonio.logging.level": "info",
+    // "esbonio.logging.level": "debug",
     "esbonio.server.enabled": true,
     "esbonio.sphinx.buildCommand": [
         "sphinx-build",
         "-M",
         "html",
         "docs/source",
-        "_build"
+        "_build",
     ],
+    "esbonio.sphinx.pythonCommand": ["/Users/dvbeek/miniconda3/bin/python"],
     //
     "evenBetterToml.semanticTokens": false,
     //

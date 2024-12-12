@@ -203,7 +203,8 @@ Inclusions and exclusions
 
 ``--subfolder``
   Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders.
+  and its subfolders. Remove the subfolder from the path of the files in the
+  output.
 
 ``--since DATE``
   Only show statistics for commits more recent than a specific date. The
