@@ -6,25 +6,29 @@ Synopsis
 .. code:: text
 
   gitinspectorgui
-    [-h | --gui | -V | --show | --save | --save-as PATH | --load PATH | --reset]
-    [-d DEPTH] [-o FILEBASE] [--fix {prefix,postfix,nofix}]
-    [-F {auto,html,excel}] [--show-renames | --no-show-renames]
+    [-h]
+    [--gui | --show | --save | --save-as PATH | --load PATH | --reset | -V | --about]
+    [-d DEPTH] [--subfolder SUBFOLDER] [-n [N]] [-f [PATTERNS ...]]
+    [-o FILE_BASE] [--fix {prefix,postfix,nofix}]
+    [--view | --no-view] [-F [FORMAT ...]]
+    [--show-renames | --no-show-renames]
+    [--deletions | --no-deletions]
     [--scaled-percentages | --no-scaled-percentages]
-    [--blame-omit-exclusions | --no-blame-omit-exclusions]
-    [--blame-skip | --no-blame-skip] [--viewer {auto,none}] [-v]
-    [--dry-run {0,1,2}] [-n N | -f PATTERNS] [--subfolder SUBFOLDER]
-    [--since SINCE] [--until UNTIL] [-e EXTENSIONS]
-    [--deletions | --no-deletions] [--whitespace | --no-whitespace]
+    [--blame-history {none,dynamic,static}]
+    [--blame-exclusions {hide,show,remove}] [--copy-move N]
+    [--blame-skip | --no-blame-skip]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
-    [--copy-move N] [--multi-thread | --no-multi-thread]
-    [--multi-core | --no-multi-core] [--ex-files PATTERNS]
-    [--ex-authors PATTERNS] [--ex-emails PATTERNS]
-    [--ex-revisions PATTERNS] [--ex-messages PATTERNS] [--profile N]
+    [--whitespace | --no-whitespace] [--since SINCE] [--until UNTIL]
+    [-v] [--dry-run {0,1,2}] [-e [EXTENSIONS ...]]
+    [--multithread | --no-multithread] [--multicore | --no-multicore]
+    [--ex-files [PATTERNS ...]] [--ex-authors [PATTERNS ...]]
+    [--ex-emails [PATTERNS ...]] [--ex-revisions [PATTERNS ...]]
+    [--ex-messages [PATTERNS ...]] [--profile N]
     [PATH ...]
 
 Overview
 --------
-The command line interface (CLI) can be used to start the GUI or to analyse
+The command line interface (CLI) can be used to start the GUI or to analyze
 repositories directly from the command line. GUI and CLI share the same settings
 file. They start by loading the settings from the settings file.
 
@@ -113,7 +117,7 @@ Output formats
   Selects for which file formats output is generated. Available choices are
   ``auto``, ``html``and ``excel``. To select more than one output
   format, repeat the option, e.g. ``-F html -F excel``.
-  For more information on the output formats, see :doc:`output-formats`.
+  For more information on the output formats, see :doc:`output`.
 
 .. _blame-sheets-cli:
 
@@ -278,7 +282,7 @@ Analysis options
     x = 1  # Initialize x
 
 ``--copy-move N``
-  .. include:: opt-hard.inc
+  .. include:: opt-copy-move.inc
 
 
 

@@ -2,17 +2,27 @@ This option, with values from 0 to 4, affects only the Excel blame worksheets:
 
 0. Do not detect moved or copied lines. This means that the author that moves or
    copies a set of lines becomes the new author of the lines.
+
 1. Detect moved or copied lines within a file. This means that the (original)
-   author of the lines that are moved or copied remains the author of the
-   lines, independently of whoever copies or moves the lines.
+   author of the lines that are moved or copied remains the author of the lines,
+   independently of whoever copies or moves the lines. This is the default.
+
 2. Follow moved or copied lines across files. Consider as potential origin of a
    set of lines only files that were changed in the same commit.
+
 3. Same as 2, but in addition, consider as potential origin of a set of lines
    also the files of the commit that created the file containing the set of
    lines.
+
 4. Same as 3, but consider as potential origin of a set of lines also the files
    of all other commits. This can be a very expensive operation for large
    projects.
+
+.. warning::
+
+    The value of 4 for the ``--copy-move`` option can be extremely slow for
+    large repositories. The values 2 and 3 can also be slow for large
+    repositories with many commits. The default value 1 is usually fast.
 
 For more information, see `git blame <https://www.mankier.com/1/git-blame#-M>`_.
 The option corresponds to the ``-M`` and ``-C`` options of the ``git blame``
@@ -31,7 +41,7 @@ The ``--copy-move`` option does not affect the value of insertions and deletions
 in the statistics worksheets :guilabel:`Authors`,
 :guilabel:`Authors-Files`, :guilabel:`Files-Authors` and :guilabel:`Files`.
 
-The problem is that even tough ``git log --follow``, which is used by
+The problem is that even though ``git log --follow``, which is used by
 gitinspectorgui to calculate insertions and deletions, does detect file
 rename and copy operations, it does not detect moved or copied lines. Insertions
 and deletions are always attributed to the author who does the change, even if

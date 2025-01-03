@@ -14,7 +14,7 @@ The two main parts of the GUI are:
 1. The input part where the options are defined. This part can
    be scrolled up and down using the top scroll bar at the right.
 2. The console output part, where progress output is presented to the user
-   while the repositories are analysed. The console has its own scrollbar.
+   while the repositories are analyzed. The console has its own scrollbar.
 
 Top row buttons
 ---------------
@@ -46,6 +46,31 @@ Percentage box
   of the input part is adjusted to the percentage value.
 
 
+General guidelines
+------------------
+There are seven input fields in the GUI where space separated patterns can be
+entered:
+
+- Input folder path
+- Include files: File patterns
+- Five input fields for exclusion patterns
+
+
+
+Quotes ``""`` or ``''``
+^^^^^^^^^^^^^^^^^^^^^^^
+In the input fields, quotes are needed to include spaces in a pattern. For
+example, to exclude the authors John Smith and Mary in the Author exclusion
+input field, the pattern should be entered as ``"John Smith" Mary``.
+
+Asterisk ``*``
+^^^^^^^^^^^^^^^
+The asterisk ``*`` is a wildcard character that matches zero or more characters,
+just like in the shell. For example, to exclude all files with the extension
+``.py``, the pattern should be entered as ``*.py``.
+
+
+
 IO configuration
 ----------------
 Input folder path
@@ -58,12 +83,8 @@ Input folder path is a repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. figure:: _files/gui-repo-select.png
 
-If the input folder path is a repository, that repository is analysed and no
-search for addtional repositories takes place.
-
-Output file base
-  The output filename without extension and without directories, default
-  ``gitinspect``. See bottom right of the IO configuration panel.
+If the input folder path is a repository, that repository is analyzed and no
+search for additional repositories takes place.
 
 Output file path
   The output file path depends on the selected output prepostfix (see next
@@ -85,6 +106,25 @@ Output prepostfix
 Search depth
   Disabled and ignored in this case.
 
+Output file base
+  The output filename without extension and without directories, default
+  ``gitinspect``.
+
+Subfolder
+  Restrict analysis of the files of the repository to the files in this folder
+  and its subfolders. Remove the subfolder from the path of the files in the
+  output.
+
+N files
+  Generate output for the `N` biggest files for each repository. The number of
+  files for which results are generated can be smaller than `N` due to files
+  being excluded by filters. Leave the field empty or set it to zero to show all
+  files.
+
+File patterns
+  Show only files matching any of the space separated patterns. When the pattern
+  is empty, the N largest files specified by option N files are shown.
+
 
 Input folder path is a folder but not a repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -92,7 +132,7 @@ Input folder path is a folder but not a repository
 
 If the input folder path is not a repository, all folder and subfolders up to
 the value of the :guilabel:`Search depth` option are searched for repositories
-and the repositories found are analysed. The output file for each repository
+and the repositories found are analyzed. The output file for each repository
 found is placed in the parent directory of the repository.
 
 Output file base
@@ -106,22 +146,15 @@ Output file path
 Output prepostfix
   For the values :guilabel:`Postfix with repo` and :guilabel:`Prefix with repo`,
   the output file path for each repository found is as specified for the case
-  :ref:`input-is-repo`.
-
-  The value :guilabel:`No prefix or postfix` behaves differently. For this
-  option, only a single output file is generated in the input folder path.
-
-  The contents of this file is depends on the output format.
-
-  For output format Excel, the Excel file contains the analysis results for each
-  individual repository seperated from the other repositories in a single Excel
-  file. Each worksheet has an additional column which specifies the name of the
-  repository. No blame worksheets are generated.
+  :ref:`input-is-repo`. The value :guilabel:`No prefix or postfix` is disabled
+  in this case.
 
 Search depth
   Positive integer value that represents the number of levels of subfolders
   that is searched for repositories, *default* ``5``. For depth ``1``, only
-  the repository in the input folder path, if present, is analysed.
+  the repository in the input folder path, if present, is analyzed.
+
+The remaining options are as specified for the case :ref:`input-is-repo`.
 
 
 Output generation and formatting
@@ -133,7 +166,37 @@ Output formats
 Tick box :guilabel:`view` defines whether a viewer is opened on the analysis
 results. The other tick boxes define for which file formats output is generated.
 Available output formats are :guilabel:`html` and :guilabel:`excel`. For more
-information on the output formats, see :doc:`output-formats`.
+information on the output formats, see :doc:`output`.
+
+Statistic output
+^^^^^^^^^^^^^^^^
+These options define the columns that are shown in the output of the four first
+tables: Authors, Authors-Files, Files-Authors and Files.
+
+Show renames
+  Show previous file names and alternative author names and emails in the
+  output.
+
+  Some authors use multiple names and emails in various commits.
+  Gitinspectorgui can detect this if there is overlap in either the name or
+  email in author-email combinations in commits. If show-renames is active, all
+  names and emails of each author are shown. If inactive, only a single name and
+  email are shown per author.
+
+  For files that have been renamed at some point in their history, all previous
+  names are shown in the output.
+
+Deletions
+  Include a column for number of deleted lines in the output. This does not
+  affect the blame output, because deleted lines cannot be shown. The default is
+  not to include deletions.
+
+Scaled %
+  For each column with output in percentages, e.g. :guilabel:`% Insertions`, add
+  a column :guilabel:`% Scaled insertions`, which equals the value of
+  :guilabel:`% Insertions` multiplied by the number of authors in the
+  repository.
+
 
 .. _blame-sheets-gui:
 
@@ -146,7 +209,37 @@ Blame options
   date and by which author. The color of the line indicates the author of the
   last change. The blame output is generated for each file that is analyzed.
 
-Blame exclusions
+History
+  Values for the history option are:
+
+  - :guilabel:`none` (default). The generated blame sheets show the lines of
+    each file as they are in the latest commit.
+
+  - :guilabel:`dynamic` and :guilabel:`static`. The top line of the blame sheet
+    for each file shows all commits that have changed the file. The user can
+    select a commit from the list to see the file as it was at that commit. The
+    blame sheet then shows the file as it was at that commit, with the lines
+    colored according to the author of the last change to that line. The
+    differences between the :guilabel:`dynamic` and :guilabel:`static` modes
+    are:
+
+    In the dynamic mode, the blame sheet is generated on the fly when the user
+    selects a commit from the list. When this mode is selected in the GUI,
+    automatically the view option is set to true and the output formats html and
+    excel are set the false. These options are then also disabled. Although the
+    dynamic mode cannot be used in the GUI, it can be selected and saved, and
+    then used in the CLI.
+
+    In the static mode, the blame sheets for all commits in the top list are
+    generated when the analysis is started and all generated blame sheets are
+    embedded in the generated html file. When this mode is selected in the GUI,
+    automatically the  output formats html and excel and set to true and false,
+    respectively and both are disabled.
+
+    When the blame history option is reset to :guilabel:`none`, the options
+    view, html and excel are enabled.
+
+Exclusions
   By means of this option, excluded blame lines can be hidden or shown or
   removed from the blame output.
 
@@ -164,118 +257,14 @@ in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
 omit exclusions` is active, the blame sheets omit the excluded lines from the
 blame output.
 
+Copy move
+  .. include:: opt-copy-move.inc
+
 Blame skip
   Do not output html blame tabs or Excel blame sheets.
 
-Options
-^^^^^^^
-
-Show renames
-  Show previous file names and alternative author names and emails in the
-  output.
-
-  Some authors use multiple names and emails in various commits.
-  Gitinspectorgui can detect this if there is overlap in either the name or
-  email in author-email combinations in commits. If show-renames is active, all
-  names and emails of each author are shown. If inactive, only a single name and
-  email are shown per author.
-
-  For files that have been renamed at some point in their history, all previous
-  names are shown in the output.
-
-Scaled percentages
-  For each column with output in percentages, e.g. :guilabel:`Changes %`, add a
-  column :guilabel:`Scaled changes %`, which equals the value of
-  :guilabel:`Changes %` multiplied by the number of authors in the repository.
-
-Debug
-  - 0: No debug output (default).
-  - 1: Show debug output in the console. Corresponds to the ``-v`` option
-    in the CLI.
-  - 2: Show more detailed debug output in the console. Corresponds to the
-    ``-vv`` option in the CLI.
-
-Dry run
-  - 0: Normal analysis and output (default).
-  - 1: Perform all required analysis and show the output in the console, but do
-    not write any output files and do not open any viewers.
-  - 2: Do not perform any analysis and do not produce any file or viewer output,
-    but do print output lines to the console.
-
-
-Settings
---------
-Save
-  Save all settings specified in the GUI to the currently active settings file
-  and print this file name to the console, see the above figure.
-
-Save As
-  Save the settings specified in the GUI to another file. This file becomes the
-  currently active settings file.
-
-Load
-  Open a browse dialog to select a settings file to load. This file becomes the
-  currently active settings file.
-
-Reset
-  Reset all settings to their default values and reset the location of the
-  currently active settings file to its default, operating system dependent,
-  location.
-
-
-
-Inclusions and exclusions
--------------------------
-N files
-  Generate output for the `N` biggest files for each repository. The number of
-  files for which results are generated can be smaller than `N` due to files
-  being excluded by filters.
-
-File patterns
-  Show only files matching any of the specified pattern. If a pattern is
-  specified, it takes priority over the value of N in option :guilabel:`Show N
-  files`, which is then ignored. When a pattern is present, the :guilabel:`Show
-  N files` option is disabled.
-
-  To show all files, use the pattern ``.*``.
-
-Subfolder
-  Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders. Remove the subfolder from the path of the files in the
-  output.
-
-Since
-  Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are
-  optional for month and day, or select one using the :guilabel:`.` button. Only
-  show statistics for commits more recent than the given date.
-
-Until
-	Only show statistics for commits older than the given date. See Since for the
-	date format.
-
-Extensions
-  A comma separated list of file extensions to include when computing
-  statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
-  hpp, java, js, py, rb, sql.
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
-
-
-
-
-
-
-Analysis options
-----------------
-Deletions
-  Include a column for Deletions in the output. This does not affect the blame
-  output, because deleted lines cannot be shown. The default is not to include
-  deletions.
-
-Whitespace
-    Include whitespace changes in the statistics. This affects the statics and
-    the blame output. The default setting is to ignore whitespace changes.
+Blame inclusions
+^^^^^^^^^^^^^^^^
 
 Empty lines
   Include empty lines in the blame calculations. This affects the color of the
@@ -308,44 +297,106 @@ Comments
 
     # Start of variable declarations
 
-  wheras the following line is not a comment line:
+  whereas the following line is not a comment line:
 
   .. code-block:: python
 
     x = 1  # Initialize x
 
-Copy move
-  .. include:: opt-hard.inc
 
+General options
+---------------
+Whitespace
+    Include whitespace changes in the statistics. This affects the statics and
+    the blame output. The default setting is to ignore whitespace changes.
+
+Multithread
+    Use multiple threads to analyze the repositories. The default is to use a
+    single thread.
+
+Since
+  Enter a date in the text box in the format YYYY-MM-DD, where leading zeros are
+  optional for month and day, or select one using the :guilabel:`.` button. Only
+  show statistics for commits more recent than the given date.
+
+Until
+	Only show statistics for commits older than the given date. See Since for the
+	date format.
+
+Verbosity
+  - 0: No debug output (default).
+  - 1: Show debug output in the console. Corresponds to the ``-v`` option
+    in the CLI.
+  - 2: Show more detailed debug output in the console. Corresponds to the
+    ``-vv`` option in the CLI.
+
+Dry run
+  - 0: Normal analysis and output (default).
+  - 1: Perform all required analysis and show the output in the console, but do
+    not write any output files and do not open any viewers.
+  - 2: Do not perform any analysis and do not produce any file or viewer output,
+    but do print output lines to the console.
+
+Extensions
+  A comma separated list of file extensions to include when computing
+  statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
+  hpp, java, js, py, rb, sql.
+  Specifying a single ``*`` asterisk character includes files with no extension.
+  Specifying two consecutive ``**`` asterisk characters includes all files
+  regardless of extension.
+
+
+Settings
+--------
+Save
+  Save all settings specified in the GUI to the currently active settings file
+  and print this file name to the console, see the above figure.
+
+Save As
+  Save the settings specified in the GUI to another file. This file becomes the
+  currently active settings file.
+
+Load
+  Open a browse dialog to select a settings file to load. This file becomes the
+  currently active settings file.
+
+Reset
+  Reset all settings to their default values and reset the location of the
+  currently active settings file to its default, operating system dependent,
+  location.
+
+Toggle
+  Toggle the representation of the settings file between the name and the full
+  path.
 
 .. _exclusion_pattern:
 
 Exclusion patterns
 ------------------
 Files/Paths
-  Filter out files (or paths) containing any of the comma separated strings
-  in the text box. E.g. ``myfile, test`` excludes files ``myfile.py`` and
+  Filter out files that match containing any of the space separated strings
+  in the text box. E.g. ``myfile.py test*`` excludes files ``myfile.py`` and
   ``testing.c``.
 
 Authors
-  Filter out author names containing any of the comma separated strings in
-  the text box. E.g. ``John`` excludes author ``John Smith``.
+  Filter out author names that match any of the space separated strings in
+  the text box. E.g. ``"John Smith"`` excludes author ``John Smith`` and ``John
+  Smith`` excludes author ``John`` and author ``Smith``.  The quotes are needed
+  to include spaces in a pattern.
 
 Emails
-  Filter out email addresses containing any of the comma separated strings
-  in the text box. E.g. ``@gmail.com`` excludes all authors with a gmail
+  Filter out email addresses taht match any of the space separated strings
+  in the text box. E.g. ``*@gmail.com`` excludes all authors with a gmail
   address.
 
 Revision hashes
-  Filter out revisions containing any of the comma separated hashes/SHAs in the
-  text box. When used with short hashes, the caret ``^`` is needed to make sure
-  that only hashes starting with the specified string are excluded. E.g.
-  ``^8755fb33,^12345678`` excludes revisions that start with ``8755fb33`` or
-  ``12345678``.
+  Filter out revisions that start with any of the space separated hashes/SHAs in
+  the text box. E.g. ``8755fb 1234567`` excludes revisions that start with
+  ``8755fb`` or ``1234567``.
 
 Commit messages
-  Filter out commit messages containing any of the comma separated strings in
-  the text box. E.g. ``bug, fix`` excludes commits from analysis with commit
+  Filter out commit messages that match any of the space separated strings in
+  the text box. E.g. ``bug* fix`` excludes commits from analysis with commit
   messages such as ``Bugfix`` or ``Fixing issue #15``.
 
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
