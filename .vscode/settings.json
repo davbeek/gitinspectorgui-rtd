@@ -8,17 +8,11 @@
     //  - trailing: Render only trailing whitespace characters.
     //  - all
     "editor.formatOnSave": true,
+    //
     "editor.renderWhitespace": "boundary",
     "editor.rulers": [
-        88,
+        88
     ],
-    "[restructuredtext]": {
-        "editor.tabSize": 2,
-        "editor.rulers": [
-            80,
-            88
-        ],
-    },
     //
     // "esbonio.logging.level": "error",
     // "esbonio.logging.level": "warning",
@@ -30,9 +24,11 @@
         "-M",
         "html",
         "docs/source",
-        "_build",
+        "_build"
     ],
-    "esbonio.sphinx.pythonCommand": ["/Users/dvbeek/miniconda3/bin/python"],
+    "esbonio.sphinx.pythonCommand": [
+        "/Users/dvbeek/miniconda3/bin/python"
+    ],
     //
     "evenBetterToml.semanticTokens": false,
     //
@@ -44,10 +40,15 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     //
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    //
     "isort.args": [
         "--profile",
         "black"
     ],
+    //
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
@@ -58,7 +59,7 @@
         // required for isort, see setting "isort.args"
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
-        },
+        }
     },
     // analysis.include works much better than analysis.exclude to prevent unwanted analysis
     "python.analysis.include": [
@@ -85,9 +86,24 @@
     // Trace: = Information + ?????
     "python.analysis.logLevel": "Information",
     //
+    "[restructuredtext]": {
+        "editor.tabSize": 2,
+        "editor.rulers": [
+            80,
+            88
+        ],
+        "editor.formatOnSave": false,
+    },
+    //
     "rewrap.autoWrap.enabled": true,
     // Puts a single space between comment character "//" and comment text
     "rewrap.reformat": true,
     //
     "terminal.integrated.persistentSessionReviveProcess": "never",
+    "cSpell.words": [
+        "gitinspect",
+        "gitinspectorgui",
+        "prepostfix",
+        "subfolders"
+    ]
 }
