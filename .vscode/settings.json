@@ -101,8 +101,10 @@
     //
     "terminal.integrated.persistentSessionReviveProcess": "never",
     "cSpell.words": [
+        "gigui",
         "gitinspect",
         "gitinspectorgui",
+        "multicore",
         "prepostfix",
         "subfolders"
     ]

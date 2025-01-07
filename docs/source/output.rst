@@ -10,40 +10,19 @@ Output formats and viewers
   Output is generated in the form of tables and saved in a file per repository.
 
   :guilabel:`html` output is suitable for viewing in a web browser. For single
-  repositories and for ten or fewer multiple repositories, the output is shown
-  in a single window in the system web browser. For multiple repositories, each
-  repository is shown in a separate tab.
+  repositories the output is shown in a single window in the system web browser.
+  For multiple repositories, each repository is shown in a separate tab.
 
   :guilabel:`Excel` tables are similar to :guilabel:`html` tables, but have
   more options. Each column header in an excel table has a triangle button which
   activates a dropdown menu for sorting and filtering. For single repositories,
   the output is opened in Excel for viewing.
 
-:guilabel:`auto`
-  The output for option :guilabel:`auto` (default for CLI) is always
-  :guilabel:`html`. The exact form depends on the number of repositories
-  analysed:
-
-  - For single repositories, the :guilabel:`auto` option  is the only case where
-    no file output is generated. The generated html output is shown in a web
-    viewer.
-  - For multiple repositories, the :guilabel:`auto` option generates
-    :guilabel:`html` output which is saved in a file and shown in the default
-    system browser.
-
-  Multiple output formats can be selected at the same time, resulting for each
-  repository in a separate output file for every selected format. In such a
-  case, no output viewers are opened after analysis.
-
-  When :guilabel:`auto` is selected, the other output formats are automatically
-  deselected.
-
 
 Output tables
 -------------
 For html and excel, output is generated in tables. Html tables are show in a
-browser window
-
+browser window.
 
 There are two kinds of tables: numerical analysis tables and blame tables. The
 format of the tables is described in more detail in the next sections.
@@ -63,7 +42,8 @@ Blame tables
   The options :guilabel:`N files` (``--n-files``) or :guilabel:`File pattern`
   (``--include-files``) select the files for analysis. For each of the selected
   files, a blame tab or worksheet is generated, unless the option
-  :guilabel:`Skip blame` is active, see :ref:`blame-sheets-cli`.
+  :guilabel:`Blame skip` is active, see :ref:`Blame options GUI
+  <blame-sheets-gui>` or :ref:`Blame options CLI <blame-sheets-cli>`.
 
 
 Numerical analysis tables
@@ -76,7 +56,7 @@ output follow below.
 
 .. :guilabel:`Repository`
 ..   Name of the repository folder. Present only when multiple repositories are
-..   analysed simultaneously and results are combined in one output file.
+..   analyzed simultaneously and results are combined in one output file.
 
 :guilabel:`Author`
   Author name(s). If the same author uses multiple names, they are
@@ -166,7 +146,7 @@ output follow below.
    :guilabel:`Age_n`)/:guilabel:`n`
 
    where :guilabel:`n` is the total of all lines inserted by the combination of
-   authors and files over the complete lifetime of the files, inclusing
+   authors and files over the complete lifetime of the files, including
    insertions in previous versions of the file in the case of file renames.
 
 
@@ -188,7 +168,8 @@ number of authors. This is achieved by multiplying the :guilabel:`%` column by
 
 Blame tables
 ------------
-
+HTML and Excel
+^^^^^^^^^^^^^^
 :guilabel:`ID`
   ID of the author shown in the second column. The author with ID 1 is the
   author of the most lines in the file. The author with ID 2 is the author of
@@ -218,3 +199,45 @@ Blame tables
 
 :guilabel:`Code`
   Code of the line.
+
+
+HTML only
+^^^^^^^^^
+For HTML blame output, the Code column has three additional toggle buttons:
+
+:guilabel:`Hide blame exclusions`
+  The initial state of this button corresponds to the value of the Blame option
+  :guilabel:`Exclude` (``--exclude-blame`` in ``{hide, show, remove}``).
+
+  For the value :guilabel:`hide` (default), the button is initially active. For
+  the value of :guilabel:`show`, the button is initially inactive and for the
+  value of :guilabel:`remove`, the button itself is removed.
+
+  When the button is active, the lines that are excluded from the blame analysis
+  as a result of the exclude pattern options, such as ``--exclude-files`` and
+  ``--exclude-authors`` are not displayed.
+
+:guilabel:`Hide empty lines`
+  The initial state of this button corresponds to the value of the Blame
+  inclusions option :guilabel:`Empty lines` (``--empty-lines`` or
+  ``--no-empty-lines``).
+
+  For option ``--no-empty-lines``, the :guilabel:`Hide empty lines` button is
+  initially active. For option ``--empty-lines``, the button is initially
+  inactive.
+
+  When the button is active, empty lines in the blame output are hidden. When
+  the button is inactive and option ``exclude-blame`` is not set to ``remove``
+  and button :guilabel:`Hide blame exclusions` is inactive, the empty lines are
+  shown. When the value of option ``--exclude-blame`` is set tot ``remove``,
+  the button is removed.
+
+:guilabel:`Hide colors`
+  Removes all colors from the blame lines and shows all lines in white.
+
+
+Excel only
+^^^^^^^^^^
+For Excel blame output, the values ``hide`` and ``show`` of option
+``--exclude-blame`` have no effect. The value ``remove``, removes the excluded
+blame lines from the Excel blame output sheets.

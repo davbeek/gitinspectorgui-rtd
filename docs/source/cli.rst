@@ -38,13 +38,29 @@ file. They start by loading the settings from the settings file.
 
 General guidelines
 ------------------
-There are seven input fields in the GUI where space separated patterns can be
-entered:
+There are eight options where space separated patterns can be entered:
 
-- Input folder path
-- Include files: File patterns
-- Five input fields for exclusion patterns
+- ``PATH ...``: Path patterns to input repositories or folders
+- ``--include-files PATTERNS``: File patterns to include
+- ``--extensions EXTENSIONS``: File extensions to include
+- ``--ex-... PATTERNS``: Five input fields for exclusion patterns
 
+
+Multiple patterns
+^^^^^^^^^^^^^^^^^
+Multiple patterns can be entered in the input fields by separating them with
+spaces. For example, to include files with the extensions ``java`` and ``py``,
+the pattern can be entered as ``-e java py``. Multiple patterns can also be
+specified by repeating the option, e.g. ``-e java -e py``.
+
+Separating options from ``PATH ...``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When an option can be followed by multiple patterns, the separator ``--`` is
+needed when the patterns are followed by the ``PATH ...`` input specification.
+For example, to include files with the extensions ``java`` and ``py`` in the
+input repository folder ``repo``, the command can be entered as ``python -m
+gigui -e java py -- repo``. To avoid the ``--`` separator, the command can be
+entered as ``python -m gigui repo -e java py``.
 
 Quotes ``""`` or ``''``
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -62,6 +78,13 @@ Case insensitivity
 ^^^^^^^^^^^^^^^^^^
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
 ``John`` matches ``john`` and ``John``.
+
+Abbreviations
+^^^^^^^^^^^^^
+Option names can be abbreviated as long as the abbreviation is unique and
+unambiguous. For example, the option ``--ex-authors`` can be abbreviated as
+``--ex-a`` or ``--ex-au``, as there is no other option that starts with
+``--ex-a``.
 
 
 Mutually exclusive options
@@ -98,8 +121,8 @@ Mutually exclusive options
 Input
 -----
 ``PATH ...``
-  The path to the folder containing the repositories to be analyzed. Multiple
-  paths can be specified and all paths are searched for repositories.
+  The path pattern to the folder(s) containing the repositories to be analyzed.
+  Multiple paths can be specified and all paths are searched for repositories.
 
   IF ``PATH`` is a repository, that repository is analyzed and no search for
   additional repositories takes place.
@@ -150,6 +173,8 @@ Output generation and viewing
 -----------------------------
 ``--view, --no-view``
   Open a viewer is opened on the analysis results.
+
+.. _output-formats-cli:
 
 ``-F FORMAT`` ``--format FORMAT``
   Selects for which file formats output is generated. Available choices are
@@ -240,8 +265,51 @@ Blame options
 ``--blame-skip, --no-blame-skip``
   Do not output html blame tabs or Excel blame sheets.
 
+
 Blame inclusions
 ----------------
+
+  The options ``--empty-lines``, ``--comments`` and ``--blame-omit-exclusions``
+  affect the blame output. The options ``--empty-lines`` and ``--comments`` are
+  used to include empty lines and comment lines in the blame output. The option
+  ``--blame-omit-exclusions`` is used to hide or show or remove excluded blame
+  lines from the blame output.
+
+``--empty-lines, --no-empty-lines``
+  Include empty lines in the blame calculations. This affects the color of the
+  empty lines in the blame sheets. The default is not to include them
+  (``--no-empty-lines``) and show all empty lines in the blame sheets as white.
+  When this setting is active, empty lines are shown in the color of their
+  author.
+
+.. _cli-comments:
+
+``--comments, --no-comments``
+  Include whole line comments in the blame calculations. This affects the number
+  of lines of each author.
+
+  The default is not to include whole line comments, which means that such lines
+  are not attributed to any author and are shown in the blame sheets as white.
+  Whole line comments are not counted in the Lines column of the statistics
+  output, potentially causing the sum of the Lines column to be less than the
+  total number of lines in the file.
+
+  When this setting is active, whole line comments are shown in the color as of
+  their author and are counted in the Lines column of the statistics output.
+
+  A comment line is either a single or multi comment line. Only full line
+  comments are considered comment lines. For instance, for Python, the following
+  line is comment line:
+
+  .. code-block:: python
+
+    # Start of variable declarations
+
+  whereas the following line is not a comment line:
+
+  .. code-block:: python
+
+    x = 1  # Initialize x
 ``--empty-lines, --no-empty-lines``
   Include empty lines in the blame calculations. This affects the color of the
   empty lines in the blame sheets. The default is not to include them
@@ -286,17 +354,20 @@ General options
 ``--since DATE``
   Only show statistics for commits more recent than a specific date. The
   ``DATE`` format is YYYY-MM-DD, where leading zeros are optional for month and
-  day, e.g.
-  ``--since 2022-1-31`` or ``--since 2022-01-31``.
+  day, e.g. ``--since 2022-1-31`` or ``--since 2022-01-31``.
 
 ``--until DATE``
   Only show statistics for commits older than a specific date. See ``--since``
   for the format of ``DATE``.
 
 ``-v``, ``--verbosity``
-  More verbose output for each ``v``: ``-v`` or ``-vv``. This corresponds to the
-  ``Debug`` option in the GUI. The maximum value 2 of the debug option in the
-  GUI corresponds to ``-vv`` in the CLI.
+  More verbose output for each ``v``: ``-v``, ``-vv`` or ``-vvv```. The maximum
+  value 3 of the verbosity option in the GUI corresponds to ``-vvv`` in the CLI.
+
+  - (default): Show a dot for each file that is analyzed for each repository.
+  - ``-v``: Show the file name instead of a dot for each analyzed file.
+  - ``-vv``: Show additional debug output in the console.
+  - ``-vvv``: Show maximum debug output in the console.
 
 ``--dry-run {0,1,2}``
 
@@ -306,17 +377,14 @@ General options
   - 2: Do not perform any analysis and do not produce any file or viewer output,
     but do print output lines to the console.
 
-``-e EXTENSIONS`` ``--extensions EXTENSIONS``
+``-e EXTENSIONS``, ``--extensions EXTENSIONS``
   A comma separated list of file extensions to include when computing
   statistics. The default extensions used are: ``c, cc, cif, cpp, glsl, h, hh,
   hpp, java, js, py, rb, sql``.
 
-  For more information, see the :ref:`supported languages table
-  <languages_table>` below.
-
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
+  Specifying an asterisk ``*`` includes all files, regardless of extension,
+  including files without an extension. For more information, see the
+  :doc:`supported`.
 
 
 Multithread and multicore
@@ -328,141 +396,43 @@ Multithread and multicore
   ``--multicore, --no-multicore``
     Execute multiple repositories using multiple cores.
 
+
 Exclusion patterns
 ------------------
-Specify exclusion patterns ``PATTERNS``, describing file paths, author names or
-emails, revisions or commit messages that should be excluded from the
-statistics. Each exclusion option can be repeated multiple times.
+Specify space separated exclusion patterns ``PATTERNS``, describing file paths,
+author names or emails, revisions or commit messages that should be excluded
+from the statistics.
 
-``--ex-files PATTERNS`` ``--exclude-files PATTERNS``
-  Filter out files (or paths) containing any of the comma separated strings
-  in ``PATTERNS``. E.g. ``--ex-file myfile,test`` excludes files ``myfile.py``
-  and ``testing.c``.
-
-``--ex-authors PATTERNS`` ``--exclude-authors PATTERNS``
+``--ex-authors PATTERNS``, ``--exclude-authors PATTERNS``
   Filter out author names containing any of the comma separated strings in
-  ``PATTERNS``. E.g. ``--ex-author John`` excludes author ``John Smith``.
+  ``PATTERNS``. E.g. ``"John Smith"`` excludes author ``John Smith`` and ``John
+  Smith`` excludes author ``John`` and author ``Smith``.  The quotes are needed
+  to include spaces in a pattern.
 
-``--ex-emails PATTERNS``
+``--ex-emails PATTERNS``, ``--exclude-emails PATTERNS``
   Filter out email addresses containing any of the comma separated strings
-  in ``PATTERNS``. E.g. ``--ex-email @gmail.com`` excludes all authors with a
-  gmail address.
+  in ``PATTERNS``. E.g. ``--ex-email "*@gmail.com"`` excludes all authors with a
+  gmail address. The quotes are needed to avoid interpretation of the asterisk
+  as a wildcard by the shell.
 
-``--ex-revisions PATTERNS`` ``--exclude-revisions PATTERNS``
-  Filter out revisions containing any of the comma separated hashes/SHAs
-  in ``PATTERNS``. When used with short hashes, the caret ``^`` is needed to make
-  sure that only hashes starting with the specified string are excluded. E.g.
-  ``--ex-revision ^8755fb33,^12345678`` excludes revisions
-  that start with ``8755fb33`` or ``12345678``.
+``--ex-files PATTERNS``, ``--exclude-files PATTERNS``
+  Filter out files (or paths) containing any of the comma separated strings in
+  ``PATTERNS``. E.g. ``--ex-file myfile.py "test*"`` excludes files
+  ``myfile.py`` and ``testing.c``. The quotes are needed to avoid interpretation
+  of the asterisk as a wildcard by the shell.
 
-``--ex-messages PATTERNS`` ``--exclude-messages PATTERNS``
-  Filter out commit messages containing any of the comma separated strings
-  in ``PATTERNS``. E.g. ``--ex-message bug,fix`` excludes commits from analysis
+``--ex-revisions PATTERNS``, ``--exclude-revisions PATTERNS``
+  Filter out revisions that start with any of the space separated hashes/SHAs in
+  the text box. E.g. ``--ex-revisions 8755fb 1234567`` excludes revisions that
+  start with ``8755fb`` or ``1234567``.
+
+``--ex-messages PATTERNS``, ``--exclude-messages PATTERNS``
+  Filter out commit messages containing any of the comma separated strings in
+  ``PATTERNS``. E.g. ``--ex-message "bug*" fix`` excludes commits from analysis
   with commit messages such as ``Bugfix`` or ``Fixing issue #15``.
 
-Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
-``John`` matches ``john`` and ``John``.
 
-
-Additional options
-------------------
+Logging
+-------
 ``--profile N``
-  Output profiling information, printing ``N`` lines of output.
-
-
-.. _languages_table:
-
-Supported languages
--------------------
-
-
-.. list-table::
-
-  * - Language
-    - Comments
-    - File extensions
-    - Included in analysis by default
-  * - C
-    - Yes
-    - c, h
-    - Yes
-  * - C++
-    - Yes
-    - cc, h, hh, hpp
-    - Yes
-  * - CIF
-    - Yes
-    - cif
-    - Yes
-  * - Java
-    - Yes
-    - java
-    - Yes
-  * - JavaScript
-    - Yes
-    - js
-    - Yes
-  * - OpenGL Shading Language
-    - Yes
-    - glsl
-    - Yes
-  * - Python
-    - Yes
-    - py
-    - Yes
-  * - Ruby
-    - Yes
-    - rb
-    - Yes
-  * - SQL
-    - Yes
-    - sql
-    - Yes
-  * - ADA
-    - Yes
-    - ada, adb, ads
-    - No
-  * - C#
-    - Yes
-    - cs
-    - No
-  * - GNU Gettext
-    - Yes
-    - po, pot
-    - No
-  * - Haskell
-    - Yes
-    - hs
-    - No
-  * - HTML
-    - Yes
-    - html
-    - No
-  * - LaTeX
-    - Yes
-    - tex
-    - No
-  * - OCaml
-    - Yes
-    - ml, mli
-    - No
-  * - Perl
-    - Yes
-    - pl
-    - No
-  * - PHP
-    - Yes
-    - php
-    - No
-  * - Scala
-    - Yes
-    - scala
-    - No
-  * - ToolDef
-    - No
-    - tooldef
-    - No
-  * - XML
-    - Yes
-    - xml, jspx
-    - No
+  Output ``N`` lines of profiling output. Default 0.

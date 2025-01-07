@@ -19,12 +19,19 @@ The two main parts of the GUI are:
 
 General guidelines
 ------------------
-There are seven input fields in the GUI where space separated patterns can be
+There are eight input fields in the GUI where space separated patterns can be
 entered:
 
 - Input folder path
 - Include files: File patterns
+- Extensions: File extensions to include
 - Five input fields for exclusion patterns
+
+Multiple patterns
+^^^^^^^^^^^^^^^^^
+Multiple patterns can be entered in the input fields by separating them with
+spaces. For example, to include files with the extensions ``java`` and ``py``,
+the pattern should be entered as ``java py``.
 
 
 Quotes ``""`` or ``''``
@@ -247,7 +254,7 @@ History
     view, html and excel are enabled.
 
 Exclusions
-  By means of this option, excluded blame lines can be hidden or shown or
+  By means of this option, excluded blame lines can be hidden, shown or
   removed from the blame output. Blame lines can be excluded for three reasons:
 
   1. The author of the blame line is excluded by the :guilabel:`Author`
@@ -257,10 +264,13 @@ Exclusions
   3. The blame line is an empty line. By default, empty lines are excluded. They
      can be included by the option :guilabel:`Empty lines`.
 
-  Excluded lines are not attributed to their author as blame lines. They are
-  shown in the blame sheets as white, uncolored lines. When the option
-  :guilabel:`Blame omit exclusions` is active, the blame sheets omit the
-  excluded lines from the blame output.
+  Values of the :guilabel:`Exclusions` option are:
+
+  - :guilabel:`hide` (default). Excluded lines are shown in the blame sheets as
+    white, uncolored lines.
+  - :guilabel:`show`. Excluded lines are attributed to their author as blame
+    lines in the color of the author.
+  - :guilabel:`remove`. Excluded lines are removed from the blame lines.
 
 Copy move
   .. include:: opt-copy-move.inc
@@ -277,6 +287,7 @@ Empty lines
   all empty lines in the blame sheets as white. When this setting is active,
   empty lines are shown in the color of their author.
 
+.. _gui-comments:
 Comments
   Include whole line comments in the blame calculations. This affects the number
   of lines of each author.
@@ -325,11 +336,9 @@ Until
 	date format.
 
 Verbosity
-  - 0: No additional output (default). Show only the minimal necessary output in
-    the console. Show a dot for each file that is analyzed for each repository.
-  - 1: Show additional output in the console. Show the file name instead of a
-    dot for each analyzed file. Corresponds to the
-    ``-v`` option in the CLI.
+  - 0 (default): Show a dot for each file that is analyzed for each repository.
+  - 1: Show the file name instead of a dot for each analyzed file. Corresponds
+    to the ``-v`` option in the CLI.
   - 2: Show additional debug output in the console. Corresponds to the ``-vv``
     option in the CLI.
   - 3: Show maximum debug output in the console. Corresponds to the ``-vvv``
@@ -346,9 +355,10 @@ Extensions
   A comma separated list of file extensions to include when computing
   statistics. The default extensions used are: c, cc, cif, cpp, glsl, h, hh,
   hpp, java, js, py, rb, sql.
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
+
+  Specifying an asterisk ``*`` includes all files, regardless of extension,
+  including files without an extension. For more information, see the
+  :doc:`supported`.
 
 
 Settings
@@ -378,11 +388,6 @@ Toggle
 
 Exclusion patterns
 ------------------
-Files/Paths
-  Filter out files that match containing any of the space separated strings
-  in the text box. E.g. ``myfile.py test*`` excludes files ``myfile.py`` and
-  ``testing.c``.
-
 Authors
   Filter out author names that match any of the space separated strings in
   the text box. E.g. ``"John Smith"`` excludes author ``John Smith`` and ``John
@@ -394,6 +399,11 @@ Emails
   in the text box. E.g. ``*@gmail.com`` excludes all authors with a gmail
   address.
 
+Files/Paths
+  Filter out files that match containing any of the space separated strings
+  in the text box. E.g. ``myfile.py test*`` excludes files ``myfile.py`` and
+  ``testing.c``.
+
 Revision hashes
   Filter out revisions that start with any of the space separated hashes/SHAs in
   the text box. E.g. ``8755fb 1234567`` excludes revisions that start with
@@ -403,6 +413,3 @@ Commit messages
   Filter out commit messages that match any of the space separated strings in
   the text box. E.g. ``bug* fix`` excludes commits from analysis with commit
   messages such as ``Bugfix`` or ``Fixing issue #15``.
-
-Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
-``John`` matches ``john`` and ``John``.
