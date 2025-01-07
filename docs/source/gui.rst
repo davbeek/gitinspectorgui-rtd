@@ -288,6 +288,7 @@ Empty lines
   empty lines are shown in the color of their author.
 
 .. _gui-comments:
+
 Comments
   Include whole line comments in the blame calculations. This affects the number
   of lines of each author.
