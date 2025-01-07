@@ -32,14 +32,40 @@ The command line interface (CLI) can be used to start the GUI or to analyze
 repositories directly from the command line. GUI and CLI share the same settings
 file. They start by loading the settings from the settings file.
 
+``-h`` ``--help``
+  Display help and exit. This has priority over the other settings.
+
+
+General guidelines
+------------------
+There are seven input fields in the GUI where space separated patterns can be
+entered:
+
+- Input folder path
+- Include files: File patterns
+- Five input fields for exclusion patterns
+
+
+Quotes ``""`` or ``''``
+^^^^^^^^^^^^^^^^^^^^^^^
+In the input fields, quotes are needed to include spaces in a pattern. For
+example, to exclude the authors John Smith and Mary in the Author exclusion
+input field, the pattern should be entered as ``"John Smith" Mary``.
+
+Asterisk ``*``
+^^^^^^^^^^^^^^^
+The asterisk ``*`` is a wildcard character that matches zero or more characters.
+To avoid interpretation of the asterisk as a wildcard by the shell, the asterisk
+or the entire input pattern can be enclosed in quotes.
+
+Case insensitivity
+^^^^^^^^^^^^^^^^^^
+Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
+``John`` matches ``john`` and ``John``.
 
 
 Mutually exclusive options
 --------------------------
-
-``-h`` ``--help``
-  Display help and exit. This has priority over the other settings.
-
 ``--gui``
   Start the GUI with settings loaded from the settings file.
 
@@ -65,19 +91,22 @@ Mutually exclusive options
 ``-V`` ``--version``
   Output version information and exit.
 
+``--about``
+  Output information about the program and exit.
+
 
 Input
 -----
 ``PATH ...``
-  The path to the folder containing the repositories to be analysed. Multiple
+  The path to the folder containing the repositories to be analyzed. Multiple
   paths can be specified and all paths are searched for repositories.
 
   IF ``PATH`` is a repository, that repository is analyzed and no search for
-  addtional repositories takes place.
+  additional repositories takes place.
 
   If ``PATH`` is a folder, but not a repository, all folder and subfolders up to
   the value of the ``--depth``  option are searched for repositories and the
-  repositories found are analysed. The output file for each repository is placed
+  repositories found are analyzed. The output file for each repository is placed
   in the parent directory of the repository.
 
 ``-d N`` ``--depth N``
@@ -88,13 +117,25 @@ Input
   * ``-d 1``: only the input folder is searched for repository folders for
     analysis.
 
+``--subfolder SUBFOLDER``
+  Restrict analysis of the files of the repository to the files in this folder
+  and its subfolders. Remove the subfolder from the path of the files in the
+  output.
+
+``-n N`` ``--n-files N``
+  Generate output for the ``N`` biggest files for each repository. The number of
+  files for which results are generated can be smaller than ``N`` due to files
+  being excluded by filters. Leave the field empty or set it to zero to show all
+  files. Default is 5.
+
+``-f PATTERNS``, ``--include-files PATTERNS``
+  Show only files matching any of the space separated patterns. When the pattern
+  is empty (``-f ""``), the ``N`` largest files specified by option ``-n N``
+  files are shown.
+
+
 Output
 ------
-For the CLI, the output files generated depend on the output formats specified
-in the ``-F`` or ``--format`` option. By default, output is generated in the
-file ``gitinspect.ext``, where ``ext`` is defined by the selected :ref:`output
-formats <output-formats-cli>`.
-
 ``-o FILEBASE`` ``--output FILEBASE``
   The output filename, without extension and without parents is ``FILEBASE``.
   Default: ``gitinspect``.
@@ -105,51 +146,81 @@ formats <output-formats-cli>`.
   * ``-f postfix`` output file name is ``FILEBASE-REPONAME``.
   * ``-f nofix`` output file name is ``FILEBASE``.
 
+Output generation and viewing
+-----------------------------
+``--view, --no-view``
+  Open a viewer is opened on the analysis results.
 
-
-Output generation and formatting
---------------------------------
-.. _output-formats-cli:
-
-Output formats
-^^^^^^^^^^^^^^
 ``-F FORMAT`` ``--format FORMAT``
   Selects for which file formats output is generated. Available choices are
-  ``auto``, ``html``and ``excel``. To select more than one output
-  format, repeat the option, e.g. ``-F html -F excel``.
+  ``html``and ``excel``. To select more than one output format separate them by
+  spacing or repeat the option, e.g. ``-F html excel`` or ``-F html -F excel``.
   For more information on the output formats, see :doc:`output`.
+
+
+Statistics output
+-----------------
+``--show-renames, --no-show-renames``
+  Show previous file names and alternative author names and emails in the
+  output.
+
+  Some authors use multiple names and emails in various commits. Gitinspectorgui
+  can detect this if there is overlap in either the name or email in
+  author-email combinations in commits. If show-renames is active, all names and
+  emails of each author are shown. If inactive, only a single name and email are
+  shown per author.
+
+  For files that have been renamed at some point in their history, all previous
+  names are shown in the output.
+
+``--deletions, --no-deletions``
+  Include a column for the number of deleted lines in the output. This does not
+  affect the blame output, because deleted lines cannot be shown. The default is
+  not to include deletions.
+
+``--scaled-percentages, --no-scaled-percentages``
+  For each column with output in percentages, e.g. ``Insertions %``, add a
+  column ``Scaled insertions %``, which equals the value of ``Insertions %``
+  multiplied by the number of authors in the repository.
+
 
 .. _blame-sheets-cli:
 
-Options
-^^^^^^^
+Blame options
+-------------
+
 .. note::
 
   A blame worksheet or html blame tab shows the contents of a file and indicates
   for each line in the file in which commit the line was last changed, at which
   date and by which author. The color of the line indicates the author of the
-  last change. The blame output is generated for each file that is analysed.
+  last change. The blame output is generated for each file that is analyzed.
 
-``--show-renames``
-  Show previous file names and alternative author names and emails in the
-  output.
+``--blame-history {none,dynamic,static}``
 
-  Some authors use multiple names and emails in various commits.
-  Gitinspectorgui can detect this if there is overlap in either the name or
-  email in author-email combinations in commits. If show-renames is active, all
-  names and emails of each author are shown. If inactive, only a single name and
-  email are shown per author.
+  - ``none`` (default). The generated blame sheets show the lines of each file
+    as they are in the latest commit.
 
-  For files that have been renamed at some point in their history, all previous
-  names are shown in the output.
+  - ``dynamic`` and ``static``. The top line of the blame sheet for each file
+    shows all commits that have changed the file. The user can select a commit
+    from the list to see the file as it was at that commit. The blame sheet then
+    shows the file as it was at that commit, with the lines colored according to
+    the author of the last change to that line. The differences between the
+    ``dynamic`` and ``static`` modes are:
 
-``--scaled-percentages``
-  For each column with output in percentages, e.g. ``Insertions %``, add a
-  column ``Scaled insertions %``, which equals the value of ``Insertions %``
-  multiplied by the number of authors in the repository.
+    In the dynamic mode, the blame sheet is generated on the fly when the user
+    selects a commit from the list.
 
-``--blame-omit-exclusions``
-  Blame lines can be excluded for three reasons:
+    In the static mode, the blame sheets for all commits in the top list are
+    generated when the analysis is started and all generated blame sheets are
+    embedded in the generated html file. When this mode is selected in the GUI,
+    automatically the  output formats html and excel and set to true and false,
+    respectively and both are disabled.
+
+
+``--blame-omit-exclusions, --no-blame-omit-exclusions``
+  By means of this option, excluded blame lines can be hidden or shown or
+  removed from the blame output. Blame lines can be excluded for three reasons:
 
   1. The author of the blame line is excluded by the ``--ex-author PATTERNS``
      exclusion pattern.
@@ -158,109 +229,33 @@ Options
   3. The blame line is an empty line. By default, empty lines are excluded. They
      can be included by the option ``--empty-lines``.
 
-Excluded lines are not attributed to their author as blame lines. They are shown
-in the blame sheets as white, uncolored lines. When the option
-``--blame-omit-exclusions`` is active, the blame sheets omit the excluded lines
-from the blame output.
+  Excluded lines are not attributed to their author as blame lines. They are
+  shown in the blame sheets as white, uncolored lines. When the option
+  ``--blame-omit-exclusions`` is active, the blame sheets omit the excluded
+  lines from the blame output.
 
-``--blame-skip``
+``--copy-move N``
+  .. include:: opt-copy-move.inc
+
+``--blame-skip, --no-blame-skip``
   Do not output html blame tabs or Excel blame sheets.
 
-``--viewer {auto,none}``
-
-  * ``auto``: open the viewer for the selected output format as
-    specified in the :ref:`output-formats-cli` section.
-
-  * ``none``: never open any viewer.
-
-``-v``, ``--verbosity``
-  More verbose output for each ``v``: ``-v`` or ``-vv``. This corresponds to the
-  ``Debug`` option in the GUI. The maximum value 2 of the debug option in the
-  GUI corresponds to ``-vv`` in the CLI.
-
-``--dry-run {0,1,2}``
-
-  - 0: Normal analysis and output (default).
-  - 1: Perform all required analysis and show the output in the console, but do
-    not write any output files and do not open any viewers.
-  - 2: Do not perform any analysis and do not produce any file or viewer output,
-    but do print output lines to the console.
-
-
-Inclusions and exclusions
-^^^^^^^^^^^^^^^^^^^^^^^^^
-``-n N`` ``--n-files N`` ``--include-n-files N``
-  Generate output for the ``N`` biggest files for each repository. The number of
-  files for which results are generated can be smaller than ``N`` due to files
-  being excluded by filters.
-
-``-f PATTERNS``, ``--inc-files PATTERNS``, ``--include-files PATTERNS``
-  Show only files matching any of the specified patterns. If a pattern is
-  specified, it takes priority over the value of ``N`` in option ``--n-files``,
-  which is then ignored. The options ``--n-files N`` and ``--include-file
-  PATTERNS`` are mutually exclusive.
-
-  If options ``-n-files N`` and ``--include-files PATTERNS`` are both missing, a
-  default value of ``--n-files 5`` is used.
-
-  To show all files, use the pattern ``.*``.
-
-``--subfolder``
-  Restrict analysis of the files of the repository to the files in this folder
-  and its subfolders. Remove the subfolder from the path of the files in the
-  output.
-
-``--since DATE``
-  Only show statistics for commits more recent than a specific date. The
-  ``DATE`` format is YYYY-MM-DD, where leading zeros are optional for month and
-  day, e.g.
-  ``--since 2022-1-31`` or ``--since 2022-01-31``.
-
-``--until DATE``
-  Only show statistics for commits older than a specific date. See ``--since``
-  for the format of ``DATE``.
-
-``-e EXTENSIONS`` ``--extensions EXTENSIONS``
-  A comma separated list of file extensions to include when computing
-  statistics. The default extensions used are: ``c, cc, cif, cpp, glsl, h, hh,
-  hpp, java, js, py, rb, sql``.
-
-  For more information, see the :ref:`supported languages table
-  <languages_table>` below.
-
-  Specifying a single ``*`` asterisk character includes files with no extension.
-  Specifying two consecutive ``**`` asterisk characters includes all files
-  regardless of extension.
-
-
-Analysis options
+Blame inclusions
 ----------------
-``--deletions``
-  Include a column for Deletions in the output. This does not affect the blame
-  output, because deleted lines cannot be shown. The default is not to include
-  deletions.
-
-``--whitespace``
-    Include whitespace changes in the statistics. This affects the statics and
-    the blame output. The default setting is to ignore whitespace changes.
-
-``--empty-lines``
+``--empty-lines, --no-empty-lines``
   Include empty lines in the blame calculations. This affects the color of the
-  empty lines in the blame sheets.
-
-  The default is not to include them and show all empty lines in the blame
-  sheets as white.
-
+  empty lines in the blame sheets. The default is not to include them
+  (``--no-empty-lines``) and show all empty lines in the blame sheets as white.
   When this setting is active, empty lines are shown in the color of their
   author.
 
-``--comments``
+``--comments, --no-comments``
   Include whole line comments in the blame calculations. This affects the number
   of lines of each author.
 
   The default is not to include whole line comments, which means that such lines
   are not attributed to any author and are shown in the blame sheets as white.
-  Whole line coments are not counted in the Lines column of the statistics
+  Whole line comments are not counted in the Lines column of the statistics
   output, potentially causing the sum of the Lines column to be less than the
   total number of lines in the file.
 
@@ -275,16 +270,63 @@ Analysis options
 
     # Start of variable declarations
 
-  wheras the following line is not a comment line:
+  whereas the following line is not a comment line:
 
   .. code-block:: python
 
     x = 1  # Initialize x
 
-``--copy-move N``
-  .. include:: opt-copy-move.inc
+
+General options
+---------------
+``--whitespace, --no-whitespace``
+    Include whitespace changes in the statistics. This affects the statics and
+    the blame output. The default setting is to ignore whitespace changes.
+
+``--since DATE``
+  Only show statistics for commits more recent than a specific date. The
+  ``DATE`` format is YYYY-MM-DD, where leading zeros are optional for month and
+  day, e.g.
+  ``--since 2022-1-31`` or ``--since 2022-01-31``.
+
+``--until DATE``
+  Only show statistics for commits older than a specific date. See ``--since``
+  for the format of ``DATE``.
+
+``-v``, ``--verbosity``
+  More verbose output for each ``v``: ``-v`` or ``-vv``. This corresponds to the
+  ``Debug`` option in the GUI. The maximum value 2 of the debug option in the
+  GUI corresponds to ``-vv`` in the CLI.
+
+``--dry-run {0,1,2}``
+
+  - 0: Normal analysis and output (default).
+  - 1: Perform all required analysis and show the output in the console, but do
+    not write any output files and do not open any viewers.
+  - 2: Do not perform any analysis and do not produce any file or viewer output,
+    but do print output lines to the console.
+
+``-e EXTENSIONS`` ``--extensions EXTENSIONS``
+  A comma separated list of file extensions to include when computing
+  statistics. The default extensions used are: ``c, cc, cif, cpp, glsl, h, hh,
+  hpp, java, js, py, rb, sql``.
+
+  For more information, see the :ref:`supported languages table
+  <languages_table>` below.
+
+  Specifying a single ``*`` asterisk character includes files with no extension.
+  Specifying two consecutive ``**`` asterisk characters includes all files
+  regardless of extension.
 
 
+Multithread and multicore
+-------------------------
+  ``--multithread, --no-multithread``
+    Analyse multiple files for changes and blames per repository using multiple
+    threads.
+
+  ``--multicore, --no-multicore``
+    Execute multiple repositories using multiple cores.
 
 Exclusion patterns
 ------------------
@@ -321,30 +363,11 @@ statistics. Each exclusion option can be repeated multiple times.
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
 ``John`` matches ``john`` and ``John``.
 
-Matching is based on `python regular expressions
-<https://docs.python.org/3/library/re.html>`_. Some additional examples of
-patterns for ``--ex-file``:
-
-``^init``
-  Filter out statistics from all files starting with ``init``, e.g. ``init.py``.
-
-``init$``
-  Filter out statistics from all files ending with ``init``, e.g. ``myinit``.
-
-``^init$``
-  Filter out statistics from the file ``init``.
-
-``init``
-  Filter out statistics from all files containing ``init``, e.g. ``myinit``,
-  ``init.py`` or ``myinit.py``.
 
 Additional options
 ------------------
-``-h`` ``--help``
-  Display help and exit.
-
-``--profile``
-  Output profiling information.
+``--profile N``
+  Output profiling information, printing ``N`` lines of output.
 
 
 .. _languages_table:

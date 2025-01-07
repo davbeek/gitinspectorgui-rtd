@@ -16,6 +16,35 @@ The two main parts of the GUI are:
 2. The console output part, where progress output is presented to the user
    while the repositories are analyzed. The console has its own scrollbar.
 
+
+General guidelines
+------------------
+There are seven input fields in the GUI where space separated patterns can be
+entered:
+
+- Input folder path
+- Include files: File patterns
+- Five input fields for exclusion patterns
+
+
+Quotes ``""`` or ``''``
+^^^^^^^^^^^^^^^^^^^^^^^
+In the input fields, quotes are needed to include spaces in a pattern. For
+example, to exclude the authors John Smith and Mary in the Author exclusion
+input field, the pattern should be entered as ``"John Smith" Mary``.
+
+Asterisk ``*``
+^^^^^^^^^^^^^^^
+The asterisk ``*`` is a wildcard character that matches zero or more characters,
+just like in the shell. For example, to exclude all files with the extension
+``.py``, the pattern should be entered as ``*.py``.
+
+Case insensitivity
+^^^^^^^^^^^^^^^^^^
+Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
+``John`` matches ``john`` and ``John``.
+
+
 Top row buttons
 ---------------
 
@@ -44,31 +73,6 @@ Percentage box
   edges of the window, the height of the input part is kept unchanged while
   dragging. When the window height has become stable after dragging, the height
   of the input part is adjusted to the percentage value.
-
-
-General guidelines
-------------------
-There are seven input fields in the GUI where space separated patterns can be
-entered:
-
-- Input folder path
-- Include files: File patterns
-- Five input fields for exclusion patterns
-
-
-
-Quotes ``""`` or ``''``
-^^^^^^^^^^^^^^^^^^^^^^^
-In the input fields, quotes are needed to include spaces in a pattern. For
-example, to exclude the authors John Smith and Mary in the Author exclusion
-input field, the pattern should be entered as ``"John Smith" Mary``.
-
-Asterisk ``*``
-^^^^^^^^^^^^^^^
-The asterisk ``*`` is a wildcard character that matches zero or more characters,
-just like in the shell. For example, to exclude all files with the extension
-``.py``, the pattern should be entered as ``*.py``.
-
 
 
 IO configuration
@@ -116,10 +120,10 @@ Subfolder
   output.
 
 N files
-  Generate output for the `N` biggest files for each repository. The number of
-  files for which results are generated can be smaller than `N` due to files
+  Generate output for the ``N`` biggest files for each repository. The number of
+  files for which results are generated can be smaller than ``N`` due to files
   being excluded by filters. Leave the field empty or set it to zero to show all
-  files.
+  files. Default is 5.
 
 File patterns
   Show only files matching any of the space separated patterns. When the pattern
@@ -151,8 +155,11 @@ Output prepostfix
 
 Search depth
   Positive integer value that represents the number of levels of subfolders
-  that is searched for repositories, *default* ``5``. For depth ``1``, only
-  the repository in the input folder path, if present, is analyzed.
+  that is searched for repositories, *default* ``5``.
+
+  * Search depth ``0``: the input folder itself must be a repository.
+  * Search depth ``1``: only the input folder is searched for repository folders
+    for analysis.
 
 The remaining options are as specified for the case :ref:`input-is-repo`.
 
@@ -177,17 +184,17 @@ Show renames
   Show previous file names and alternative author names and emails in the
   output.
 
-  Some authors use multiple names and emails in various commits.
-  Gitinspectorgui can detect this if there is overlap in either the name or
-  email in author-email combinations in commits. If show-renames is active, all
-  names and emails of each author are shown. If inactive, only a single name and
-  email are shown per author.
+  Some authors use multiple names and emails in various commits. Gitinspectorgui
+  can detect this if there is overlap in either the name or email in
+  author-email combinations in commits. If show-renames is active, all names and
+  emails of each author are shown. If inactive, only a single name and email are
+  shown per author.
 
   For files that have been renamed at some point in their history, all previous
   names are shown in the output.
 
 Deletions
-  Include a column for number of deleted lines in the output. This does not
+  Include a column for the number of deleted lines in the output. This does not
   affect the blame output, because deleted lines cannot be shown. The default is
   not to include deletions.
 
@@ -241,9 +248,7 @@ History
 
 Exclusions
   By means of this option, excluded blame lines can be hidden or shown or
-  removed from the blame output.
-
-  Blame lines can be excluded for three reasons:
+  removed from the blame output. Blame lines can be excluded for three reasons:
 
   1. The author of the blame line is excluded by the :guilabel:`Author`
      :guilabel:`Exclusion pattern`.
@@ -252,10 +257,10 @@ Exclusions
   3. The blame line is an empty line. By default, empty lines are excluded. They
      can be included by the option :guilabel:`Empty lines`.
 
-Excluded lines are not attributed to their author as blame lines. They are shown
-in the blame sheets as white, uncolored lines. When the option :guilabel:`Blame
-omit exclusions` is active, the blame sheets omit the excluded lines from the
-blame output.
+  Excluded lines are not attributed to their author as blame lines. They are
+  shown in the blame sheets as white, uncolored lines. When the option
+  :guilabel:`Blame omit exclusions` is active, the blame sheets omit the
+  excluded lines from the blame output.
 
 Copy move
   .. include:: opt-copy-move.inc
@@ -268,13 +273,9 @@ Blame inclusions
 
 Empty lines
   Include empty lines in the blame calculations. This affects the color of the
-  empty lines in the blame sheets.
-
-  The default is not to include them and show all empty lines in the blame
-  sheets as white.
-
-  When this setting is active, empty lines are shown in the color of their
-  author.
+  empty lines in the blame sheets. The default is not to include them and show
+  all empty lines in the blame sheets as white. When this setting is active,
+  empty lines are shown in the color of their author.
 
 Comments
   Include whole line comments in the blame calculations. This affects the number
@@ -324,11 +325,15 @@ Until
 	date format.
 
 Verbosity
-  - 0: No debug output (default).
-  - 1: Show debug output in the console. Corresponds to the ``-v`` option
-    in the CLI.
-  - 2: Show more detailed debug output in the console. Corresponds to the
-    ``-vv`` option in the CLI.
+  - 0: No additional output (default). Show only the minimal necessary output in
+    the console. Show a dot for each file that is analyzed for each repository.
+  - 1: Show additional output in the console. Show the file name instead of a
+    dot for each analyzed file. Corresponds to the
+    ``-v`` option in the CLI.
+  - 2: Show additional debug output in the console. Corresponds to the ``-vv``
+    option in the CLI.
+  - 3: Show maximum debug output in the console. Corresponds to the ``-vvv``
+    option in the CLI.
 
 Dry run
   - 0: Normal analysis and output (default).
@@ -401,20 +406,3 @@ Commit messages
 
 Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
 ``John`` matches ``john`` and ``John``.
-
-Matching is based on `python regular expressions
-<https://docs.python.org/3/library/re.html>`_. Some additional examples of
-patterns in the File text box:
-
-``^init``
-  Filter out statistics from all files starting with ``init``, e.g. ``init.py``.
-
-``init$``
-  Filter out statistics from all files ending with ``init``, e.g. ``myinit``.
-
-``^init$``
-  Filter out statistics from the file ``init``.
-
-``init``
-  Filter out statistics from all files containing ``init``, e.g. ``myinit``,
-  ``init.py`` or ``myinit.py``.
