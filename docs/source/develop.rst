@@ -27,4 +27,7 @@ TestPyPI, use the following command:
 
 .. code:: bash
 
-  pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ gitinspectorgui
+  pip install --pre --index-url https://test.pypi.org/simple/ \
+      --extra-index-url https://pypi.org/simple/ gitinspectorgui
+
+The ``--pre`` flag is required because the version on TestPyPI is a pre-release.
