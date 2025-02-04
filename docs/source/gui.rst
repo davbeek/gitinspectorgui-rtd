@@ -30,15 +30,9 @@ entered:
 Multiple patterns
 ^^^^^^^^^^^^^^^^^
 Multiple patterns can be entered in the input fields by separating them with
-spaces. For example, to include files with the extensions ``java`` and ``py``,
-the pattern should be entered as ``java py``.
+commas. For example, to include files with the extensions ``java`` and ``py``,
+the pattern should be entered as ``java, py``.
 
-
-Quotes ``""`` or ``''``
-^^^^^^^^^^^^^^^^^^^^^^^
-In the input fields, quotes are needed to include spaces in a pattern. For
-example, to exclude the authors John Smith and Mary in the Author exclusion
-input field, the pattern should be entered as ``"John Smith" Mary``.
 
 Asterisk ``*``
 ^^^^^^^^^^^^^^^
@@ -55,7 +49,7 @@ Matches are case insensitive, e.g. ``mary`` matches ``Mary`` and ``mary``, and
 Top row buttons
 ---------------
 
-Execute
+Run
   Start the analysis, using the parameters given in the GUI.
 
 Clear
@@ -175,12 +169,24 @@ Output generation and formatting
 --------------------------------
 .. _output-formats-gui:
 
+View options
+^^^^^^^^^^^^
+Auto
+  Automatically open a viewer on the analysis results. The viewer is opened
+  after the analysis is finished.
+
+Dynamic blame history
+  Automatically open a viewer on the dynamic blame history. The viewer is opened
+  after the analysis is finished.
+
 Output formats
 ^^^^^^^^^^^^^^
-Tick box :guilabel:`view` defines whether a viewer is opened on the analysis
-results. The other tick boxes define for which file formats output is generated.
-Available output formats are :guilabel:`html` and :guilabel:`excel`. For more
-information on the output formats, see :doc:`output`.
+Tick boxes :guilabel:`auto` and :guilabel:`dynamic blame history` define whether
+a viewer is opened on the analysis results. The tick boxes on the line
+:guilabel:`File formats` define for which file formats output is generated.
+Available output formats are :guilabel:`html` :guilabel:`html blame history` and
+:guilabel:`excel`. For more information on the output formats, see
+:doc:`output`.
 
 Statistic output
 ^^^^^^^^^^^^^^^^
@@ -223,36 +229,6 @@ Blame options
   date and by which author. The color of the line indicates the author of the
   last change. The blame output is generated for each file that is analyzed.
 
-History
-  Values for the history option are:
-
-  - :guilabel:`none` (default). The generated blame sheets show the lines of
-    each file as they are in the latest commit.
-
-  - :guilabel:`dynamic` and :guilabel:`static`. The top line of the blame sheet
-    for each file shows all commits that have changed the file. The user can
-    select a commit from the list to see the file as it was at that commit. The
-    blame sheet then shows the file as it was at that commit, with the lines
-    colored according to the author of the last change to that line. The
-    differences between the :guilabel:`dynamic` and :guilabel:`static` modes
-    are:
-
-    In the dynamic mode, the blame sheet is generated on the fly when the user
-    selects a commit from the list. When this mode is selected in the GUI,
-    automatically the view option is set to true and the output formats html and
-    excel are set the false. These options are then also disabled. Although the
-    dynamic mode cannot be used in the GUI, it can be selected and saved, and
-    then used in the CLI.
-
-    In the static mode, the blame sheets for all commits in the top list are
-    generated when the analysis is started and all generated blame sheets are
-    embedded in the generated html file. When this mode is selected in the GUI,
-    automatically the  output formats html and excel and set to true and false,
-    respectively and both are disabled.
-
-    When the blame history option is reset to :guilabel:`none`, the options
-    view, html and excel are enabled.
-
 Exclusions
   By means of this option, excluded blame lines can be hidden, shown or
   removed from the blame output. Blame lines can be excluded for three reasons:
@@ -280,7 +256,6 @@ Blame skip
 
 Blame inclusions
 ^^^^^^^^^^^^^^^^
-
 Empty lines
   Include empty lines in the blame calculations. This affects the color of the
   empty lines in the blame sheets. The default is not to include them and show
@@ -338,12 +313,8 @@ Until
 
 Verbosity
   - 0 (default): Show a dot for each file that is analyzed for each repository.
-  - 1: Show the file name instead of a dot for each analyzed file. Corresponds
-    to the ``-v`` option in the CLI.
-  - 2: Show additional debug output in the console. Corresponds to the ``-vv``
-    option in the CLI.
-  - 3: Show maximum debug output in the console. Corresponds to the ``-vvv``
-    option in the CLI.
+  - 1: Show the file name instead of a dot for each analyzed file.
+  - 2: Show maximum debug output in the console.
 
 Dry run
   - 0: Normal analysis and output (default).
@@ -389,11 +360,18 @@ Toggle
 
 Exclusion patterns
 ------------------
+Exclusion patterns are used to filter out certain elements from the analysis
+results. Each exlusion pattern is a comma separated list of strings. Note that
+this is different from the CLI, where the exclusion patterns are space separated.
+
+The asterisk ``*`` is a wildcard character that matches zero or more characters,
+just like in the shell. Exclusion patterns are used in the following fields:
+
 Authors
-  Filter out author names that match any of the space separated strings in
-  the text box. E.g. ``"John Smith"`` excludes author ``John Smith`` and ``John
-  Smith`` excludes author ``John`` and author ``Smith``.  The quotes are needed
-  to include spaces in a pattern.
+  Filter out author names that match any of the comma separated strings in the
+  text box. E.g. ``John Smith`` excludes author ``John Smith`` and ``John,
+  Smith`` excludes author ``John`` and author ``Smith``, but not author ``John
+  Fielding``. To exclude all authors with the first name John, use ``John*``.
 
 Emails
   Filter out email addresses taht match any of the space separated strings
@@ -407,10 +385,10 @@ Files/Paths
 
 Revision hashes
   Filter out revisions that start with any of the space separated hashes/SHAs in
-  the text box. E.g. ``8755fb 1234567`` excludes revisions that start with
+  the text box. E.g. ``8755fb, 1234567`` excludes revisions that start with
   ``8755fb`` or ``1234567``.
 
 Commit messages
   Filter out commit messages that match any of the space separated strings in
-  the text box. E.g. ``bug* fix`` excludes commits from analysis with commit
+  the text box. E.g. ``bug*, fix*`` excludes commits from analysis with commit
   messages such as ``Bugfix`` or ``Fixing issue #15``.

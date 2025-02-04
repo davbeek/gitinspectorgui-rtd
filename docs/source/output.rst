@@ -4,19 +4,62 @@ Multiple output formats can be selected, resulting in a separate output file for
 every selected format. See the :ref:`GUI documentation <output-formats-gui>` or
 :ref:`CLI documentation <output-formats-cli>` for information on this option.
 
-Output formats and viewers
---------------------------
-:guilabel:`html` and :guilabel:`excel`
+Output formats and viewer options
+---------------------------------
+File output formats
+^^^^^^^^^^^^^^^^^^^
+:guilabel:`html`, :guilabel:`html blame history` and :guilabel:`excel`
   Output is generated in the form of tables and saved in a file per repository.
 
   :guilabel:`html` output is suitable for viewing in a web browser. For single
   repositories the output is shown in a single window in the system web browser.
   For multiple repositories, each repository is shown in a separate tab.
 
+  :guilabel:`html blame history` output is similar to :guilabel:`html` output,
+  but it includes blame information tables for each relevant commit in the
+  repository. The option can lead to very large output files.
+
   :guilabel:`Excel` tables are similar to :guilabel:`html` tables, but have
   more options. Each column header in an excel table has a triangle button which
   activates a dropdown menu for sorting and filtering. For single repositories,
   the output is opened in Excel for viewing.
+
+View option :guilabel:`auto`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- In the case of file output, the output file is opened in the default viewer
+  for the file type.
+
+- If no file output format is selected, the output is shown in the system web
+  browser. The address is of the form
+  ``localhost:8080/?v=reponame-2d0c4e242077``, where ``reponame`` is the name of
+  the repository and ``2d0c4e242077`` is a random unique 12-character string.
+  When the user no longer needs the generated page(s), the page(s) should be
+  closed, or the web browser can be closed, so that the server can be stopped
+  and gitinspectorgui is ready for analysis of another repository.
+
+View option :guilabel:`dynamic blame history`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- This option is allowed only when no file output formats are selected. The
+  output pages that are displayed in the system web browser are similar to the
+  pages generated for view option :guilabel:`auto` with no file output. The only
+  difference is that additional blame information tables can be generated and
+  displayed for each relevant commit in the repository.
+
+  The output is also very similar to the output for the file format
+  :guilabel:`html blame history`. The only difference is that where the
+  additional blame tables for each relevant commit are allready present in the
+  html output file generated with option :guilabel:`html blame history`, these
+  tables are generated on the fly for the view option :guilabel:`dynamic blame
+  history`.
+
+More info on blame history output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  For the output format :guilabel:`html blame history` and view option
+  :guilabel:`dynamic blame history`, the blame pages generated for the web
+  browser have and additional top line with a list of commits that have changed
+  the file. The user can select a commit from the list to see the file as it was
+  at that commit with the lines colored according to the author of the last change to that
+  line.
 
 
 Output tables

@@ -6,25 +6,25 @@ Synopsis
 .. code:: text
 
   gitinspectorgui
-    [-h]
-    [--gui | --show | --save | --save-as PATH | --load PATH | --reset | -V | --about]
+    [-h] [-r [PATH ...] | -g | -V | --about] [-i PATH [PATH ...]]
     [-d DEPTH] [--subfolder SUBFOLDER] [-n [N]] [-f [PATTERNS ...]]
     [-o FILE_BASE] [--fix {prefix,postfix,nofix}]
-    [--view | --no-view] [-F [FORMAT ...]]
+    [--view {auto,dynamic-blame-history,none}]
+    [-F [{html,html-blame-history,excel} ...]]
     [--show-renames | --no-show-renames]
     [--deletions | --no-deletions]
     [--scaled-percentages | --no-scaled-percentages]
-    [--blame-history {none,dynamic,static}]
     [--blame-exclusions {hide,show,remove}] [--copy-move N]
     [--blame-skip | --no-blame-skip]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
     [--whitespace | --no-whitespace] [--since SINCE] [--until UNTIL]
-    [-v] [--dry-run {0,1,2}] [-e [EXTENSIONS ...]]
+    [-v {0,1,2}] [--dry-run {0,1,2}] [-e [EXTENSIONS ...]]
     [--multithread | --no-multithread] [--multicore | --no-multicore]
-    [--ex-files [PATTERNS ...]] [--ex-authors [PATTERNS ...]]
-    [--ex-emails [PATTERNS ...]] [--ex-revisions [PATTERNS ...]]
-    [--ex-messages [PATTERNS ...]] [--profile N]
-    [PATH ...]
+    [--reset-file | --load PATH] [--reset] [--save] [--save-as PATH]
+    [--show] [--ex-files [PATTERNS ...]]
+    [--ex-authors [PATTERNS ...]] [--ex-emails [PATTERNS ...]]
+    [--ex-revisions [PATTERNS ...]] [--ex-messages [PATTERNS ...]]
+    [--profile N]
 
 Overview
 --------
@@ -53,15 +53,6 @@ spaces. For example, to include files with the extensions ``java`` and ``py``,
 the pattern can be entered as ``-e java py``. Multiple patterns can also be
 specified by repeating the option, e.g. ``-e java -e py``.
 
-Separating options from ``PATH ...``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When an option can be followed by multiple patterns, the separator ``--`` is
-needed when the patterns are followed by the ``PATH ...`` input specification.
-For example, to include files with the extensions ``java`` and ``py`` in the
-input repository folder ``repo``, the command can be entered as ``python -m
-gigui -e java py -- repo``. To avoid the ``--`` separator, the command can be
-entered as ``python -m gigui repo -e java py``.
-
 Quotes ``""`` or ``''``
 ^^^^^^^^^^^^^^^^^^^^^^^
 In the input fields, quotes are needed to include spaces in a pattern. For
@@ -89,27 +80,13 @@ unambiguous. For example, the option ``--ex-authors`` can be abbreviated as
 
 Mutually exclusive options
 --------------------------
-``--gui``
+``-r [PATH ...]``, ``--run [PATH ...]``
+  Analyze the repositories in the specified paths and generate output files. The
+  output file for each repository is placed in the parent directory of the
+  repository. When no path is specified, the path is taken from the settings.
+
+``-g``, ``--gui``
   Start the GUI with settings loaded from the settings file.
-
-``--show``
-  Output the location of the settings file and its values, then exit.
-
-``--save``
-  Save the current settings to the settings file.
-
-``--save-as PATH``
-  Save the current settings to the specified file. This file becomes the
-  currently active settings file.
-
-``--load PATH``
-  Load settings from the specified file. This file becomes the currently active
-  settings file.
-
-``--reset``
-  Reset all settings to their default values and reset the location of the
-  currently active settings file to its default, operating system dependent,
-  location.
 
 ``-V`` ``--version``
   Output version information and exit.
@@ -120,9 +97,11 @@ Mutually exclusive options
 
 Input
 -----
-``PATH ...``
-  The path pattern to the folder(s) containing the repositories to be analyzed.
-  Multiple paths can be specified and all paths are searched for repositories.
+``-i PATH ...``, ``--input PATH ...``
+  Set the input path according to the value of ``PATH ...``. This option can be
+  combined with option ``-r`` only when ``-r`` has no arguments. Another useful
+  combination is with the ``--save`` to save the input path to the settings
+  file.
 
   IF ``PATH`` is a repository, that repository is analyzed and no search for
   additional repositories takes place.
@@ -171,16 +150,17 @@ Output
 
 Output generation and viewing
 -----------------------------
-``--view, --no-view``
+``--auto, --no-auto``
   Open a viewer is opened on the analysis results.
 
 .. _output-formats-cli:
 
-``-F FORMAT`` ``--format FORMAT``
+``-F FORMAT`` ``--file-format FORMAT``
   Selects for which file formats output is generated. Available choices are
-  ``html``and ``excel``. To select more than one output format separate them by
-  spacing or repeat the option, e.g. ``-F html excel`` or ``-F html -F excel``.
-  For more information on the output formats, see :doc:`output`.
+  ``html``, ``html-blame-hisotry`` and ``excel``. To select more than one output
+  format separate them by spacing or repeat the option, e.g. ``-F html excel``
+  or ``-F html -F excel``. For more information on the output formats, see
+  :doc:`output`.
 
 
 Statistics output
@@ -221,28 +201,6 @@ Blame options
   date and by which author. The color of the line indicates the author of the
   last change. The blame output is generated for each file that is analyzed.
 
-``--blame-history {none,dynamic,static}``
-
-  - ``none`` (default). The generated blame sheets show the lines of each file
-    as they are in the latest commit.
-
-  - ``dynamic`` and ``static``. The top line of the blame sheet for each file
-    shows all commits that have changed the file. The user can select a commit
-    from the list to see the file as it was at that commit. The blame sheet then
-    shows the file as it was at that commit, with the lines colored according to
-    the author of the last change to that line. The differences between the
-    ``dynamic`` and ``static`` modes are:
-
-    In the dynamic mode, the blame sheet is generated on the fly when the user
-    selects a commit from the list.
-
-    In the static mode, the blame sheets for all commits in the top list are
-    generated when the analysis is started and all generated blame sheets are
-    embedded in the generated html file. When this mode is selected in the GUI,
-    automatically the  output formats html and excel and set to true and false,
-    respectively and both are disabled.
-
-
 ``--blame-omit-exclusions, --no-blame-omit-exclusions``
   By means of this option, excluded blame lines can be hidden or shown or
   removed from the blame output. Blame lines can be excluded for three reasons:
@@ -268,12 +226,11 @@ Blame options
 
 Blame inclusions
 ----------------
-
-  The options ``--empty-lines``, ``--comments`` and ``--blame-omit-exclusions``
-  affect the blame output. The options ``--empty-lines`` and ``--comments`` are
-  used to include empty lines and comment lines in the blame output. The option
-  ``--blame-omit-exclusions`` is used to hide or show or remove excluded blame
-  lines from the blame output.
+The options ``--empty-lines``, ``--comments`` and ``--blame-omit-exclusions``
+affect the blame output. The options ``--empty-lines`` and ``--comments`` are
+used to include empty lines and comment lines in the blame output. The option
+``--blame-omit-exclusions`` is used to hide or show or remove excluded blame
+lines from the blame output.
 
 ``--empty-lines, --no-empty-lines``
   Include empty lines in the blame calculations. This affects the color of the
@@ -310,6 +267,7 @@ Blame inclusions
   .. code-block:: python
 
     x = 1  # Initialize x
+
 ``--empty-lines, --no-empty-lines``
   Include empty lines in the blame calculations. This affects the color of the
   empty lines in the blame sheets. The default is not to include them
@@ -360,14 +318,13 @@ General options
   Only show statistics for commits older than a specific date. See ``--since``
   for the format of ``DATE``.
 
-``-v``, ``--verbosity``
+``-v {0,1,2}``, ``--verbosity {0,1,2}``
   More verbose output for each ``v``: ``-v``, ``-vv`` or ``-vvv```. The maximum
   value 3 of the verbosity option in the GUI corresponds to ``-vvv`` in the CLI.
 
-  - (default): Show a dot for each file that is analyzed for each repository.
-  - ``-v``: Show the file name instead of a dot for each analyzed file.
-  - ``-vv``: Show additional debug output in the console.
-  - ``-vvv``: Show maximum debug output in the console.
+  - 0 (default): Show a dot for each file that is analyzed for each repository.
+  - 1: Show the file name instead of a dot for each analyzed file.
+  - 2: Show maximum debug output in the console.
 
 ``--dry-run {0,1,2}``
 
@@ -396,6 +353,27 @@ Multithread and multicore
   ``--multicore, --no-multicore``
     Execute multiple repositories using multiple cores.
 
+
+Settings
+--------
+``--show``
+  Output the location of the settings file and its values, then exit.
+
+``--save``
+  Save the current settings to the settings file.
+
+``--save-as PATH``
+  Save the current settings to the specified file. This file becomes the
+  currently active settings file.
+
+``--load PATH``
+  Load settings from the specified file. This file becomes the currently active
+  settings file.
+
+``--reset``
+  Reset all settings to their default values and reset the location of the
+  currently active settings file to its default, operating system dependent,
+  location.
 
 Exclusion patterns
 ------------------
