@@ -6,9 +6,14 @@ Working with TestPyPI
 Before publishing to PyPI, the code and publishing scripts can be tested via
 TestPyPI.
 
+Prepare the package for TestPyPI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- ``poetry build`` to create the package.
+- ``poetry config repositories.testpypi https://test.pypi.org/legacy/`` to add
+  TestPyPI as a repository for poetry.
+
 Publish to TestPyPI via poetry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code:: bash
 
   poetry publish --repository testpypi --username __token__ --password AUTHENTICATION-TOKEN
