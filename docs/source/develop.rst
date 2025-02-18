@@ -8,15 +8,13 @@ TestPyPI.
 
 Prepare the package for TestPyPI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- ``poetry build`` to create the package.
-- ``poetry config repositories.testpypi https://test.pypi.org/legacy/`` to add
-  TestPyPI as a repository for poetry.
+- ``uv build`` to create the package.
 
-Publish to TestPyPI via poetry
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Publish to TestPyPI via uv
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: bash
 
-  poetry publish --repository testpypi --username __token__ --password AUTHENTICATION-TOKEN
+  uv publish --index testpypi --username __token__ --password AUTHENTICATION-TOKEN
 
 Here ``__token__`` should be entered as is, and ``AUTHENTICATION-TOKEN`` should
 be replaced with the (very long) token generated from the TestPyPI account.
@@ -36,3 +34,10 @@ TestPyPI, use the following command:
       --extra-index-url https://pypi.org/simple/ gitinspectorgui
 
 The ``--pre`` flag is required because the version on TestPyPI is a pre-release.
+
+When using release candidates, the version number should be specified, e.g.:
+
+.. code:: bash
+
+  pip install --pre --index-url https://test.pypi.org/simple/ \
+      --extra-index-url https://pypi.org/simple/ gitinspectorgui==0.4.0rc7
