@@ -11,9 +11,9 @@ File output formats
 :guilabel:`html`, :guilabel:`html blame history` and :guilabel:`excel`
   Output is generated in the form of tables and saved in a file per repository.
 
-  :guilabel:`html` output is suitable for viewing in a web browser. For single
-  repositories the output is shown in a single window in the system web browser.
-  For multiple repositories, each repository is shown in a separate tab.
+  :guilabel:`html` output is the default and most user-friendly output format,
+  that can be displayed in the system's web browser. For multiple repositories,
+  each repository is shown in a separate tab.
 
   :guilabel:`html blame history` output is similar to :guilabel:`html` output,
   but it includes blame information tables for each relevant commit in the
