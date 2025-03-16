@@ -184,7 +184,7 @@ Output formats
 Tick boxes :guilabel:`auto` and :guilabel:`dynamic blame history` define whether
 a viewer is opened on the analysis results. The tick boxes on the line
 :guilabel:`File formats` define for which file formats output is generated.
-Available output formats are :guilabel:`html` :guilabel:`html blame history` and
+Available output formats are :guilabel:`html` and
 :guilabel:`excel`. For more information on the output formats, see
 :doc:`output`.
 

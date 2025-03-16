@@ -10,5 +10,4 @@ GitinspectorGUI documentation
   output
   supported
   FAQ <faq>
-  changelog
   develop

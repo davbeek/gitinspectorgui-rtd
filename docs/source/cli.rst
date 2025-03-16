@@ -10,15 +10,14 @@ Synopsis
     [-d DEPTH] [--subfolder SUBFOLDER] [-n [N]] [-f [PATTERNS ...]]
     [-o FILE_BASE] [--fix {prefix,postfix,nofix}]
     [--view {auto,dynamic-blame-history,none}]
-    [-F [{html,html-blame-history,excel} ...]]
-    [--show-renames | --no-show-renames]
+    [-F [{html,excel} ...]] [--show-renames | --no-show-renames]
     [--deletions | --no-deletions]
     [--scaled-percentages | --no-scaled-percentages]
     [--blame-exclusions {hide,show,remove}] [--copy-move N]
     [--blame-skip | --no-blame-skip]
     [--empty-lines | --no-empty-lines] [--comments | --no-comments]
     [--whitespace | --no-whitespace] [--since SINCE] [--until UNTIL]
-    [-v {0,1,2}] [--dry-run {0,1,2}] [-e [EXTENSIONS ...]]
+    [-v {0,1,2}] [--dryrun {0,1,2}] [-e [EXTENSIONS ...]]
     [--multithread | --no-multithread] [--multicore | --no-multicore]
     [--reset-file | --load PATH] [--reset] [--save] [--save-as PATH]
     [--show] [--ex-files [PATTERNS ...]]
@@ -157,7 +156,7 @@ Output generation and viewing
 
 ``-F FORMAT`` ``--file-format FORMAT``
   Selects for which file formats output is generated. Available choices are
-  ``html``, ``html-blame-hisotry`` and ``excel``. To select more than one output
+  ``html`` and ``excel``. To select more than one output
   format separate them by spacing or repeat the option, e.g. ``-F html excel``
   or ``-F html -F excel``. For more information on the output formats, see
   :doc:`output`.
@@ -327,7 +326,6 @@ General options
   - 2: Show maximum debug output in the console.
 
 ``--dry-run {0,1,2}``
-
   - 0: Normal analysis and output (default).
   - 1: Perform all required analysis and show the output in the console, but do
     not write any output files and do not open any viewers.
