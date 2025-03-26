@@ -8,6 +8,8 @@ GitinspectorGUI documentation
   GUI <gui>
   CLI <cli>
   output
+  examples
   supported
   FAQ <faq>
   develop
+  issues
