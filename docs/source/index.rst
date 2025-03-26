@@ -5,6 +5,7 @@ GitinspectorGUI documentation
   :maxdepth: 2
 
   overview
+  install
   GUI <gui>
   CLI <cli>
   output

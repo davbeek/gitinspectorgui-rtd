@@ -25,10 +25,6 @@ Available as executable app and PyPI package
   Executable apps with GUI interface are available for macOS and Windows. In
   addition, a Python package can be installed from PyPI.
 
-Download and installation
--------------------------
-For download and installation instructions, see the `GitinspectorGUI GitHub
-website <https://github.com/davbeek/gitinspectorgui>`_.
 
 Origin
 ------
