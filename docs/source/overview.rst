@@ -23,7 +23,8 @@ GUI and CLI interface
 
 Available as executable app and PyPI package
   Executable apps with GUI interface are available for macOS and Windows. In
-  addition, a Python package can be installed from PyPI.
+  addition, a Python package can be installed from `PyPI
+  <https://pypi.org/project/gitinspectorgui/>`_.
 
 
 Origin
